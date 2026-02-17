@@ -6,9 +6,9 @@ import boto3
 from decimal import Decimal
 
 # AWS configuration
-PROFILE = '777937796305_Ps-HackatonAgentic-Mexico'
+PROFILE = 'pragma-power-user'
 REGION = 'us-east-1'
-TABLE_NAME = 'centli-accounts'
+TABLE_NAME = 'poc-wizi-mex-user-profile-dev'
 
 # Initialize DynamoDB
 session = boto3.Session(profile_name=PROFILE, region_name=REGION)

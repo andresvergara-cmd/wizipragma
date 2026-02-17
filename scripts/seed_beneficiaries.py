@@ -4,7 +4,7 @@ Seed beneficiaries for demo
 
 import boto3
 
-PROFILE = '777937796305_Ps-HackatonAgentic-Mexico'
+PROFILE = 'pragma-power-user'
 REGION = 'us-east-1'
 TABLE_NAME = 'centli-beneficiaries'
 

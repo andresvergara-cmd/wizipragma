@@ -5,9 +5,9 @@ Seed products for demo
 import boto3
 from decimal import Decimal
 
-PROFILE = '777937796305_Ps-HackatonAgentic-Mexico'
+PROFILE = 'pragma-power-user'
 REGION = 'us-east-1'
-PRODUCTS_TABLE = 'centli-products'
+PRODUCTS_TABLE = 'poc-wizi-mex-retailers-dev'
 RETAILERS_TABLE = 'centli-retailers'
 
 session = boto3.Session(profile_name=PROFILE, region_name=REGION)
