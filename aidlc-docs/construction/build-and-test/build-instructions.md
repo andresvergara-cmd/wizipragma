@@ -1,287 +1,257 @@
-# Build Instructions - CENTLI
+# Build Instructions - CENTLI Project
 
-## Prerequisites
-
-### Required Tools
-- **AWS CLI**: Version 2.x or higher
-- **AWS SAM CLI**: Version 1.100.0 or higher
-- **Python**: 3.9 or 3.10
-- **Poetry**: 1.7.0 or higher (Python dependency management)
-- **Node.js**: 18.x or higher (for frontend build tools, optional)
-- **Git**: For version control
-
-### AWS Configuration
-- **AWS Profile**: `777937796305_Ps-HackatonAgentic-Mexico`
-- **AWS Region**: `us-east-1`
-- **AWS Account ID**: `777937796305`
-
-### Environment Variables
-```bash
-export AWS_PROFILE=777937796305_Ps-HackatonAgentic-Mexico
-export AWS_REGION=us-east-1
-export AWS_ACCOUNT_ID=777937796305
-export PROJECT_NAME=centli
-```
-
-### System Requirements
-- **OS**: macOS, Linux, or Windows with WSL2
-- **Memory**: Minimum 8GB RAM
-- **Disk Space**: Minimum 2GB free space
-- **Network**: Internet connection for AWS services
+## Overview
+CENTLI is a serverless multimodal banking assistant with 4 units. This document provides build and deployment instructions for all units.
 
 ---
 
-## Build Steps
+## Unit 1: Infrastructure Foundation
 
-### 1. Install Dependencies
+### Status
+✅ **DEPLOYED** - 2026-02-17
 
-#### Python Dependencies (Backend Lambdas)
+### Build Steps
+No build required (SAM template only).
+
+### Deployment
 ```bash
-# Install Poetry if not already installed
-curl -sSL https://install.python-poetry.org | python3 -
-
-# Install project dependencies
-poetry install
-
-# Verify installation
-poetry run python --version
+# Already deployed
+# Stack: centli-hackathon
+# Resources: EventBridge bus, S3 bucket, IAM roles, CloudWatch log group
 ```
 
-#### AWS SAM CLI
+### Verification
 ```bash
-# macOS
-brew install aws-sam-cli
-
-# Linux
-pip install aws-sam-cli
-
-# Verify installation
-sam --version
+aws cloudformation describe-stacks \
+  --stack-name centli-hackathon \
+  --profile 777937796305_Ps-HackatonAgentic-Mexico \
+  --region us-east-1
 ```
 
-### 2. Configure Environment
+---
 
-#### Set AWS Credentials
-```bash
-# Configure AWS CLI with your credentials
-aws configure --profile 777937796305_Ps-HackatonAgentic-Mexico
+## Unit 2: AgentCore & Orchestration
 
-# Verify AWS access
-aws sts get-caller-identity --profile 777937796305_Ps-HackatonAgentic-Mexico
-```
+### Status
+✅ **DEPLOYED** - 2026-02-17
 
-Expected output:
-```json
-{
-    "UserId": "...",
-    "Account": "777937796305",
-    "Arn": "..."
-}
-```
-
-#### Create Local Environment File
-```bash
-# Copy example environment file
-cp .env.example .env
-
-# Edit .env with your specific values
-# (This file is gitignored)
-```
-
-### 3. Build All Units
-
-#### Unit 1: Infrastructure Foundation
-```bash
-# Validate base template
-sam validate --template infrastructure/base-template.yaml
-
-# Build (no code to build, just validation)
-echo "✅ Unit 1: Infrastructure validated"
-```
-
-#### Unit 2: AgentCore & Orchestration
+### Build Steps
 ```bash
 # Build Lambda functions
-sam build \
-  --template template.yaml \
-  --build-dir .aws-sam/build \
+sam build --profile 777937796305_Ps-HackatonAgentic-Mexico
+```
+
+### Deployment
+```bash
+# Deploy stack
+sam deploy \
+  --stack-name centli-hackathon \
+  --profile 777937796305_Ps-HackatonAgentic-Mexico \
+  --region us-east-1 \
+  --capabilities CAPABILITY_IAM \
+  --no-confirm-changeset
+```
+
+### Verification
+```bash
+# Test WebSocket connection
+node test-websocket.js
+
+# Check Lambda logs
+aws logs tail /aws/lambda/centli-app-message \
+  --follow \
   --profile 777937796305_Ps-HackatonAgentic-Mexico
-
-# Verify build artifacts
-ls -la .aws-sam/build/
 ```
 
-Expected output:
-```
-AppConnectFunction/
-AppDisconnectFunction/
-AppMessageFunction/
-template.yaml
-```
-
-#### Unit 3: Action Groups (When Ready)
-```bash
-# Build Action Group Lambdas
-sam build \
-  --template infrastructure/action-groups-template.yaml \
-  --build-dir .aws-sam/build-action-groups \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
-```
-
-#### Unit 4: Frontend (When Ready)
-```bash
-# No build step required for static HTML/CSS/JS
-# Validate HTML syntax
-echo "✅ Unit 4: Frontend files ready for deployment"
-```
-
-### 4. Verify Build Success
-
-#### Check Build Artifacts
-```bash
-# List all build artifacts
-find .aws-sam/build -type f -name "*.py" | head -10
-
-# Check Lambda function sizes
-du -sh .aws-sam/build/*/
-```
-
-#### Expected Output
-- **Build Status**: SUCCESS
-- **Build Artifacts**:
-  - `.aws-sam/build/AppConnectFunction/` - WebSocket connect handler
-  - `.aws-sam/build/AppDisconnectFunction/` - WebSocket disconnect handler
-  - `.aws-sam/build/AppMessageFunction/` - WebSocket message handler
-  - `.aws-sam/build/template.yaml` - Processed SAM template
-
-#### Common Warnings (Acceptable)
-- `WARNING: Skipping build for function X (no code changes)` - OK if function already built
-- `WARNING: Using Python 3.9 runtime` - OK, this is our target runtime
+### Deployed Resources
+- WebSocket API: `wss://vvg621xawg.execute-api.us-east-1.amazonaws.com/prod`
+- Lambda Functions: app_connect, app_disconnect, app_message
+- DynamoDB Table: centli-sessions
+- Bedrock Agent: centli-agentcore (Z6PCEKYNPS)
 
 ---
 
-## Troubleshooting
+## Unit 3: Action Groups
 
-### Build Fails with Dependency Errors
+### Status
+⏳ **IN PROGRESS** - Assigned to Developer 2
 
-**Symptom**: `ModuleNotFoundError` or `ImportError` during build
-
-**Cause**: Missing Python dependencies or Poetry not configured
-
-**Solution**:
+### Build Steps
 ```bash
-# Reinstall dependencies
-poetry install --no-root
+# Build Lambda functions (when ready)
+sam build --profile 777937796305_Ps-HackatonAgentic-Mexico
+```
 
-# Clear Poetry cache
-poetry cache clear pypi --all
+### Deployment
+```bash
+# Deploy stack (when ready)
+sam deploy \
+  --stack-name centli-hackathon \
+  --profile 777937796305_Ps-HackatonAgentic-Mexico \
+  --region us-east-1 \
+  --capabilities CAPABILITY_IAM \
+  --no-confirm-changeset
+```
+
+### Expected Resources
+- Lambda Functions: core_banking, marketplace, crm
+- DynamoDB Tables: accounts, transactions, beneficiaries, products, purchases, user-profiles
+- EventBridge Rules: Action event subscriptions
+
+---
+
+## Unit 4: Frontend Multimodal UI
+
+### Status
+✅ **CODE COMPLETE** - Ready for deployment
+
+### Build Steps
+**NO BUILD REQUIRED** - Vanilla JavaScript, no build process
+
+### Pre-Deployment Configuration
+
+#### 1. Enable S3 Static Website Hosting
+```bash
+aws s3 website s3://centli-frontend-bucket/ \
+  --index-document index.html \
+  --error-document index.html \
+  --profile 777937796305_Ps-HackatonAgentic-Mexico \
+  --region us-east-1
+```
+
+#### 2. Set Bucket Policy (Public Read)
+```bash
+aws s3api put-bucket-policy \
+  --bucket centli-frontend-bucket \
+  --policy file://infrastructure/s3-bucket-policy.json \
+  --profile 777937796305_Ps-HackatonAgentic-Mexico
+```
+
+#### 3. Configure CORS
+```bash
+aws s3api put-bucket-cors \
+  --bucket centli-frontend-bucket \
+  --cors-configuration file://infrastructure/s3-cors-config.json \
+  --profile 777937796305_Ps-HackatonAgentic-Mexico
+```
+
+#### 4. Set Lifecycle Policy
+```bash
+aws s3api put-bucket-lifecycle-configuration \
+  --bucket centli-frontend-bucket \
+  --lifecycle-configuration file://infrastructure/s3-lifecycle-policy.json \
+  --profile 777937796305_Ps-HackatonAgentic-Mexico
+```
+
+### Deployment
+```bash
+# Deploy frontend files to S3
+./commands/deploy-frontend.sh
+```
+
+### Verification
+```bash
+# Check S3 website endpoint
+curl -I http://centli-frontend-bucket.s3-website-us-east-1.amazonaws.com
+
+# Or open in browser
+open http://centli-frontend-bucket.s3-website-us-east-1.amazonaws.com
+```
+
+### Frontend URL
+- **S3 Website**: `http://centli-frontend-bucket.s3-website-us-east-1.amazonaws.com`
+- **S3 HTTPS**: `https://centli-frontend-bucket.s3.amazonaws.com/index.html`
+
+---
+
+## Complete System Build
+
+### Prerequisites
+- AWS CLI configured with profile `777937796305_Ps-HackatonAgentic-Mexico`
+- AWS SAM CLI installed (version 1.154.0+)
+- Python 3.11 (for Lambda functions)
+- Node.js (for WebSocket testing)
+
+### Build All Units
+```bash
+# Unit 1 & 2 (already deployed)
+sam build --profile 777937796305_Ps-HackatonAgentic-Mexico
+
+# Unit 3 (when ready)
+# sam build --profile 777937796305_Ps-HackatonAgentic-Mexico
+
+# Unit 4 (no build needed)
+# Just deploy to S3
+```
+
+### Deploy All Units
+```bash
+# Unit 1 & 2 (already deployed)
+# Stack: centli-hackathon
+
+# Unit 3 (when ready)
+# sam deploy ...
+
+# Unit 4
+./commands/deploy-frontend.sh
+```
+
+---
+
+## Build Troubleshooting
+
+### SAM Build Fails
+```bash
+# Clean build artifacts
+rm -rf .aws-sam/
 
 # Rebuild
-sam build --use-container
+sam build --profile 777937796305_Ps-HackatonAgentic-Mexico
 ```
 
-### Build Fails with SAM Template Errors
-
-**Symptom**: `Template validation error` or `Invalid template`
-
-**Cause**: Syntax error in YAML template
-
-**Solution**:
+### Lambda Deployment Fails
 ```bash
-# Validate template syntax
-sam validate --template template.yaml --lint
-
-# Check for YAML syntax errors
-python -c "import yaml; yaml.safe_load(open('template.yaml'))"
-
-# Fix errors and rebuild
+# Check CloudFormation events
+aws cloudformation describe-stack-events \
+  --stack-name centli-hackathon \
+  --profile 777937796305_Ps-HackatonAgentic-Mexico \
+  --max-items 20
 ```
 
-### Build Fails with Permission Errors
-
-**Symptom**: `Access Denied` or `Permission denied`
-
-**Cause**: AWS credentials not configured or insufficient permissions
-
-**Solution**:
+### Frontend Deployment Fails
 ```bash
-# Verify AWS credentials
-aws sts get-caller-identity --profile 777937796305_Ps-HackatonAgentic-Mexico
+# Check S3 bucket exists
+aws s3 ls s3://centli-frontend-bucket/ \
+  --profile 777937796305_Ps-HackatonAgentic-Mexico
 
-# Check IAM permissions (need Lambda, S3, DynamoDB, EventBridge access)
-aws iam get-user --profile 777937796305_Ps-HackatonAgentic-Mexico
-
-# Reconfigure credentials if needed
-aws configure --profile 777937796305_Ps-HackatonAgentic-Mexico
-```
-
-### Build is Slow
-
-**Symptom**: Build takes more than 5 minutes
-
-**Cause**: Large dependencies or network issues
-
-**Solution**:
-```bash
-# Use container build for faster dependency resolution
-sam build --use-container --parallel
-
-# Or use cached build
-sam build --cached
+# Check bucket policy
+aws s3api get-bucket-policy \
+  --bucket centli-frontend-bucket \
+  --profile 777937796305_Ps-HackatonAgentic-Mexico
 ```
 
 ---
 
-## Build Optimization Tips
+## Build Summary
 
-### 1. Use Cached Builds
-```bash
-# Enable caching for faster subsequent builds
-sam build --cached --parallel
-```
-
-### 2. Build Specific Functions
-```bash
-# Build only changed functions
-sam build AppMessageFunction --use-container
-```
-
-### 3. Use Container Builds
-```bash
-# Build in Docker container (consistent environment)
-sam build --use-container
-```
-
-### 4. Parallel Builds
-```bash
-# Build multiple functions in parallel
-sam build --parallel
-```
-
----
-
-## Build Verification Checklist
-
-- [ ] Poetry dependencies installed successfully
-- [ ] AWS SAM CLI installed and configured
-- [ ] AWS credentials configured and verified
-- [ ] Base template validated (Unit 1)
-- [ ] Lambda functions built successfully (Unit 2)
-- [ ] Build artifacts present in `.aws-sam/build/`
-- [ ] No critical errors in build output
-- [ ] Lambda function sizes are reasonable (<50MB each)
+| Unit | Build Required | Status | Deployment Method |
+|------|----------------|--------|-------------------|
+| Unit 1 | No | ✅ Deployed | SAM (CloudFormation) |
+| Unit 2 | Yes (Python) | ✅ Deployed | SAM (CloudFormation) |
+| Unit 3 | Yes (Python) | ⏳ In Progress | SAM (CloudFormation) |
+| Unit 4 | No | ✅ Ready | AWS CLI (S3 sync) |
 
 ---
 
 ## Next Steps
 
-After successful build:
-1. ✅ Proceed to **Unit Test Execution** (unit-test-instructions.md)
-2. ✅ Deploy to AWS (see DEPLOYMENT-UNIT2.md)
-3. ✅ Run integration tests (integration-test-instructions.md)
+1. ✅ Unit 1 & 2: Already deployed and tested
+2. ⏳ Unit 3: Waiting for Developer 2 to complete
+3. 🚀 Unit 4: Deploy to S3 and test
+4. 🧪 Integration Testing: Test all units together
+5. 🎯 Demo Preparation: Final end-to-end testing
 
 ---
 
-**Build Time**: ~2-5 minutes (first build), ~30 seconds (cached builds)  
-**Build Artifacts Location**: `.aws-sam/build/`  
-**Build Status**: Ready for deployment
+**Document Status**: Complete  
+**Last Updated**: 2026-02-17T16:35:00Z

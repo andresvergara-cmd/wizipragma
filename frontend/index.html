@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CENTLI - Asistente Bancario Multimodal</title>
+  
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link href="css/custom.css" rel="stylesheet">
+</head>
+<body>
+  
+  <!-- Login Screen -->
+  <div id="login-screen" class="login-container">
+    <div class="card login-card">
+      <div class="card-body text-center">
+        <h2 class="mb-4">🏦 CENTLI</h2>
+        <p class="text-muted">Asistente Bancario Multimodal</p>
+        <div class="mb-3">
+          <input type="text" id="user-id-input" class="form-control" placeholder="ID de Usuario" data-testid="login-form-user-input">
+        </div>
+        <button id="login-button" class="btn btn-primary w-100" data-testid="login-form-submit-button">
+          Iniciar Sesión
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main App Container -->
+  <div id="app-container" class="app-container" style="display: none;">
+    
+    <!-- Header -->
+    <nav class="navbar navbar-dark bg-primary">
+      <div class="container-fluid">
+        <span class="navbar-brand">🏦 CENTLI</span>
+        <div class="d-flex align-items-center">
+          <span id="connection-status" class="me-3 text-white" data-testid="connection-status">Desconectado</span>
+          <button id="logout-button" class="btn btn-sm btn-outline-light" data-testid="logout-button">
+            <i class="bi bi-box-arrow-right"></i> Salir
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid main-content">
+      <div class="row h-100">
+        
+        <!-- Chat Column -->
+        <div class="col-md-8 d-flex flex-column chat-column">
+          
+          <!-- Messages Container -->
+          <div id="message-container" class="flex-grow-1 messages-container" data-testid="chat-message-container">
+            <!-- Messages will be rendered here -->
+          </div>
+          
+          <!-- Typing Indicator -->
+          <div id="typing-indicator" class="typing-indicator" style="display: none;">
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+            <span class="ms-2">El asistente está escribiendo...</span>
+          </div>
+          
+          <!-- Input Area -->
+          <div class="input-area">
+            <div class="input-group">
+              <textarea id="message-input" class="form-control" placeholder="Escribe tu mensaje..." rows="2" data-testid="chat-message-input"></textarea>
+              <button id="send-button" class="btn btn-primary" data-testid="chat-send-button">
+                <i class="bi bi-send"></i>
+              </button>
+            </div>
+            
+            <!-- Action Buttons -->
+            <div class="action-buttons mt-2">
+              <button id="voice-button" class="btn btn-outline-primary" data-testid="voice-record-button" title="Mantén presionado para grabar">
+                <i class="bi bi-mic"></i> Voz
+              </button>
+              
+              <label for="image-input" class="btn btn-outline-primary" data-testid="image-upload-button">
+                <i class="bi bi-image"></i> Imagen
+              </label>
+              <input type="file" id="image-input" accept="image/jpeg,image/png" style="display: none;">
+              
+              <div id="image-preview" class="mt-2"></div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Sidebar Column -->
+        <div class="col-md-4 sidebar-column">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">Información</h5>
+              
+              <!-- Product Catalog -->
+              <div id="product-catalog" class="mt-3">
+                <p class="text-muted">Los productos aparecerán aquí</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- Transaction Confirmation Modal -->
+  <div class="modal fade" id="transaction-modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirmar Transacción</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Tipo:</strong> <span id="transaction-type"></span></p>
+          <p><strong>Monto:</strong> <span id="transaction-amount"></span></p>
+          <p><strong>Destino:</strong> <span id="transaction-destination"></span></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="transaction-cancel-btn" class="btn btn-secondary" data-testid="transaction-cancel-button">Cancelar</button>
+          <button type="button" id="transaction-confirm-btn" class="btn btn-primary" data-testid="transaction-confirm-button">Confirmar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- App Scripts -->
+  <script src="config.js"></script>
+  <script src="js/logger.js"></script>
+  <script src="js/app-state.js"></script>
+  <script src="js/websocket-manager.js"></script>
+  <script src="js/voice-manager.js"></script>
+  <script src="js/chat-manager.js"></script>
+  <script src="js/image-manager.js"></script>
+  <script src="js/transaction-manager.js"></script>
+  <script src="js/product-catalog-manager.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

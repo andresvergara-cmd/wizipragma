@@ -1,526 +1,430 @@
-# Integration Test Instructions - CENTLI
+# Integration Test Instructions - CENTLI Project
 
-## Purpose
-
-Integration tests verify that different units work together correctly. These tests validate:
-- Communication between Frontend and AgentCore (WebSocket)
-- Communication between AgentCore and Action Groups (EventBridge)
-- Communication between Action Groups (EventBridge)
-- End-to-end user workflows
+## Overview
+Integration testing validates that all units work together correctly. Tests the complete end-to-end flow from frontend to backend to AI agent.
 
 ---
 
-## Test Scenarios
+## Integration Test Scenarios
 
-### Scenario 1: Frontend → AgentCore Integration (WebSocket)
+### Scenario 1: Complete Chat Flow (Text)
 
-**Description**: Test WebSocket connection and message flow between Frontend and Orchestration Service
+**Objective**: Verify text message flows from frontend through WebSocket to Bedrock agent and back
 
-**Setup**:
-```bash
-# Deploy Unit 2 (if not already deployed)
-sam deploy --guided --profile 777937796305_Ps-HackatonAgentic-Mexico
+**Prerequisites**:
+- Unit 2 deployed and running
+- Unit 4 deployed to S3
+- Bedrock agent configured
 
-# Get WebSocket API endpoint
-aws apigatewayv2 get-apis \
-  --query 'Items[?Name==`centli-websocket-api`].ApiEndpoint' \
-  --output text \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
-```
-
-**Test Steps**:
-
-1. **Connect to WebSocket**
-```bash
-# Using wscat (install: npm install -g wscat)
-wscat -c wss://YOUR_API_ID.execute-api.us-east-1.amazonaws.com/prod
-
-# Expected: Connection established
-# Expected: Receive connection confirmation message
-```
-
-2. **Send Text Message**
-```json
-{
-  "type": "TEXT",
-  "content": "Hola, ¿cuál es mi saldo?",
-  "metadata": {
-    "timestamp": "2026-02-17T10:00:00Z",
-    "message_id": "msg-001",
-    "user_id": "user-123",
-    "session_id": "session-abc"
-  }
-}
-```
+**Steps**:
+1. Open frontend: `http://centli-frontend-bucket.s3-website-us-east-1.amazonaws.com`
+2. Login with user ID: "integration-test-user"
+3. Wait for "Conectado" status
+4. Send message: "Hola, ¿cómo estás?"
+5. Observe typing indicator
+6. Wait for agent response
 
 **Expected Results**:
-- ✅ Message received by Orchestration Service
-- ✅ Session created/updated in DynamoDB
-- ✅ Message processed by AgentCore
-- ✅ Response sent back via WebSocket
-- ✅ Response contains relevant information
+- ✅ WebSocket connects successfully
+- ✅ Message sent (appears in chat, right side)
+- ✅ Typing indicator shows
+- ✅ Agent response received (appears in chat, left side)
+- ✅ Response is contextual and relevant
+- ✅ No errors in browser console
+- ✅ Lambda logs show successful invocation
 
-**Verification**:
+**Validation**:
 ```bash
-# Check DynamoDB sessions table
-aws dynamodb scan \
+# Check Lambda logs
+aws logs tail /aws/lambda/centli-app-message \
+  --since 5m \
+  --profile 777937796305_Ps-HackatonAgentic-Mexico
+
+# Check DynamoDB session
+aws dynamodb get-item \
   --table-name centli-sessions \
+  --key '{"connection_id":{"S":"[CONNECTION_ID]"}}' \
   --profile 777937796305_Ps-HackatonAgentic-Mexico
-
-# Check CloudWatch logs
-aws logs tail /aws/lambda/centli-app-message \
-  --follow \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
-```
-
-**Cleanup**:
-```bash
-# Disconnect from WebSocket
-# Press Ctrl+C in wscat
 ```
 
 ---
 
-### Scenario 2: AgentCore → Action Groups Integration (EventBridge)
+### Scenario 2: Voice Input Flow (if supported)
 
-**Description**: Test event-driven communication between AgentCore and Action Groups
+**Objective**: Verify voice recording, transcription, and response
 
-**Setup**:
-```bash
-# Ensure Unit 2 is deployed
-# Ensure Unit 3 is deployed (when ready)
+**Prerequisites**:
+- Scenario 1 passed
+- Browser supports MediaRecorder API
+- Microphone permission granted
 
-# Verify EventBridge bus exists
-aws events describe-event-bus \
-  --name centli-event-bus \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
-```
-
-**Test Steps**:
-
-1. **Publish Test Action Event**
-```bash
-# Create test event file
-cat > test-action-event.json <<EOF
-{
-  "Source": "centli.agentcore",
-  "DetailType": "ActionRequest",
-  "Detail": "{\"action_type\":\"GET_BALANCE\",\"action_data\":{\"user_id\":\"user-123\"},\"user_id\":\"user-123\",\"session_id\":\"session-abc\",\"request_id\":\"req-001\",\"timestamp\":\"2026-02-17T10:00:00Z\"}",
-  "EventBusName": "centli-event-bus"
-}
-EOF
-
-# Publish event
-aws events put-events \
-  --entries file://test-action-event.json \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
-```
-
-2. **Verify Event Delivery**
-```bash
-# Check Core Banking Lambda logs (Unit 3)
-aws logs tail /aws/lambda/centli-core-banking \
-  --follow \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
-
-# Expected: Event received and processed
-```
-
-3. **Verify Response Event**
-```bash
-# Check for response event in EventBridge
-# (Response should be published back to event bus)
-
-# Check AgentCore logs for response handling
-aws logs tail /aws/lambda/centli-app-message \
-  --follow \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
-```
+**Steps**:
+1. Click and hold voice button
+2. Speak clearly: "¿Cuál es mi saldo?"
+3. Release voice button
+4. Wait for response
 
 **Expected Results**:
-- ✅ Action event published to EventBridge
-- ✅ Core Banking Lambda receives event
-- ✅ Core Banking Lambda processes request
-- ✅ Response event published back to EventBridge
-- ✅ AgentCore receives response event
-- ✅ Response sent to user via WebSocket
+- ✅ Recording starts (indicator shows)
+- ✅ Audio captured (WebM format)
+- ✅ Voice message sent via WebSocket
+- ✅ Backend receives audio (base64 encoded)
+- ✅ Bedrock transcribes audio (Nova Sonic)
+- ✅ Agent processes transcription
+- ✅ Text response received
+- ✅ Optional: Voice response received and plays
 
-**Cleanup**:
+**Note**: Full voice flow depends on Unit 2 implementing Nova Sonic integration
+
+---
+
+### Scenario 3: Image Upload Flow (if backend ready)
+
+**Objective**: Verify image upload, compression, and analysis
+
+**Prerequisites**:
+- Scenario 1 passed
+- Backend implements presigned URL generation
+- Bedrock Nova Canvas configured
+
+**Steps**:
+1. Click "Imagen" button
+2. Select test image (JPEG, < 5MB)
+3. Observe preview
+4. Wait for upload
+5. Wait for analysis response
+
+**Expected Results**:
+- ✅ Image preview shows
+- ✅ Client-side compression works (Canvas API)
+- ✅ Presigned URL requested via WebSocket
+- ✅ Presigned URL received
+- ✅ Direct S3 upload succeeds (PUT request)
+- ✅ Image URL sent to backend
+- ✅ Bedrock analyzes image (Nova Canvas)
+- ✅ Analysis response received
+- ✅ Image stored in S3: `uploads/{session_id}/{timestamp}_{filename}`
+
+**Validation**:
 ```bash
-# Remove test event file
-rm test-action-event.json
+# Check S3 uploads folder
+aws s3 ls s3://centli-frontend-bucket/uploads/ \
+  --recursive \
+  --profile 777937796305_Ps-HackatonAgentic-Mexico
 ```
 
 ---
 
-### Scenario 3: Marketplace → Core Banking Integration (Cross-Action Group)
+### Scenario 4: Transaction Flow (Unit 3 integration)
 
-**Description**: Test communication between Action Groups (Marketplace triggers payment in Core Banking)
+**Objective**: Verify transaction request, confirmation, and execution
 
-**Setup**:
+**Prerequisites**:
+- Scenario 1 passed
+- Unit 3 deployed (Action Groups)
+- Core Banking mock ready
+
+**Steps**:
+1. Send message: "Transferir $100 a Juan Pérez"
+2. Wait for transaction confirmation modal
+3. Review transaction details
+4. Click "Confirmar"
+5. Wait for confirmation response
+
+**Expected Results**:
+- ✅ Agent understands transfer intent
+- ✅ Transaction confirmation event sent via WebSocket
+- ✅ Modal displays: Type, Amount, Destination
+- ✅ User confirms transaction
+- ✅ Confirmation sent to backend
+- ✅ Backend invokes Core Banking Lambda (Unit 3)
+- ✅ EventBridge event published
+- ✅ Transaction recorded in DynamoDB
+- ✅ Success response received
+- ✅ Agent confirms: "Transferencia completada"
+
+**Validation**:
 ```bash
-# Ensure Unit 3 is fully deployed
-# Seed test data in DynamoDB tables
-```
-
-**Test Steps**:
-
-1. **Trigger Purchase Flow**
-```bash
-# Publish purchase event
-cat > test-purchase-event.json <<EOF
-{
-  "Source": "centli.agentcore",
-  "DetailType": "ActionRequest",
-  "Detail": "{\"action_type\":\"PURCHASE_PRODUCT\",\"action_data\":{\"user_id\":\"user-123\",\"product_id\":\"prod-001\",\"amount\":500},\"user_id\":\"user-123\",\"session_id\":\"session-abc\",\"request_id\":\"req-002\",\"timestamp\":\"2026-02-17T10:05:00Z\"}",
-  "EventBusName": "centli-event-bus"
-}
-EOF
-
-aws events put-events \
-  --entries file://test-purchase-event.json \
+# Check transactions table
+aws dynamodb scan \
+  --table-name centli-transactions \
+  --filter-expression "user_id = :uid" \
+  --expression-attribute-values '{":uid":{"S":"integration-test-user"}}' \
   --profile 777937796305_Ps-HackatonAgentic-Mexico
 ```
 
-2. **Verify Marketplace Processing**
+---
+
+### Scenario 5: Product Catalog Flow (Unit 3 integration)
+
+**Objective**: Verify product listing, selection, and purchase
+
+**Prerequisites**:
+- Scenario 1 passed
+- Unit 3 deployed (Action Groups)
+- Marketplace mock ready
+
+**Steps**:
+1. Send message: "Muéstrame productos disponibles"
+2. Wait for products to appear in sidebar
+3. Click "Ver Detalles" on a product
+4. Send message: "Quiero comprar este producto"
+5. Confirm purchase
+
+**Expected Results**:
+- ✅ Agent understands product request
+- ✅ Backend invokes Marketplace Lambda (Unit 3)
+- ✅ Product catalog event sent via WebSocket
+- ✅ Products display in sidebar (grid layout)
+- ✅ Product selection works
+- ✅ Purchase flow initiated
+- ✅ Purchase recorded in DynamoDB
+- ✅ Benefits calculated and displayed
+- ✅ Agent confirms purchase
+
+**Validation**:
 ```bash
-# Check Marketplace Lambda logs
-aws logs tail /aws/lambda/centli-marketplace \
-  --follow \
+# Check products table
+aws dynamodb scan \
+  --table-name centli-products \
   --profile 777937796305_Ps-HackatonAgentic-Mexico
 
-# Expected: Purchase request received
-# Expected: Payment event published to EventBridge
-```
-
-3. **Verify Core Banking Payment**
-```bash
-# Check Core Banking Lambda logs
-aws logs tail /aws/lambda/centli-core-banking \
-  --follow \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
-
-# Expected: Payment event received
-# Expected: Funds deducted from account
-# Expected: Transaction recorded
-```
-
-4. **Verify Purchase Completion**
-```bash
-# Check DynamoDB purchases table
+# Check purchases table
 aws dynamodb scan \
   --table-name centli-purchases \
+  --filter-expression "user_id = :uid" \
+  --expression-attribute-values '{":uid":{"S":"integration-test-user"}}' \
   --profile 777937796305_Ps-HackatonAgentic-Mexico
-
-# Expected: Purchase record created with status "COMPLETED"
 ```
+
+---
+
+### Scenario 6: Beneficiary Management Flow (Unit 3 integration)
+
+**Objective**: Verify beneficiary search, add, and transfer
+
+**Prerequisites**:
+- Scenario 1 passed
+- Unit 3 deployed (Action Groups)
+- CRM mock ready
+
+**Steps**:
+1. Send message: "Buscar beneficiario Juan"
+2. Wait for beneficiary list
+3. Send message: "Agregar beneficiario María López, cuenta 1234567890"
+4. Confirm beneficiary added
+5. Send message: "Transferir $50 a María López"
+6. Confirm transfer
 
 **Expected Results**:
-- ✅ Purchase request received by Marketplace
-- ✅ Payment event published to EventBridge
-- ✅ Core Banking receives payment event
-- ✅ Funds deducted from user account
-- ✅ Transaction recorded in transactions table
-- ✅ Purchase completed in purchases table
-- ✅ Success response sent back to AgentCore
+- ✅ Agent understands beneficiary search
+- ✅ Backend invokes CRM Lambda (Unit 3)
+- ✅ Beneficiary list returned
+- ✅ Add beneficiary works
+- ✅ Beneficiary stored in DynamoDB
+- ✅ Transfer to beneficiary works
+- ✅ Frequent beneficiary counter incremented
 
-**Cleanup**:
+**Validation**:
 ```bash
-rm test-purchase-event.json
-```
-
----
-
-### Scenario 4: End-to-End User Workflow (All Units)
-
-**Description**: Complete user journey from Frontend to Action Groups and back
-
-**Setup**:
-```bash
-# Ensure all units are deployed
-# Open frontend in browser
-open frontend/index.html
-# Or deploy to S3 and access via URL
-```
-
-**Test Steps**:
-
-1. **User Connects**
-- Open frontend in browser
-- Click "Connect" button
-- Verify WebSocket connection established
-- Verify connection status shows "Connected"
-
-2. **User Sends Text Message**
-- Type: "¿Cuál es mi saldo?"
-- Click "Send" or press Enter
-- Verify message appears in chat
-- Verify loading indicator shows
-
-3. **AgentCore Processes**
-- Verify AgentCore receives message
-- Verify intent recognized as "GET_BALANCE"
-- Verify action event published to EventBridge
-
-4. **Action Group Responds**
-- Verify Core Banking Lambda receives event
-- Verify balance retrieved from DynamoDB
-- Verify response event published
-
-5. **User Receives Response**
-- Verify response appears in chat
-- Verify response contains balance information
-- Verify loading indicator disappears
-
-**Expected Results**:
-- ✅ User connects successfully
-- ✅ Message sent and received
-- ✅ AgentCore processes message
-- ✅ Action Group executes action
-- ✅ Response received by user
-- ✅ UI updates correctly
-- ✅ Total round-trip time < 3 seconds
-
-**Verification**:
-```bash
-# Check all Lambda logs
-aws logs tail /aws/lambda/centli-app-message --follow &
-aws logs tail /aws/lambda/centli-core-banking --follow &
-
-# Monitor EventBridge events
-aws events list-rules \
-  --event-bus-name centli-event-bus \
+# Check beneficiaries table
+aws dynamodb scan \
+  --table-name centli-beneficiaries \
+  --filter-expression "user_id = :uid" \
+  --expression-attribute-values '{":uid":{"S":"integration-test-user"}}' \
   --profile 777937796305_Ps-HackatonAgentic-Mexico
 ```
 
 ---
 
-## Setup Integration Test Environment
+### Scenario 7: Error Handling and Recovery
 
-### 1. Deploy All Units
-```bash
-# Deploy Unit 1 (Infrastructure)
-sam deploy --template infrastructure/base-template.yaml \
-  --stack-name centli-infrastructure \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
+**Objective**: Verify system handles errors gracefully
 
-# Deploy Unit 2 (AgentCore)
-sam deploy --guided \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
+**Test Cases**:
 
-# Deploy Unit 3 (Action Groups) - when ready
-sam deploy --template infrastructure/action-groups-template.yaml \
-  --stack-name centli-action-groups \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
+#### 7.1: Network Disconnection
+1. Establish connection
+2. Disable network
+3. Try to send message
+4. Observe error handling
+5. Re-enable network
+6. Observe auto-reconnect
 
-# Deploy Unit 4 (Frontend) - when ready
-aws s3 sync frontend/ s3://centli-assets-777937796305/ \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
-```
+**Expected**: Error toast, auto-reconnect (5 attempts), queued messages sent
 
-### 2. Seed Test Data
-```bash
-# Seed users
-aws dynamodb put-item \
-  --table-name centli-user-profiles \
-  --item file://data/users_mx.json \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
+#### 7.2: Backend Error
+1. Send invalid message format
+2. Observe error handling
 
-# Seed transactions
-aws dynamodb batch-write-item \
-  --request-items file://data/transactions_mx.json \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
+**Expected**: Error response from backend, user-friendly error message
 
-# Seed products
-aws dynamodb batch-write-item \
-  --request-items file://data/stores_mx.json \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
-```
+#### 7.3: Large File Upload
+1. Try to upload image > 5MB
+2. Observe validation
 
-### 3. Configure Service Endpoints
-```bash
-# Get WebSocket API endpoint
-export WEBSOCKET_URL=$(aws apigatewayv2 get-apis \
-  --query 'Items[?Name==`centli-websocket-api`].ApiEndpoint' \
-  --output text \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico)
+**Expected**: Client-side validation, error message before upload
 
-echo "WebSocket URL: $WEBSOCKET_URL"
+#### 7.4: Session Timeout
+1. Leave page idle for extended period
+2. Try to send message
+3. Observe session handling
 
-# Get EventBridge bus ARN
-export EVENTBRIDGE_BUS_ARN=$(aws events describe-event-bus \
-  --name centli-event-bus \
-  --query 'Arn' \
-  --output text \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico)
-
-echo "EventBridge Bus ARN: $EVENTBRIDGE_BUS_ARN"
-```
+**Expected**: Session refresh or re-authentication prompt
 
 ---
 
-## Run Integration Tests
+## Integration Test Matrix
 
-### Automated Integration Test Suite
-```bash
-# Run integration tests (when test suite is ready)
-poetry run pytest tests/integration/ -v
+| Scenario | Unit 1 | Unit 2 | Unit 3 | Unit 4 | Status |
+|----------|--------|--------|--------|--------|--------|
+| Chat Flow | ✅ | ✅ | - | ✅ | Ready |
+| Voice Input | ✅ | ⏳ | - | ✅ | Partial |
+| Image Upload | ✅ | ⏳ | - | ✅ | Partial |
+| Transaction | ✅ | ✅ | ⏳ | ✅ | Waiting Unit 3 |
+| Product Catalog | ✅ | ✅ | ⏳ | ✅ | Waiting Unit 3 |
+| Beneficiary | ✅ | ✅ | ⏳ | ✅ | Waiting Unit 3 |
+| Error Handling | ✅ | ✅ | - | ✅ | Ready |
 
-# Or run specific scenario
-poetry run pytest tests/integration/test_websocket_integration.py -v
-poetry run pytest tests/integration/test_eventbridge_integration.py -v
-poetry run pytest tests/integration/test_cross_action_group.py -v
-poetry run pytest tests/integration/test_e2e_workflow.py -v
-```
-
-### Manual Integration Testing
-```bash
-# Use provided test scripts
-./tests/integration/manual/test-websocket.sh
-./tests/integration/manual/test-eventbridge.sh
-./tests/integration/manual/test-purchase-flow.sh
-```
+**Legend**:
+- ✅ Ready
+- ⏳ Partial/In Progress
+- - Not Required
 
 ---
 
-## Verify Service Interactions
+## End-to-End Test Flow
 
-### Check WebSocket Connections
-```bash
-# List active connections
-aws apigatewayv2 get-connections \
-  --api-id YOUR_API_ID \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
-```
+### Complete User Journey
 
-### Check EventBridge Events
-```bash
-# Describe event bus
-aws events describe-event-bus \
-  --name centli-event-bus \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
+**Scenario**: User checks balance, views products, makes purchase
 
-# List rules
-aws events list-rules \
-  --event-bus-name centli-event-bus \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
-```
+**Steps**:
+1. **Login**: User opens frontend, logs in
+2. **Greeting**: Agent greets user
+3. **Balance Check**: "¿Cuál es mi saldo?"
+4. **Product Browse**: "Muéstrame productos"
+5. **Product Selection**: Click product in catalog
+6. **Purchase**: "Quiero comprar este producto"
+7. **Confirmation**: Confirm purchase in modal
+8. **Receipt**: Agent shows purchase confirmation
+9. **Balance Update**: "¿Cuál es mi saldo ahora?"
+10. **Logout**: User logs out
 
-### Check DynamoDB Data
-```bash
-# Check sessions
-aws dynamodb scan --table-name centli-sessions \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
+**Expected Duration**: 2-3 minutes
 
-# Check transactions
-aws dynamodb scan --table-name centli-transactions \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
-
-# Check purchases
-aws dynamodb scan --table-name centli-purchases \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
-```
-
-### Check Lambda Logs
-```bash
-# Tail all Lambda logs
-aws logs tail /aws/lambda/centli-app-connect --follow &
-aws logs tail /aws/lambda/centli-app-disconnect --follow &
-aws logs tail /aws/lambda/centli-app-message --follow &
-aws logs tail /aws/lambda/centli-core-banking --follow &
-aws logs tail /aws/lambda/centli-marketplace --follow &
-aws logs tail /aws/lambda/centli-crm --follow &
-```
+**Success Criteria**:
+- ✅ All steps complete without errors
+- ✅ Data persists correctly in DynamoDB
+- ✅ UI responsive and smooth
+- ✅ Agent responses contextual and helpful
+- ✅ No console errors
+- ✅ No Lambda errors
 
 ---
 
-## Cleanup
+## Performance Testing
 
-### After Integration Tests
+### Load Test (Optional)
+
+**Objective**: Verify system handles multiple concurrent users
+
+**Tool**: Artillery, k6, or manual (multiple browser tabs)
+
+**Test**:
 ```bash
-# Clear test data from DynamoDB
-aws dynamodb delete-item \
-  --table-name centli-sessions \
-  --key '{"session_id": {"S": "session-abc"}}' \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
-
-# Stop log tailing
-# Press Ctrl+C for each tail command
-
-# Close WebSocket connections
-# Disconnect from wscat
+# Simple load test with Artillery
+artillery quick --count 10 --num 5 wss://vvg621xawg.execute-api.us-east-1.amazonaws.com/prod
 ```
+
+**Expected**:
+- WebSocket connections: < 500ms
+- Message latency: < 1 second
+- No connection drops
+- Lambda cold starts: < 3 seconds
+- Lambda warm: < 500ms
 
 ---
 
 ## Integration Test Checklist
 
-- [ ] All units deployed successfully
-- [ ] Test data seeded in DynamoDB
-- [ ] WebSocket connection working
-- [ ] EventBridge events flowing
-- [ ] AgentCore → Action Groups integration working
-- [ ] Action Groups → Action Groups integration working
-- [ ] End-to-end workflow completing successfully
-- [ ] Response times acceptable (< 3 seconds)
-- [ ] No errors in CloudWatch logs
+### Pre-Test
+- [ ] All units deployed
+- [ ] AWS resources verified
+- [ ] Frontend accessible
+- [ ] Backend WebSocket URL correct in config.js
+- [ ] Test data prepared
+
+### Execution
+- [ ] Scenario 1: Chat Flow ✅
+- [ ] Scenario 2: Voice Input (if ready)
+- [ ] Scenario 3: Image Upload (if ready)
+- [ ] Scenario 4: Transaction (if Unit 3 ready)
+- [ ] Scenario 5: Product Catalog (if Unit 3 ready)
+- [ ] Scenario 6: Beneficiary (if Unit 3 ready)
+- [ ] Scenario 7: Error Handling ✅
+
+### Post-Test
+- [ ] All scenarios passed
+- [ ] No critical errors
+- [ ] Performance acceptable
+- [ ] Data integrity verified
+- [ ] Logs reviewed
+- [ ] Issues documented
 
 ---
 
-## Troubleshooting Integration Issues
+## Test Reporting
 
-### WebSocket Connection Fails
-```bash
-# Check API Gateway deployment
-aws apigatewayv2 get-deployments \
-  --api-id YOUR_API_ID \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
+### Integration Test Report Template
 
-# Check Lambda permissions
-aws lambda get-policy \
-  --function-name centli-app-connect \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
-```
+```markdown
+# Integration Test Report - CENTLI
 
-### EventBridge Events Not Delivered
-```bash
-# Check EventBridge rules
-aws events list-targets-by-rule \
-  --rule YOUR_RULE_NAME \
-  --event-bus-name centli-event-bus \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
+**Date**: 2026-02-17  
+**Tester**: [Name]  
+**Environment**: Production (S3 + AWS)  
+**Duration**: [X] minutes
 
-# Check Lambda permissions for EventBridge
-aws lambda get-policy \
-  --function-name centli-core-banking \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
-```
+## Test Summary
+- Total Scenarios: 7
+- Passed: X
+- Failed: X
+- Skipped: X
 
-### DynamoDB Access Issues
-```bash
-# Check Lambda IAM role
-aws iam get-role \
-  --role-name centli-lambda-execution-role \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
+## Scenario Results
 
-# Check DynamoDB table status
-aws dynamodb describe-table \
-  --table-name centli-sessions \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
+### Scenario 1: Chat Flow
+- Status: ✅ Passed
+- Duration: 30 seconds
+- Notes: All messages delivered successfully
+
+### Scenario 2: Voice Input
+- Status: ⏭️ Skipped
+- Reason: Backend voice processing not implemented
+
+[... continue for all scenarios ...]
+
+## Issues Found
+1. [Issue description]
+   - Severity: High/Medium/Low
+   - Unit: [Unit number]
+   - Steps to reproduce: [...]
+
+## Performance Observations
+- WebSocket latency: [X]ms
+- Agent response time: [X]s
+- Page load time: [X]s
+
+## Recommendations
+1. [Recommendation]
+2. [Recommendation]
+
+## Conclusion
+[Overall assessment]
 ```
 
 ---
 
-## Next Steps
-
-After all integration tests pass:
-1. ✅ Proceed to **Performance Testing** (if applicable)
-2. ✅ Prepare demo scenarios
-3. ✅ Document any integration issues found
-4. ✅ Update integration contracts if needed
-
----
-
-**Integration Test Time**: ~10-15 minutes (manual), ~5 minutes (automated)  
-**Test Scenarios**: 4 scenarios (WebSocket, EventBridge, Cross-AG, E2E)  
-**Test Status**: Ready for execution when all units are deployed
+**Document Status**: Complete  
+**Last Updated**: 2026-02-17T16:35:00Z
