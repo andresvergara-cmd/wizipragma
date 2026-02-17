@@ -1,0 +1,12 @@
+{
+  "Rules": [
+    {
+      "ID": "DeleteUploadsAfter24Hours",
+      "Status": "Enabled",
+      "Prefix": "uploads/",
+      "Expiration": {
+        "Days": 1
+      }
+    }
+  ]
+}
