@@ -1,0 +1,230 @@
+.transactions {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--bg-secondary);
+  padding: 2rem;
+}
+
+.transactions-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.transactions-header {
+  background: white;
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  margin-bottom: 2rem;
+}
+
+.transactions-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.transactions-header p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+.transactions-filters {
+  background: white;
+  padding: 1.5rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  margin-bottom: 2rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.filter-button {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid var(--border);
+  background: white;
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-button:hover {
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+
+.filter-button.active {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: white;
+}
+
+.transactions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.transaction-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1.5rem;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.transaction-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.transaction-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+.transaction-icon.purchase {
+  background: rgba(173, 55, 224, 0.1);
+}
+
+.transaction-icon.transfer {
+  background: rgba(33, 150, 243, 0.1);
+}
+
+.transaction-icon.payment {
+  background: rgba(76, 175, 80, 0.1);
+}
+
+.transaction-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.transaction-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.transaction-details {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.transaction-detail {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.transaction-amount-section {
+  text-align: right;
+}
+
+.transaction-amount {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.transaction-amount.positive {
+  color: var(--success);
+}
+
+.transaction-amount.negative {
+  color: var(--error);
+}
+
+.transaction-status {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.transaction-status.completed {
+  background: rgba(76, 175, 80, 0.1);
+  color: var(--success);
+}
+
+.transaction-status.pending {
+  background: rgba(255, 152, 0, 0.1);
+  color: var(--warning);
+}
+
+.transaction-status.failed {
+  background: rgba(244, 67, 54, 0.1);
+  color: var(--error);
+}
+
+.empty-transactions {
+  background: white;
+  padding: 4rem 2rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.empty-transactions h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.empty-transactions p {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .transactions {
+    padding: 1rem;
+  }
+
+  .transactions-header h1 {
+    font-size: 2rem;
+  }
+
+  .transaction-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .transaction-icon {
+    margin: 0 auto;
+  }
+
+  .transaction-amount-section {
+    text-align: center;
+  }
+
+  .transaction-details {
+    justify-content: center;
+  }
+}
