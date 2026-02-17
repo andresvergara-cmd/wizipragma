@@ -13,10 +13,10 @@
 ### AWS Configuration
 ```bash
 # Configure AWS CLI
-aws configure --profile 777937796305_Ps-HackatonAgentic-Mexico
+aws configure --profile Ps-HackatonAgentic-Mexico-777937796305
 
 # Verify configuration
-aws sts get-caller-identity --profile 777937796305_Ps-HackatonAgentic-Mexico
+aws sts get-caller-identity --profile Ps-HackatonAgentic-Mexico-777937796305
 ```
 
 ### Required Tools
@@ -32,7 +32,7 @@ aws sts get-caller-identity --profile 777937796305_Ps-HackatonAgentic-Mexico
 ### Step 1: Validate SAM Template
 ```bash
 sam validate \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico \
+  --profile Ps-HackatonAgentic-Mexico-777937796305 \
   --region us-east-1
 ```
 
@@ -43,7 +43,7 @@ sam validate \
 ### Step 2: Build Application
 ```bash
 sam build \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
+  --profile Ps-HackatonAgentic-Mexico-777937796305
 ```
 
 **What it does**:
@@ -58,7 +58,7 @@ sam build \
 ### Step 3: Deploy to AWS
 ```bash
 sam deploy \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico \
+  --profile Ps-HackatonAgentic-Mexico-777937796305 \
   --region us-east-1 \
   --stack-name centli-hackathon \
   --capabilities CAPABILITY_NAMED_IAM \
@@ -81,7 +81,7 @@ sam deploy \
 # Check stack status
 aws cloudformation describe-stacks \
   --stack-name centli-hackathon \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico \
+  --profile Ps-HackatonAgentic-Mexico-777937796305 \
   --region us-east-1 \
   --query 'Stacks[0].StackStatus'
 ```
@@ -94,7 +94,7 @@ aws cloudformation describe-stacks \
 ```bash
 aws cloudformation describe-stacks \
   --stack-name centli-hackathon \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico \
+  --profile Ps-HackatonAgentic-Mexico-777937796305 \
   --region us-east-1 \
   --query 'Stacks[0].Outputs' \
   --output table
@@ -135,12 +135,12 @@ python scripts/seed_all.py
 # Invoke Lambda directly
 sam local invoke CoreBankingBalanceFunction \
   --event events/balance_query.json \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
+  --profile Ps-HackatonAgentic-Mexico-777937796305
 
 # Or publish to EventBridge
 aws events put-events \
   --entries file://events/balance_query.json \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico \
+  --profile Ps-HackatonAgentic-Mexico-777937796305 \
   --region us-east-1
 ```
 
@@ -152,7 +152,7 @@ aws events put-events \
 ```bash
 aws events put-events \
   --entries file://events/transfer_request.json \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico \
+  --profile Ps-HackatonAgentic-Mexico-777937796305 \
   --region us-east-1
 ```
 
@@ -164,7 +164,7 @@ aws events put-events \
 ```bash
 aws events put-events \
   --entries file://events/alias_resolution_request.json \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico \
+  --profile Ps-HackatonAgentic-Mexico-777937796305 \
   --region us-east-1
 ```
 
@@ -177,19 +177,19 @@ aws events put-events \
 # 1. Query catalog
 aws events put-events \
   --entries file://events/catalog_query.json \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico \
+  --profile Ps-HackatonAgentic-Mexico-777937796305 \
   --region us-east-1
 
 # 2. Check benefits
 aws events put-events \
   --entries file://events/benefits_query.json \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico \
+  --profile Ps-HackatonAgentic-Mexico-777937796305 \
   --region us-east-1
 
 # 3. Purchase product
 aws events put-events \
   --entries file://events/purchase_request.json \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico \
+  --profile Ps-HackatonAgentic-Mexico-777937796305 \
   --region us-east-1
 ```
 
@@ -207,7 +207,7 @@ sam logs --stack-name centli-hackathon --tail
 # View specific Lambda
 aws logs tail /aws/lambda/centli-core-banking-transfer \
   --follow \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico \
+  --profile Ps-HackatonAgentic-Mexico-777937796305 \
   --region us-east-1
 ```
 
@@ -219,7 +219,7 @@ aws logs start-query \
   --start-time $(date -u -d '10 minutes ago' +%s) \
   --end-time $(date -u +%s) \
   --query-string 'fields @timestamp, level, message | filter level = "ERROR" | sort @timestamp desc | limit 20' \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico \
+  --profile Ps-HackatonAgentic-Mexico-777937796305 \
   --region us-east-1
 ```
 
@@ -232,7 +232,7 @@ aws logs start-query \
 ```bash
 aws cloudformation describe-stack-events \
   --stack-name centli-hackathon \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico \
+  --profile Ps-HackatonAgentic-Mexico-777937796305 \
   --region us-east-1 \
   --max-items 10
 ```
@@ -242,7 +242,7 @@ aws cloudformation describe-stack-events \
 ```bash
 aws logs tail /aws/lambda/FUNCTION_NAME \
   --follow \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico \
+  --profile Ps-HackatonAgentic-Mexico-777937796305 \
   --region us-east-1
 ```
 
@@ -251,7 +251,7 @@ aws logs tail /aws/lambda/FUNCTION_NAME \
 ```bash
 aws dynamodb describe-table \
   --table-name centli-accounts \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico \
+  --profile Ps-HackatonAgentic-Mexico-777937796305 \
   --region us-east-1
 ```
 
@@ -260,7 +260,7 @@ aws dynamodb describe-table \
 ```bash
 aws events list-rules \
   --event-bus-name centli-event-bus \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico \
+  --profile Ps-HackatonAgentic-Mexico-777937796305 \
   --region us-east-1
 ```
 
@@ -272,12 +272,12 @@ aws events list-rules \
 ```bash
 # Empty S3 bucket first (if any)
 aws s3 rm s3://centli-assets-777937796305 --recursive \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico
+  --profile Ps-HackatonAgentic-Mexico-777937796305
 
 # Delete stack
 sam delete \
   --stack-name centli-hackathon \
-  --profile 777937796305_Ps-HackatonAgentic-Mexico \
+  --profile Ps-HackatonAgentic-Mexico-777937796305 \
   --region us-east-1 \
   --no-prompts
 ```
@@ -294,7 +294,7 @@ sam delete \
 sam build
 
 # Deploy
-sam deploy --profile 777937796305_Ps-HackatonAgentic-Mexico
+sam deploy --profile Ps-HackatonAgentic-Mexico-777937796305
 
 # Logs
 sam logs --stack-name centli-hackathon --tail
