@@ -1560,3 +1560,45 @@ Frontend (Unit 4) → WebSocket → Lambda (Unit 2) → Bedrock AgentCore → Cl
 
 ---
 
+
+## Chat Widget Fix - Input and Messaging Issues
+**Timestamp**: 2026-02-17T19:15:00Z
+**User Input**: "Revisa porque no se puede escribir, ni enviar mensajes ni audios en la interfaz conversacional"
+**AI Action**: Diagnosed and fixed chat widget issues, rebuilt and redeployed frontend
+
+**Problems Identified**:
+1. ❌ Closure issue in `stream_end` handler - `currentStreamMessage` not updating correctly
+2. ❌ Missing `.env.production` file with production environment variables
+
+**Solutions Applied**:
+1. ✅ Fixed closure in `WebSocketContext.jsx`:
+   - Changed `stream_end` handler to use callback pattern
+   - Ensures final stream message is captured correctly
+   - Prevents message loss during streaming
+
+2. ✅ Created `.env.production`:
+   - Added VITE_WEBSOCKET_URL with correct endpoint
+   - Added VITE_AWS_REGION=us-east-1
+   - Added VITE_ENV=production
+
+3. ✅ Rebuilt and redeployed:
+   - Built frontend with corrections
+   - Deployed to S3: centli-frontend-prod
+   - Updated assets: index-lnYBfSXN.js (206KB)
+
+**Testing Tool Created**:
+- Created `test-websocket.html` for standalone WebSocket testing
+- Deployed to: http://centli-frontend-prod.s3-website-us-east-1.amazonaws.com/test.html
+- Features: Connection test, message sending, event logging
+
+**Files Modified**:
+- frontend/src/context/WebSocketContext.jsx (fixed closure)
+- frontend/.env.production (created)
+- test-websocket.html (created)
+- CHAT-FIX-REPORT.md (created)
+
+**Deployment Status**: ✅ Frontend redeployed with fixes
+**Next Steps**: Test chat functionality in production
+
+---
+

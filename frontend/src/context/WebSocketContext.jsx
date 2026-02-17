@@ -60,20 +60,23 @@ export const WebSocketProvider = ({ children }) => {
           }
           else if (data.msg_type === 'stream_end') {
             console.log('🏁 Stream ended')
+            
+            // Add final message using the accumulated stream message
+            setCurrentStreamMessage(prevStream => {
+              const finalMessage = data.message || prevStream
+              if (finalMessage) {
+                setMessages(prev => [...prev, {
+                  id: streamMessageIdRef.current || `msg-${Date.now()}`,
+                  type: 'bot',
+                  content: finalMessage,
+                  timestamp: new Date().toISOString(),
+                  data: data.data
+                }])
+              }
+              return '' // Clear stream message
+            })
+            
             setIsStreaming(false)
-            
-            // Add final message
-            if (currentStreamMessage || data.message) {
-              setMessages(prev => [...prev, {
-                id: streamMessageIdRef.current || `msg-${Date.now()}`,
-                type: 'bot',
-                content: data.message || currentStreamMessage,
-                timestamp: new Date().toISOString(),
-                data: data.data
-              }])
-            }
-            
-            setCurrentStreamMessage('')
             streamMessageIdRef.current = null
           }
           else if (data.msg_type === 'agent_response') {
