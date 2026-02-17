@@ -3,11 +3,16 @@ Unit tests for WebSocket Connect Handler (Unit 2)
 Tests session creation, authentication, and error handling.
 """
 import json
+import time
 import pytest
 from unittest.mock import Mock, patch, MagicMock
 from datetime import datetime, timedelta
 import sys
 import os
+
+# Set environment variables BEFORE importing the module
+os.environ['SESSIONS_TABLE'] = 'test-sessions-table'
+os.environ['LOG_LEVEL'] = 'INFO'
 
 # Add src_aws to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src_aws/app_connect'))

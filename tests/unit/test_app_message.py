@@ -9,6 +9,16 @@ from datetime import datetime
 import sys
 import os
 
+# Set environment variables BEFORE importing the module
+os.environ['SESSIONS_TABLE'] = 'test-sessions-table'
+os.environ['EVENT_BUS_NAME'] = 'test-event-bus'
+os.environ['WEBSOCKET_API_ENDPOINT'] = 'https://test.execute-api.us-east-1.amazonaws.com/prod'
+os.environ['BEDROCK_AGENT_ID'] = 'test-agent-id'
+os.environ['BEDROCK_AGENT_ALIAS_ID'] = 'test-alias-id'
+os.environ['AGENTCORE_ID'] = 'test-agentcore-id'
+os.environ['ASSETS_BUCKET'] = 'test-assets-bucket'
+os.environ['LOG_LEVEL'] = 'INFO'
+
 # Add src_aws to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src_aws/app_message'))
 
