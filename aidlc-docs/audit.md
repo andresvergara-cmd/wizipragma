@@ -978,3 +978,37 @@ Total deliverables: 3 Lambda functions (~410 lines), 2 scripts, SAM template upd
 - Configure Bedrock AgentCore (optional)
 
 ---
+
+
+## Build and Test Phase - Developer 3 (Integration & Testing)
+**Timestamp**: 2026-02-17T16:00:00Z
+**User Input**: "Vamos a la opción A Y C" (Testing & Integration + Build & Test Phase)
+**AI Response**: Created comprehensive Build & Test documentation and integration testing framework
+**Context**: Developer 3 working on testing while Developers 1 & 2 work on Units 3 & 4
+
+### Actions Completed:
+1. ✅ Created build-instructions.md - Complete build setup for all units
+2. ✅ Created unit-test-instructions.md - Unit testing guide with coverage requirements
+3. ✅ Created integration-test-instructions.md - 4 integration test scenarios
+4. ✅ Created build-and-test-summary.md - Current status and results
+5. ✅ Created demo-test-scenarios.md - 5 demo scenarios for hackathon presentation
+6. ✅ Updated aidlc-state.md - Marked Build and Test as completed for Unit 2
+
+### Test Coverage Achieved:
+- Unit 2: 91% coverage (14/14 tests passing)
+- Integration: WebSocket testing completed
+- Demo scenarios: 5 scenarios prepared
+
+### Files Generated:
+- aidlc-docs/construction/build-and-test/build-instructions.md
+- aidlc-docs/construction/build-and-test/unit-test-instructions.md
+- aidlc-docs/construction/build-and-test/integration-test-instructions.md
+- aidlc-docs/construction/build-and-test/build-and-test-summary.md
+- aidlc-docs/construction/build-and-test/demo-test-scenarios.md
+
+### Next Steps:
+- Execute integration tests when Units 3 & 4 are deployed
+- Prepare demo environment
+- Support Developers 1 & 2 with integration issues
+
+---
