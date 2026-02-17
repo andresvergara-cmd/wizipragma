@@ -81,10 +81,18 @@
   - [x] Deployment (WebSocket API, DynamoDB sessions table)
   - [x] Bedrock AgentCore Configuration (Claude 3.5 Sonnet v2)
   - [x] Testing (WebSocket connection and agent invocation successful)
-- [ ] Unit 3: Action Groups (IN PROGRESS - Functional Design Planning)
-  - [ ] Functional Design - 20 questions pending answers
-  - [ ] NFR Requirements
-  - [ ] NFR Design
-  - [ ] Infrastructure Design
-  - [ ] Code Generation
+- [ ] Unit 3: Action Groups (IN PROGRESS - Code Generation 88% Complete)
+  - [x] Functional Design - Complete (business logic, entities, rules)
+  - [x] NFR Requirements - Complete (25 questions answered, artifacts generated)
+  - [x] NFR Design - Complete (patterns and logical components)
+  - [x] Infrastructure Design - Complete (infrastructure and deployment architecture)
+  - [ ] Code Generation - 88% Complete (44/50 files)
+    - [x] Shared utilities (6/6 files) ✅
+    - [x] Core Banking (9/9 files) ✅
+    - [x] Marketplace (9/9 files) ✅
+    - [x] CRM (9/9 files) ✅
+    - [ ] SAM template updates (CRITICAL - pending)
+    - [x] Seed scripts (4/4 files) ✅
+    - [x] Test events (9/9 files) ✅
+    - [x] Documentation (4/5 files) ✅
 - [ ] Unit 4: Frontend Multimodal UI

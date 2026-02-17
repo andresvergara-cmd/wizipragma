@@ -1,0 +1,23 @@
+{
+  "version": "0",
+  "id": "test-event-004",
+  "detail-type": "CATALOG_QUERY",
+  "source": "centli.agentcore",
+  "account": "777937796305",
+  "time": "2026-02-17T10:00:00Z",
+  "region": "us-east-1",
+  "resources": [],
+  "detail": {
+    "version": "1.0",
+    "event_type": "CATALOG_QUERY",
+    "correlation_id": "test-corr-004",
+    "timestamp": "2026-02-17T10:00:00Z",
+    "source": "agentcore",
+    "user_id": "user-demo-001",
+    "data": {
+      "user_id": "user-demo-001",
+      "category": "electronics",
+      "limit": 20
+    }
+  }
+}

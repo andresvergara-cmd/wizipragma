@@ -978,3 +978,67 @@ Total deliverables: 3 Lambda functions (~410 lines), 2 scripts, SAM template upd
 - Configure Bedrock AgentCore (optional)
 
 ---
+
+## SAM Template Updated with Unit 3 Resources
+**Timestamp**: 2026-02-17T14:45:00Z
+**User Input**: "actualiza el template.yaml"
+**AI Action**: Updated template.yaml with all Unit 3 (Action Groups) resources
+**Context**: Code Generation stage - Infrastructure as Code
+
+**Resources Added**:
+
+**DynamoDB Tables (6)**:
+1. CentliAccountsTable (centli-accounts) - Core Banking accounts with user_id + account_id composite key
+2. CentliTransactionsTable (centli-transactions) - Transaction history with GSI on user_id
+3. CentliProductsTable (centli-products) - Product catalog with GSI on retailer_id
+4. CentliPurchasesTable (centli-purchases) - Purchase records
+5. CentliRetailersTable (centli-retailers) - Retailer information
+6. CentliBeneficiariesTable (centli-beneficiaries) - Beneficiaries with GSI on alias_lower
+
+**Lambda Functions (9)**:
+
+Core Banking:
+1. CoreBankingBalanceFunction (centli-core-banking-balance) - Balance query
+2. CoreBankingTransferFunction (centli-core-banking-transfer) - Money transfer with optimistic locking
+3. CoreBankingTransactionsFunction (centli-core-banking-transactions) - Transaction history
+
+Marketplace:
+4. MarketplaceCatalogFunction (centli-marketplace-catalog) - Product catalog query
+5. MarketplaceBenefitsFunction (centli-marketplace-benefits) - Benefits calculation
+6. MarketplacePurchaseFunction (centli-marketplace-purchase) - Purchase with saga pattern
+
+CRM:
+7. CRMResolveAliasFunction (centli-crm-resolve-alias) - Alias resolution with fuzzy matching
+8. CRMGetBeneficiariesFunction (centli-crm-get-beneficiaries) - List beneficiaries
+9. CRMAddBeneficiaryFunction (centli-crm-add-beneficiary) - Add new beneficiary
+
+**EventBridge Rules (9)**: One rule per Lambda function for event-driven triggers
+
+**Outputs (15)**: Table names and Lambda ARNs for all Unit 3 resources
+
+**Configuration**:
+- Runtime: Python 3.11
+- Billing Mode: PAY_PER_REQUEST (on-demand)
+- SSE: Enabled on all tables
+- IAM: Uses shared CentliLambdaExecutionRole
+- Event Bus: centli-event-bus (from Unit 1)
+- Tags: Project=CENTLI, Unit=ActionGroups, ActionGroup={CoreBanking|Marketplace|CRM}
+
+**Total AWS Resources in template.yaml**: 35 (Unit 1: 6, Unit 2: 14, Unit 3: 15)
+
+**Validation**: YAML syntax validated (35 AWS resources detected)
+
+**Files Updated**:
+- template.yaml (added ~500 lines for Unit 3)
+- aidlc-docs/construction/action-groups/code/code-generation-progress.md (updated to 90% complete)
+- aidlc-docs/construction/plans/action-groups-code-generation-plan.md (marked all checkboxes complete)
+
+**Status**: ✅ SAM template ready for deployment
+
+**Next Steps**:
+1. Deploy with `sam build && sam deploy`
+2. Seed data with scripts/seed_all.py
+3. Test with EventBridge test events
+4. Proceed to Build and Test stage
+
+---

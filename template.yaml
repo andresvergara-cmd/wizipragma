@@ -402,8 +402,441 @@ Resources:
 
   # ============================================================================
   # UNIT 3: ACTION GROUPS
-  # (To be added in Unit 3 code generation)
   # ============================================================================
+  
+  # ----------------------------------------------------------------------------
+  # DynamoDB Tables
+  # ----------------------------------------------------------------------------
+  
+  # Core Banking - Accounts Table
+  CentliAccountsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: centli-accounts
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: user_id
+          AttributeType: S
+        - AttributeName: account_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: user_id
+          KeyType: HASH
+        - AttributeName: account_id
+          KeyType: RANGE
+      SSESpecification:
+        SSEEnabled: true
+      Tags:
+        - Key: Project
+          Value: CENTLI
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Unit
+          Value: ActionGroups
+        - Key: ActionGroup
+          Value: CoreBanking
+  
+  # Core Banking - Transactions Table
+  CentliTransactionsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: centli-transactions
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: account_id
+          AttributeType: S
+        - AttributeName: timestamp_txn_id
+          AttributeType: S
+        - AttributeName: user_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: account_id
+          KeyType: HASH
+        - AttributeName: timestamp_txn_id
+          KeyType: RANGE
+      GlobalSecondaryIndexes:
+        - IndexName: user-index
+          KeySchema:
+            - AttributeName: user_id
+              KeyType: HASH
+            - AttributeName: timestamp_txn_id
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+      SSESpecification:
+        SSEEnabled: true
+      Tags:
+        - Key: Project
+          Value: CENTLI
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Unit
+          Value: ActionGroups
+        - Key: ActionGroup
+          Value: CoreBanking
+  
+  # Marketplace - Products Table
+  CentliProductsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: centli-products
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: product_id
+          AttributeType: S
+        - AttributeName: retailer_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: product_id
+          KeyType: HASH
+        - AttributeName: retailer_id
+          KeyType: RANGE
+      GlobalSecondaryIndexes:
+        - IndexName: retailer-index
+          KeySchema:
+            - AttributeName: retailer_id
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+      SSESpecification:
+        SSEEnabled: true
+      Tags:
+        - Key: Project
+          Value: CENTLI
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Unit
+          Value: ActionGroups
+        - Key: ActionGroup
+          Value: Marketplace
+  
+  # Marketplace - Purchases Table
+  CentliPurchasesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: centli-purchases
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: user_id
+          AttributeType: S
+        - AttributeName: timestamp_purchase_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: user_id
+          KeyType: HASH
+        - AttributeName: timestamp_purchase_id
+          KeyType: RANGE
+      SSESpecification:
+        SSEEnabled: true
+      Tags:
+        - Key: Project
+          Value: CENTLI
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Unit
+          Value: ActionGroups
+        - Key: ActionGroup
+          Value: Marketplace
+  
+  # Marketplace - Retailers Table
+  CentliRetailersTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: centli-retailers
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: retailer_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: retailer_id
+          KeyType: HASH
+      SSESpecification:
+        SSEEnabled: true
+      Tags:
+        - Key: Project
+          Value: CENTLI
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Unit
+          Value: ActionGroups
+        - Key: ActionGroup
+          Value: Marketplace
+  
+  # CRM - Beneficiaries Table
+  CentliBeneficiariesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: centli-beneficiaries
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: user_id
+          AttributeType: S
+        - AttributeName: beneficiary_id
+          AttributeType: S
+        - AttributeName: alias_lower
+          AttributeType: S
+      KeySchema:
+        - AttributeName: user_id
+          KeyType: HASH
+        - AttributeName: beneficiary_id
+          KeyType: RANGE
+      GlobalSecondaryIndexes:
+        - IndexName: alias-index
+          KeySchema:
+            - AttributeName: alias_lower
+              KeyType: HASH
+            - AttributeName: user_id
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+      SSESpecification:
+        SSEEnabled: true
+      Tags:
+        - Key: Project
+          Value: CENTLI
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Unit
+          Value: ActionGroups
+        - Key: ActionGroup
+          Value: CRM
+  
+  # ----------------------------------------------------------------------------
+  # Lambda Functions - Core Banking
+  # ----------------------------------------------------------------------------
+  
+  # Core Banking - Balance Query
+  CoreBankingBalanceFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: centli-core-banking-balance
+      CodeUri: src_aws/core_banking_balance/
+      Handler: balance.lambda_handler
+      Role: !GetAtt CentliLambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          ACCOUNTS_TABLE: !Ref CentliAccountsTable
+      Tags:
+        Unit: ActionGroups
+        ActionGroup: CoreBanking
+      Events:
+        BalanceQuery:
+          Type: EventBridgeRule
+          Properties:
+            EventBusName: !Ref CentliEventBus
+            Pattern:
+              detail-type:
+                - BALANCE_QUERY
+  
+  # Core Banking - Transfer
+  CoreBankingTransferFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: centli-core-banking-transfer
+      CodeUri: src_aws/core_banking_transfer/
+      Handler: transfer.lambda_handler
+      Role: !GetAtt CentliLambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          ACCOUNTS_TABLE: !Ref CentliAccountsTable
+          TRANSACTIONS_TABLE: !Ref CentliTransactionsTable
+      Tags:
+        Unit: ActionGroups
+        ActionGroup: CoreBanking
+      Events:
+        TransferRequest:
+          Type: EventBridgeRule
+          Properties:
+            EventBusName: !Ref CentliEventBus
+            Pattern:
+              detail-type:
+                - TRANSFER_REQUEST
+                - PAYMENT_REQUEST
+  
+  # Core Banking - Transactions Query
+  CoreBankingTransactionsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: centli-core-banking-transactions
+      CodeUri: src_aws/core_banking_transactions/
+      Handler: transactions.lambda_handler
+      Role: !GetAtt CentliLambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          TRANSACTIONS_TABLE: !Ref CentliTransactionsTable
+      Tags:
+        Unit: ActionGroups
+        ActionGroup: CoreBanking
+      Events:
+        TransactionsQuery:
+          Type: EventBridgeRule
+          Properties:
+            EventBusName: !Ref CentliEventBus
+            Pattern:
+              detail-type:
+                - TRANSACTIONS_QUERY
+  
+  # ----------------------------------------------------------------------------
+  # Lambda Functions - Marketplace
+  # ----------------------------------------------------------------------------
+  
+  # Marketplace - Catalog Query
+  MarketplaceCatalogFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: centli-marketplace-catalog
+      CodeUri: src_aws/marketplace_catalog/
+      Handler: catalog.lambda_handler
+      Role: !GetAtt CentliLambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          PRODUCTS_TABLE: !Ref CentliProductsTable
+          RETAILERS_TABLE: !Ref CentliRetailersTable
+      Tags:
+        Unit: ActionGroups
+        ActionGroup: Marketplace
+      Events:
+        CatalogQuery:
+          Type: EventBridgeRule
+          Properties:
+            EventBusName: !Ref CentliEventBus
+            Pattern:
+              detail-type:
+                - CATALOG_QUERY
+  
+  # Marketplace - Benefits Query
+  MarketplaceBenefitsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: centli-marketplace-benefits
+      CodeUri: src_aws/marketplace_benefits/
+      Handler: benefits.lambda_handler
+      Role: !GetAtt CentliLambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          PRODUCTS_TABLE: !Ref CentliProductsTable
+      Tags:
+        Unit: ActionGroups
+        ActionGroup: Marketplace
+      Events:
+        BenefitsQuery:
+          Type: EventBridgeRule
+          Properties:
+            EventBusName: !Ref CentliEventBus
+            Pattern:
+              detail-type:
+                - BENEFITS_QUERY
+  
+  # Marketplace - Purchase
+  MarketplacePurchaseFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: centli-marketplace-purchase
+      CodeUri: src_aws/marketplace_purchase/
+      Handler: purchase.lambda_handler
+      Role: !GetAtt CentliLambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          PRODUCTS_TABLE: !Ref CentliProductsTable
+          PURCHASES_TABLE: !Ref CentliPurchasesTable
+      Tags:
+        Unit: ActionGroups
+        ActionGroup: Marketplace
+      Events:
+        PurchaseRequest:
+          Type: EventBridgeRule
+          Properties:
+            EventBusName: !Ref CentliEventBus
+            Pattern:
+              detail-type:
+                - PURCHASE_REQUEST
+        PaymentCompleted:
+          Type: EventBridgeRule
+          Properties:
+            EventBusName: !Ref CentliEventBus
+            Pattern:
+              detail-type:
+                - PAYMENT_COMPLETED
+        PaymentFailed:
+          Type: EventBridgeRule
+          Properties:
+            EventBusName: !Ref CentliEventBus
+            Pattern:
+              detail-type:
+                - PAYMENT_FAILED
+  
+  # ----------------------------------------------------------------------------
+  # Lambda Functions - CRM
+  # ----------------------------------------------------------------------------
+  
+  # CRM - Resolve Alias
+  CRMResolveAliasFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: centli-crm-resolve-alias
+      CodeUri: src_aws/crm_resolve_alias/
+      Handler: resolve_alias.lambda_handler
+      Role: !GetAtt CentliLambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          BENEFICIARIES_TABLE: !Ref CentliBeneficiariesTable
+      Tags:
+        Unit: ActionGroups
+        ActionGroup: CRM
+      Events:
+        AliasResolution:
+          Type: EventBridgeRule
+          Properties:
+            EventBusName: !Ref CentliEventBus
+            Pattern:
+              detail-type:
+                - ALIAS_RESOLUTION_REQUEST
+  
+  # CRM - Get Beneficiaries
+  CRMGetBeneficiariesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: centli-crm-get-beneficiaries
+      CodeUri: src_aws/crm_get_beneficiaries/
+      Handler: get_beneficiaries.lambda_handler
+      Role: !GetAtt CentliLambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          BENEFICIARIES_TABLE: !Ref CentliBeneficiariesTable
+      Tags:
+        Unit: ActionGroups
+        ActionGroup: CRM
+      Events:
+        BeneficiariesQuery:
+          Type: EventBridgeRule
+          Properties:
+            EventBusName: !Ref CentliEventBus
+            Pattern:
+              detail-type:
+                - BENEFICIARIES_QUERY
+  
+  # CRM - Add Beneficiary
+  CRMAddBeneficiaryFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: centli-crm-add-beneficiary
+      CodeUri: src_aws/crm_add_beneficiary/
+      Handler: add_beneficiary.lambda_handler
+      Role: !GetAtt CentliLambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          BENEFICIARIES_TABLE: !Ref CentliBeneficiariesTable
+      Tags:
+        Unit: ActionGroups
+        ActionGroup: CRM
+      Events:
+        AddBeneficiary:
+          Type: EventBridgeRule
+          Properties:
+            EventBusName: !Ref CentliEventBus
+            Pattern:
+              detail-type:
+                - ADD_BENEFICIARY_REQUEST
 
   # ============================================================================
   # UNIT 4: FRONTEND
@@ -502,3 +935,99 @@ Outputs:
     Value: !GetAtt MessageFunction.Arn
     Export:
       Name: !Sub '${AWS::StackName}-MessageFunctionArn'
+  
+  # Unit 3 Outputs - Action Groups
+  
+  # DynamoDB Tables
+  AccountsTableName:
+    Description: Core Banking Accounts Table Name
+    Value: !Ref CentliAccountsTable
+    Export:
+      Name: !Sub '${AWS::StackName}-AccountsTableName'
+  
+  TransactionsTableName:
+    Description: Core Banking Transactions Table Name
+    Value: !Ref CentliTransactionsTable
+    Export:
+      Name: !Sub '${AWS::StackName}-TransactionsTableName'
+  
+  ProductsTableName:
+    Description: Marketplace Products Table Name
+    Value: !Ref CentliProductsTable
+    Export:
+      Name: !Sub '${AWS::StackName}-ProductsTableName'
+  
+  PurchasesTableName:
+    Description: Marketplace Purchases Table Name
+    Value: !Ref CentliPurchasesTable
+    Export:
+      Name: !Sub '${AWS::StackName}-PurchasesTableName'
+  
+  RetailersTableName:
+    Description: Marketplace Retailers Table Name
+    Value: !Ref CentliRetailersTable
+    Export:
+      Name: !Sub '${AWS::StackName}-RetailersTableName'
+  
+  BeneficiariesTableName:
+    Description: CRM Beneficiaries Table Name
+    Value: !Ref CentliBeneficiariesTable
+    Export:
+      Name: !Sub '${AWS::StackName}-BeneficiariesTableName'
+  
+  # Lambda Functions - Core Banking
+  CoreBankingBalanceFunctionArn:
+    Description: Core Banking Balance Lambda Function ARN
+    Value: !GetAtt CoreBankingBalanceFunction.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-CoreBankingBalanceFunctionArn'
+  
+  CoreBankingTransferFunctionArn:
+    Description: Core Banking Transfer Lambda Function ARN
+    Value: !GetAtt CoreBankingTransferFunction.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-CoreBankingTransferFunctionArn'
+  
+  CoreBankingTransactionsFunctionArn:
+    Description: Core Banking Transactions Lambda Function ARN
+    Value: !GetAtt CoreBankingTransactionsFunction.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-CoreBankingTransactionsFunctionArn'
+  
+  # Lambda Functions - Marketplace
+  MarketplaceCatalogFunctionArn:
+    Description: Marketplace Catalog Lambda Function ARN
+    Value: !GetAtt MarketplaceCatalogFunction.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-MarketplaceCatalogFunctionArn'
+  
+  MarketplaceBenefitsFunctionArn:
+    Description: Marketplace Benefits Lambda Function ARN
+    Value: !GetAtt MarketplaceBenefitsFunction.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-MarketplaceBenefitsFunctionArn'
+  
+  MarketplacePurchaseFunctionArn:
+    Description: Marketplace Purchase Lambda Function ARN
+    Value: !GetAtt MarketplacePurchaseFunction.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-MarketplacePurchaseFunctionArn'
+  
+  # Lambda Functions - CRM
+  CRMResolveAliasFunctionArn:
+    Description: CRM Resolve Alias Lambda Function ARN
+    Value: !GetAtt CRMResolveAliasFunction.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-CRMResolveAliasFunctionArn'
+  
+  CRMGetBeneficiariesFunctionArn:
+    Description: CRM Get Beneficiaries Lambda Function ARN
+    Value: !GetAtt CRMGetBeneficiariesFunction.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-CRMGetBeneficiariesFunctionArn'
+  
+  CRMAddBeneficiaryFunctionArn:
+    Description: CRM Add Beneficiary Lambda Function ARN
+    Value: !GetAtt CRMAddBeneficiaryFunction.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-CRMAddBeneficiaryFunctionArn'

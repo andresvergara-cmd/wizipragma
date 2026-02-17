@@ -1,0 +1,22 @@
+{
+  "version": "0",
+  "id": "test-event-001",
+  "detail-type": "BALANCE_QUERY",
+  "source": "centli.agentcore",
+  "account": "777937796305",
+  "time": "2026-02-17T10:00:00Z",
+  "region": "us-east-1",
+  "resources": [],
+  "detail": {
+    "version": "1.0",
+    "event_type": "BALANCE_QUERY",
+    "correlation_id": "test-corr-001",
+    "timestamp": "2026-02-17T10:00:00Z",
+    "source": "agentcore",
+    "user_id": "user-demo-001",
+    "data": {
+      "user_id": "user-demo-001",
+      "account_id": "acc-checking-001"
+    }
+  }
+}

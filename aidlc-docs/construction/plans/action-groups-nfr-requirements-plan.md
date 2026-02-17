@@ -74,7 +74,7 @@ B) Standard: < 1 second (balanced, achievable)
 C) Relaxed: < 2 seconds (safe for demo)  
 D) Custom: Specify your target
 
-[Answer]:
+[Answer]: B - Standard: < 1 second. Para un demo de hackathon, 1 segundo es un balance perfecto entre performance percibida y complejidad de implementación.
 
 ---
 
@@ -87,7 +87,7 @@ B) Standard: < 2 seconds (balanced, realistic)
 C) Relaxed: < 3 seconds (safe for demo)  
 D) Custom: Specify your target
 
-[Answer]:
+[Answer]: B - Standard: < 2 seconds. El flujo de compra involucra múltiples Action Groups (Marketplace → Core Banking), 2 segundos es realista.
 
 ---
 
@@ -100,7 +100,7 @@ B) Standard: < 1 second (balanced)
 C) Relaxed: < 2 seconds (safe for complex matching)  
 D) Custom: Specify your target
 
-[Answer]:
+[Answer]: B - Standard: < 1 second. La resolución de alias es crítica para UX, pero con matching simple (lowercase, fuzzy) 1 segundo es suficiente.
 
 ---
 
@@ -113,7 +113,7 @@ B) Standard: < 100ms (balanced)
 C) Relaxed: < 200ms (safe for demo)  
 D) Custom: Specify your target
 
-[Answer]:
+[Answer]: B - Standard: < 100ms. Con índices GSI bien diseñados y queries simples, 100ms es alcanzable sin sobre-optimización.
 
 ---
 
@@ -128,7 +128,7 @@ B) Medium: 10-50 concurrent operations (multiple demo users)
 C) Large: 50-100 concurrent operations (stress testing)  
 D) Custom: Specify your target
 
-[Answer]:
+[Answer]: A - Small: 1-10 concurrent operations. Es un demo de hackathon con 1-2 usuarios simultáneos máximo. Optimizar para más sería over-engineering.
 
 ---
 
@@ -141,7 +141,7 @@ B) Reserved concurrency per Lambda (guarantee capacity)
 C) Provisioned concurrency (pre-warmed, lowest latency)  
 D) Custom: Specify your strategy
 
-[Answer]:
+[Answer]: A - No reserved concurrency. Para un demo con bajo volumen, el default de AWS es suficiente. Evitamos complejidad y costos innecesarios.
 
 ---
 
@@ -153,7 +153,7 @@ A) On-demand (pay per request, auto-scaling, recommended for demo)
 B) Provisioned (fixed capacity, lower cost for predictable load)  
 C) Custom: Specify your preference
 
-[Answer]:
+[Answer]: A - On-demand. Perfecto para hackathon: cero configuración de capacity, auto-scaling automático, y costos mínimos con bajo volumen.
 
 ---
 
@@ -166,7 +166,7 @@ B) Medium: 10-50 events/second (multiple users)
 C) High: 50-100 events/second (stress testing)  
 D) Custom: Specify your target
 
-[Answer]:
+[Answer]: A - Low: < 10 events/second. Demo con 1-2 usuarios, cada operación genera 1-3 eventos. 10 eventos/seg es más que suficiente.
 
 ---
 
@@ -181,7 +181,7 @@ B) Standard: 95% (balanced, some failures acceptable)
 C) Demo: 90% (focus on happy path, minimal error handling)  
 D) Custom: Specify your target
 
-[Answer]:
+[Answer]: C - Demo: 90%. Enfoque en happy path para el demo. Error handling básico es suficiente, priorizamos velocidad de desarrollo.
 
 ---
 
@@ -194,7 +194,7 @@ B) Retry: Attempt retry with exponential backoff
 C) Cache: Use in-memory cache as fallback  
 D) Queue: Queue for later processing
 
-[Answer]:
+[Answer]: B - Retry. Retry simple (3 intentos con backoff) maneja transient failures sin complejidad de cache o queues. Balance perfecto para demo.
 
 ---
 
@@ -209,7 +209,7 @@ B) Eventual consistency (faster, may read stale data)
 C) Hybrid: Strong for critical reads, eventual for others  
 D) Custom: Specify your preference
 
-[Answer]:
+[Answer]: C - Hybrid. Strong consistency para balance/transactions (crítico), eventual para catálogo/beneficiarios (no crítico). Optimiza latency sin sacrificar correctness.
 
 ---
 
@@ -222,7 +222,7 @@ B) Simple retries: Retry up to 3 times with fixed delay
 C) Exponential backoff: Retry with increasing delays  
 D) Custom: Specify your strategy
 
-[Answer]:
+[Answer]: B - Simple retries. Con bajo volumen de concurrencia (1-10 ops), conflictos serán raros. 3 retries con delay fijo es suficiente y simple.
 
 ---
 
@@ -235,7 +235,7 @@ B) Eventual: Use event-driven eventual consistency (recommended)
 C) Compensating: Use saga pattern with compensation logic  
 D) Custom: Specify your approach
 
-[Answer]:
+[Answer]: B - Eventual consistency. EventBridge ya provee el modelo event-driven. Para demo, eventual consistency es suficiente y evita complejidad de sagas/transactions.
 
 ---
 
@@ -250,7 +250,7 @@ B) Event signature: Sign events with HMAC (balanced)
 C) IAM roles: Use IAM role-based access control (most secure)  
 D) Custom: Specify your approach
 
-[Answer]:
+[Answer]: C - IAM roles. AWS ya provee IAM integration con EventBridge. Es seguro, sin overhead de implementación, y es best practice de AWS.
 
 ---
 
@@ -263,7 +263,7 @@ B) Selective encryption: Encrypt sensitive fields only (balance, account numbers
 C) Default encryption: Use DynamoDB default encryption  
 D) Custom: Specify your requirements
 
-[Answer]:
+[Answer]: C - Default encryption. DynamoDB encryption at rest está habilitado por default. Para demo, es suficiente. TLS in-transit ya está incluido en AWS SDK.
 
 ---
 
@@ -276,7 +276,7 @@ B) Standard: Mask sensitive fields (account numbers, balances)
 C) Minimal: Log everything for debugging (demo only)  
 D) Custom: Specify your approach
 
-[Answer]:
+[Answer]: B - Standard. Maskear account numbers y balances en logs. Nombres/alias pueden quedar para debugging. Balance entre seguridad y debuggability.
 
 ---
 
@@ -291,7 +291,7 @@ B) Python 3.10 (newer features, good support)
 C) Python 3.11 (latest, best performance, recommended)  
 D) Python 3.12 (cutting edge, may have compatibility issues)
 
-[Answer]:
+[Answer]: C - Python 3.11. Mejor performance que 3.9/3.10, excelente soporte en AWS Lambda, y compatible con boto3. Consistente con Unit 2.
 
 ---
 
@@ -304,7 +304,7 @@ B) Multiple tables (one per entity type, simpler, recommended for demo)
 C) Hybrid: Group related entities (e.g., accounts + transactions)  
 D) Custom: Specify your design
 
-[Answer]:
+[Answer]: B - Multiple tables. Una tabla por entity type (Accounts, Transactions, Products, Beneficiaries, Purchases, Retailers). Simple, claro, fácil de debuggear en hackathon.
 
 ---
 
@@ -317,7 +317,7 @@ B) Multiple Lambdas per action (9 Lambdas total, better separation, recommended)
 C) Monolithic: Single Lambda for all Action Groups (not recommended)  
 D) Custom: Specify your architecture
 
-[Answer]:
+[Answer]: B - Multiple Lambdas per action (9 total). Mejor separation of concerns, más fácil de debuggear, y permite scaling independiente. Vale la pena la complejidad adicional.
 
 ---
 
@@ -330,7 +330,7 @@ B) JSON with loose validation (flexible, faster to implement, recommended)
 C) Avro/Protobuf (efficient, more complex)  
 D) Custom: Specify your format
 
-[Answer]:
+[Answer]: B - JSON con loose validation. Rápido de implementar, fácil de debuggear, flexible para cambios durante hackathon. Schema validation estricta es overkill para demo.
 
 ---
 
@@ -345,7 +345,7 @@ B) Simple retries: Retry up to 3 times with fixed delay (recommended)
 C) Exponential backoff: Retry with increasing delays  
 D) Custom: Specify your strategy
 
-[Answer]:
+[Answer]: B - Simple retries (3 intentos, 100ms delay). Maneja transient failures sin complejidad de exponential backoff. Suficiente para demo con bajo volumen.
 
 ---
 
@@ -358,7 +358,7 @@ B) Event deduplication: Use EventBridge deduplication
 C) No idempotency: Accept duplicate processing (not recommended)  
 D) Custom: Specify your approach
 
-[Answer]:
+[Answer]: A - Request ID tracking en DynamoDB. Simple de implementar (check-then-write pattern), confiable, y nos da control total sobre idempotency window.
 
 ---
 
@@ -371,7 +371,7 @@ B) Standard: 10 seconds (balanced, recommended)
 C) Long: 30 seconds (accommodate slow operations)  
 D) Custom: Specify your timeouts
 
-[Answer]:
+[Answer]: B - Standard: 10 seconds. Suficiente para DynamoDB ops + EventBridge publish + retries. Evita timeouts innecesarios sin desperdiciar recursos.
 
 ---
 
@@ -384,7 +384,7 @@ B) Standard: CloudWatch Logs + basic metrics (recommended)
 C) Minimal: CloudWatch Logs only  
 D) Custom: Specify your strategy
 
-[Answer]:
+[Answer]: B - Standard: CloudWatch Logs + basic metrics. Logs estructurados con correlation_id, métricas básicas (errors, latency). X-Ray es overkill para demo.
 
 ---
 
@@ -397,25 +397,29 @@ B) Manual: Log failures for manual intervention
 C) No compensation: Accept inconsistencies (not recommended)  
 D) Custom: Specify your approach
 
-[Answer]:
+[Answer]: A - Automatic compensation. Implementar rollback automático para purchase flow (revert inventory, refund payment). Crítico para demo creíble, no tan complejo con eventos.
 
 ---
 
 ## Success Criteria
 
-- [ ] All performance targets defined
-- [ ] All scalability requirements specified
-- [ ] All availability requirements determined
-- [ ] All data consistency requirements identified
-- [ ] All security requirements identified
-- [ ] All tech stack decisions made with rationale
-- [ ] All reliability requirements documented
-- [ ] All questions answered by user
-- [ ] No ambiguities remaining
+- [x] All performance targets defined
+- [x] All scalability requirements specified
+- [x] All availability requirements determined
+- [x] All data consistency requirements identified
+- [x] All security requirements identified
+- [x] All tech stack decisions made with rationale
+- [x] All reliability requirements documented
+- [x] All questions answered by user
+- [x] No ambiguities remaining
 
 ---
 
-**Plan Status**: Awaiting user answers  
+**Plan Status**: Complete - All questions answered, artifacts generated  
 **Total Questions**: 25 questions across 7 categories  
-**Next Step**: Collect answers and generate NFR requirements artifacts
+**Artifacts Generated**:
+- `aidlc-docs/construction/action-groups/nfr-requirements/nfr-requirements.md`
+- `aidlc-docs/construction/action-groups/nfr-requirements/tech-stack-decisions.md`
+
+**Next Step**: User approval to proceed to NFR Design stage
 
