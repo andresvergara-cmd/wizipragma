@@ -99,7 +99,8 @@ La aplicación estará disponible en `http://localhost:3000`
 - **Weights**: 300, 400, 500, 600, 700, 800
 
 ### Iconografía
-- **Mascota**: 🦉 (Búho - símbolo de sabiduría)
+- **Mascota**: Cintéotl (Dios Azteca del Maíz - CENTLI significa "maíz" en náhuatl)
+- **Logo**: SVG personalizado con diseño inspirado en iconografía azteca
 - **Estilo**: Lucide React Icons
 
 ## 📦 Componentes Principales

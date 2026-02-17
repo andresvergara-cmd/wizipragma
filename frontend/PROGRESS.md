@@ -10,7 +10,7 @@
 
 Se ha completado exitosamente el desarrollo del frontend profesional de CENTLI, inspirado en el marketplace de Bancolombia Tu360. El frontend incluye:
 
-- ✅ Diseño profesional con identidad CENTLI (morado #ad37e0, mascota búho 🦉)
+- ✅ Diseño profesional con identidad CENTLI (morado #ad37e0, logo Cintéotl)
 - ✅ 4 páginas principales completamente funcionales
 - ✅ Sistema de componentes reutilizables
 - ✅ Integración WebSocket con backend
@@ -231,7 +231,9 @@ Todas las páginas y componentes se adaptan perfectamente a diferentes tamaños 
 - **Weights**: 300, 400, 500, 600, 700, 800
 
 ### Mascota
-- 🦉 Búho (símbolo de sabiduría)
+- Cintéotl - Dios Azteca del Maíz (CENTLI significa "maíz" en náhuatl)
+- Logo SVG personalizado con diseño inspirado en iconografía azteca
+- Colores: Dorado (#FFD700), Naranja (#FFA500), Verde (#4CAF50)
 
 ---
 
@@ -298,7 +300,7 @@ Todas las páginas y componentes se adaptan perfectamente a diferentes tamaños 
 
 ## 🎉 Conclusión
 
-El frontend de CENTLI está **listo para demo** con todas las funcionalidades principales implementadas. El diseño es profesional, inspirado en Bancolombia Tu360, con la identidad única de CENTLI (morado, búho). 
+El frontend de CENTLI está **listo para demo** con todas las funcionalidades principales implementadas. El diseño es profesional, inspirado en Bancolombia Tu360, con la identidad única de CENTLI (morado, logo Cintéotl - Dios Azteca del Maíz). 
 
 La integración con el backend vía WebSocket está funcional y lista para recibir respuestas del AgentCore.
 

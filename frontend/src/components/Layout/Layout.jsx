@@ -1,6 +1,8 @@
 import { Link, useLocation } from 'react-router-dom'
 import { useChat } from '../../context/ChatContext'
+import CinteotlLogo from '../Logo/CinteotlLogo'
 import './Layout.css'
+import '../Logo/CinteotlLogo.css'
 
 const Layout = ({ children }) => {
   const location = useLocation()
@@ -33,7 +35,7 @@ const Layout = ({ children }) => {
       <header className="header">
         <div className="header-content">
           <Link to="/" className="logo">
-            <span className="logo-icon">🦉</span>
+            <CinteotlLogo size={40} className="cinteotl-logo" />
             <span className="logo-text">CENTLI</span>
           </Link>
           
@@ -81,7 +83,7 @@ const Layout = ({ children }) => {
         <div className="chat-widget">
           <div className="chat-header">
             <div className="chat-title">
-              <span>🦉</span>
+              <CinteotlLogo size={24} className="cinteotl-logo" />
               <span>Chat con CENTLI</span>
             </div>
             <button onClick={closeChat} className="close-button">✕</button>
@@ -90,7 +92,9 @@ const Layout = ({ children }) => {
           <div className="chat-body">
             {messages.length === 0 ? (
               <div className="chat-message bot">
-                <div className="message-avatar">🦉</div>
+                <div className="message-avatar">
+                  <CinteotlLogo size={32} className="cinteotl-logo" />
+                </div>
                 <div className="message-content">
                   ¡Hola! Soy CENTLI, tu coach financiero. ¿En qué puedo ayudarte hoy?
                 </div>
@@ -98,7 +102,11 @@ const Layout = ({ children }) => {
             ) : (
               messages.map((msg) => (
                 <div key={msg.id} className={`chat-message ${msg.type}`}>
-                  {msg.type === 'bot' && <div className="message-avatar">🦉</div>}
+                  {msg.type === 'bot' && (
+                    <div className="message-avatar">
+                      <CinteotlLogo size={32} className="cinteotl-logo" />
+                    </div>
+                  )}
                   <div className="message-content">
                     {msg.content}
                   </div>
@@ -109,7 +117,9 @@ const Layout = ({ children }) => {
             
             {isTyping && (
               <div className="chat-message bot">
-                <div className="message-avatar">🦉</div>
+                <div className="message-avatar">
+                  <CinteotlLogo size={32} className="cinteotl-logo" />
+                </div>
                 <div className="message-content typing">
                   <span className="typing-dot"></span>
                   <span className="typing-dot"></span>

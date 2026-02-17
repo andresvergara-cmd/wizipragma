@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom'
+import CinteotlLogo from '../components/Logo/CinteotlLogo'
+import '../components/Logo/CinteotlLogo.css'
 import './Home.css'
 
 const Home = () => {
@@ -9,7 +11,7 @@ const Home = () => {
         <div className="hero-content">
           <div className="hero-text">
             <h1 className="hero-title">
-              <span className="hero-icon">🦉</span>
+              <CinteotlLogo size={60} className="cinteotl-logo hero-icon" />
               Bienvenido a CENTLI
             </h1>
             <p className="hero-subtitle">
@@ -29,7 +31,7 @@ const Home = () => {
             </div>
           </div>
           <div className="hero-image">
-            <div className="hero-owl">🦉</div>
+            <CinteotlLogo size={240} className="cinteotl-logo hero-owl" />
           </div>
         </div>
       </section>
