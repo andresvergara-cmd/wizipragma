@@ -9,6 +9,8 @@ const ChatWidget = ({ isOpen, onClose }) => {
     isTyping, 
     inputValue, 
     isConnected,
+    isStreaming,
+    currentStreamMessage,
     setInputValue, 
     sendTextMessage 
   } = useChat()
@@ -169,7 +171,7 @@ const ChatWidget = ({ isOpen, onClose }) => {
                       <CinteotlLogo size={28} className="cinteotl-logo" />
                     </div>
                   )}
-                  <div className="message-bubble">
+                  <div className={`message-bubble ${msg.isError ? 'error' : ''}`}>
                     {msg.content}
                   </div>
                   {msg.type === 'user' && (
@@ -178,7 +180,20 @@ const ChatWidget = ({ isOpen, onClose }) => {
                 </div>
               ))}
               
-              {isTyping && (
+              {/* Streaming message */}
+              {isStreaming && currentStreamMessage && (
+                <div className="message bot">
+                  <div className="message-avatar">
+                    <CinteotlLogo size={28} className="cinteotl-logo pulse" />
+                  </div>
+                  <div className="message-bubble streaming">
+                    {currentStreamMessage}
+                    <span className="cursor-blink">|</span>
+                  </div>
+                </div>
+              )}
+              
+              {isTyping && !isStreaming && (
                 <div className="message bot">
                   <div className="message-avatar">
                     <CinteotlLogo size={28} className="cinteotl-logo" />

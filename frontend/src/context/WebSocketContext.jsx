@@ -14,9 +14,12 @@ export const WebSocketProvider = ({ children }) => {
   const [isConnected, setIsConnected] = useState(false)
   const [sessionId, setSessionId] = useState(null)
   const [messages, setMessages] = useState([])
+  const [isStreaming, setIsStreaming] = useState(false)
+  const [currentStreamMessage, setCurrentStreamMessage] = useState('')
   const wsRef = useRef(null)
   const reconnectTimeoutRef = useRef(null)
   const reconnectAttemptsRef = useRef(0)
+  const streamMessageIdRef = useRef(null)
 
   const WEBSOCKET_URL = import.meta.env.VITE_WEBSOCKET_URL || 'wss://vvg621xawg.execute-api.us-east-1.amazonaws.com/prod'
   const MAX_RECONNECT_ATTEMPTS = 5
@@ -24,62 +27,122 @@ export const WebSocketProvider = ({ children }) => {
 
   const connect = () => {
     try {
-      console.log('Connecting to WebSocket:', WEBSOCKET_URL)
+      console.log('🔌 Connecting to WebSocket:', WEBSOCKET_URL)
       
       wsRef.current = new WebSocket(WEBSOCKET_URL)
 
       wsRef.current.onopen = () => {
-        console.log('WebSocket connected')
+        console.log('✅ WebSocket connected')
         setIsConnected(true)
         reconnectAttemptsRef.current = 0
         
         // Generate session ID
         const newSessionId = `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
         setSessionId(newSessionId)
+        console.log('🆔 Session ID:', newSessionId)
       }
 
       wsRef.current.onmessage = (event) => {
         try {
           const data = JSON.parse(event.data)
-          console.log('WebSocket message received:', data)
+          console.log('📨 WebSocket message received:', data)
           
-          // Handle different message types
-          if (data.msg_type === 'agent_response' || data.msg_type === 'stream_end') {
+          // Handle different message types from backend
+          if (data.msg_type === 'stream_start') {
+            console.log('🌊 Stream started')
+            setIsStreaming(true)
+            setCurrentStreamMessage('')
+            streamMessageIdRef.current = `msg-${Date.now()}`
+          } 
+          else if (data.msg_type === 'stream_chunk') {
+            console.log('📦 Stream chunk:', data.message)
+            setCurrentStreamMessage(prev => prev + data.message)
+          }
+          else if (data.msg_type === 'stream_end') {
+            console.log('🏁 Stream ended')
+            setIsStreaming(false)
+            
+            // Add final message
+            if (currentStreamMessage || data.message) {
+              setMessages(prev => [...prev, {
+                id: streamMessageIdRef.current || `msg-${Date.now()}`,
+                type: 'bot',
+                content: data.message || currentStreamMessage,
+                timestamp: new Date().toISOString(),
+                data: data.data
+              }])
+            }
+            
+            setCurrentStreamMessage('')
+            streamMessageIdRef.current = null
+          }
+          else if (data.msg_type === 'agent_response') {
+            console.log('🤖 Agent response:', data.message)
             setMessages(prev => [...prev, {
               id: `msg-${Date.now()}`,
               type: 'bot',
-              content: data.message || data.data?.content || '',
+              content: data.message || data.data?.content || 'Respuesta recibida',
               timestamp: new Date().toISOString(),
               data: data.data
             }])
           }
+          else if (data.msg_type === 'error') {
+            console.error('❌ Error from backend:', data.message)
+            setMessages(prev => [...prev, {
+              id: `msg-${Date.now()}`,
+              type: 'bot',
+              content: `Error: ${data.message || 'Ocurrió un error'}`,
+              timestamp: new Date().toISOString(),
+              isError: true
+            }])
+          }
+          else {
+            // Generic message handling
+            console.log('📬 Generic message:', data)
+            if (data.message) {
+              setMessages(prev => [...prev, {
+                id: `msg-${Date.now()}`,
+                type: 'bot',
+                content: data.message,
+                timestamp: new Date().toISOString(),
+                data: data.data
+              }])
+            }
+          }
         } catch (error) {
-          console.error('Error parsing WebSocket message:', error)
+          console.error('❌ Error parsing WebSocket message:', error)
         }
       }
 
       wsRef.current.onerror = (error) => {
-        console.error('WebSocket error:', error)
+        console.error('❌ WebSocket error:', error)
       }
 
       wsRef.current.onclose = () => {
-        console.log('WebSocket disconnected')
+        console.log('🔌 WebSocket disconnected')
         setIsConnected(false)
         
         // Attempt to reconnect
         if (reconnectAttemptsRef.current < MAX_RECONNECT_ATTEMPTS) {
           reconnectAttemptsRef.current += 1
-          console.log(`Reconnecting... Attempt ${reconnectAttemptsRef.current}/${MAX_RECONNECT_ATTEMPTS}`)
+          console.log(`🔄 Reconnecting... Attempt ${reconnectAttemptsRef.current}/${MAX_RECONNECT_ATTEMPTS}`)
           
           reconnectTimeoutRef.current = setTimeout(() => {
             connect()
           }, RECONNECT_DELAY)
         } else {
-          console.error('Max reconnection attempts reached')
+          console.error('❌ Max reconnection attempts reached')
+          setMessages(prev => [...prev, {
+            id: `msg-${Date.now()}`,
+            type: 'bot',
+            content: 'No se pudo conectar con el servidor. Por favor, recarga la página.',
+            timestamp: new Date().toISOString(),
+            isError: true
+          }])
         }
       }
     } catch (error) {
-      console.error('Error creating WebSocket connection:', error)
+      console.error('❌ Error creating WebSocket connection:', error)
     }
   }
 
@@ -99,7 +162,14 @@ export const WebSocketProvider = ({ children }) => {
 
   const sendMessage = (message, type = 'TEXT') => {
     if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) {
-      console.error('WebSocket is not connected')
+      console.error('❌ WebSocket is not connected')
+      setMessages(prev => [...prev, {
+        id: `msg-${Date.now()}`,
+        type: 'bot',
+        content: 'No estás conectado. Intentando reconectar...',
+        timestamp: new Date().toISOString(),
+        isError: true
+      }])
       return false
     }
 
@@ -114,20 +184,20 @@ export const WebSocketProvider = ({ children }) => {
         }
       }
 
-      console.log('Sending message:', payload)
+      console.log('📤 Sending message:', payload)
       wsRef.current.send(JSON.stringify(payload))
       
       // Add user message to local state
       setMessages(prev => [...prev, {
         id: `msg-${Date.now()}`,
         type: 'user',
-        content: message,
+        content: type === 'TEXT' ? message : `[${type}]`,
         timestamp: new Date().toISOString()
       }])
       
       return true
     } catch (error) {
-      console.error('Error sending message:', error)
+      console.error('❌ Error sending message:', error)
       return false
     }
   }
@@ -144,6 +214,8 @@ export const WebSocketProvider = ({ children }) => {
     isConnected,
     sessionId,
     messages,
+    isStreaming,
+    currentStreamMessage,
     sendMessage,
     connect,
     disconnect

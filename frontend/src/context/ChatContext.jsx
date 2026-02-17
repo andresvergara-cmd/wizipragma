@@ -12,7 +12,7 @@ export const useChat = () => {
 }
 
 export const ChatProvider = ({ children }) => {
-  const { messages: wsMessages, sendMessage: wsSendMessage, isConnected } = useWebSocket()
+  const { messages: wsMessages, sendMessage: wsSendMessage, isConnected, isStreaming, currentStreamMessage } = useWebSocket()
   const [isChatOpen, setIsChatOpen] = useState(false)
   const [isTyping, setIsTyping] = useState(false)
   const [inputValue, setInputValue] = useState('')
@@ -70,6 +70,8 @@ export const ChatProvider = ({ children }) => {
     isTyping,
     inputValue,
     isConnected,
+    isStreaming,
+    currentStreamMessage,
     setInputValue,
     sendTextMessage,
     sendVoiceMessage,
