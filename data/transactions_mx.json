@@ -1,0 +1,2402 @@
+[
+  {
+    "amount": 1642.42,
+    "date": "2025-02-26T15:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-60",
+    "userId": "user-002",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 1753.14,
+    "date": "2025-04-03T10:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-49",
+    "userId": "user-001",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 1010.16,
+    "date": "2025-02-14T10:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-19",
+    "userId": "user-001",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 483.12,
+    "date": "2025-04-22T20:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-61",
+    "userId": "user-001",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 1443.87,
+    "date": "2025-03-10T11:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-18",
+    "userId": "user-004",
+    "industry": "Fitness & Sports"
+  },
+  {
+    "amount": 10064.82,
+    "date": "2025-07-22T15:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-53",
+    "userId": "user-004",
+    "industry": "Technology"
+  },
+  {
+    "amount": 3632.55,
+    "date": "2025-06-13T11:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-93",
+    "userId": "user-001",
+    "industry": "Home & Garden"
+  },
+  {
+    "amount": 2287.5,
+    "date": "2025-01-20T16:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-5",
+    "userId": "user-001",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 411.75,
+    "date": "2025-02-03T18:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-29",
+    "userId": "user-002",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 51240.0,
+    "date": "2025-08-05T10:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-56",
+    "userId": "user-004",
+    "industry": "Investment Services"
+  },
+  {
+    "amount": 38430.0,
+    "date": "2025-03-05T10:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-16",
+    "userId": "user-004",
+    "industry": "Investment Services"
+  },
+  {
+    "amount": 1398.12,
+    "date": "2025-02-25T10:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-26",
+    "userId": "user-001",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 1436.55,
+    "date": "2025-05-15T08:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-75",
+    "userId": "user-001",
+    "industry": "Health & Wellness"
+  },
+  {
+    "amount": 450.18,
+    "date": "2025-01-23T12:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-14",
+    "userId": "user-002",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 10064.82,
+    "date": "2025-11-22T15:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-85",
+    "userId": "user-004",
+    "industry": "Technology"
+  },
+  {
+    "amount": 512.4,
+    "date": "2025-02-12T18:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-41",
+    "userId": "user-002",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 1770.53,
+    "date": "2025-07-28T19:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-55",
+    "userId": "user-004",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 393.45,
+    "date": "2025-05-11T12:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-73",
+    "userId": "user-001",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 1570.14,
+    "date": "2025-12-25T08:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-94",
+    "userId": "user-004",
+    "industry": "Fitness & Sports"
+  },
+  {
+    "amount": 228.75,
+    "date": "2025-03-14T08:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-37",
+    "userId": "user-001",
+    "industry": "Health & Wellness"
+  },
+  {
+    "amount": 1240.74,
+    "date": "2025-01-24T09:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-7",
+    "userId": "user-001",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 699.98,
+    "date": "2025-03-05T19:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-69",
+    "userId": "user-002",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 541.68,
+    "date": "2025-01-30T10:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-23",
+    "userId": "user-002",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 654.23,
+    "date": "2025-02-02T19:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-12",
+    "userId": "user-001",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 1624.12,
+    "date": "2025-02-19T09:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-22",
+    "userId": "user-001",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 1244.22,
+    "date": "2025-02-05T15:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-32",
+    "userId": "user-002",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 1244.22,
+    "date": "2025-03-25T15:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-96",
+    "userId": "user-002",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 343.12,
+    "date": "2025-03-15T12:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-82",
+    "userId": "user-002",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 649.65,
+    "date": "2025-05-08T16:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-71",
+    "userId": "user-001",
+    "industry": "Books"
+  },
+  {
+    "amount": 841.62,
+    "date": "2025-03-25T16:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-44",
+    "userId": "user-001",
+    "industry": "Books"
+  },
+  {
+    "amount": 644.16,
+    "date": "2025-01-17T09:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-5",
+    "userId": "user-002",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 2868.53,
+    "date": "2025-02-10T11:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-17",
+    "userId": "user-001",
+    "industry": "Home & Garden"
+  },
+  {
+    "amount": 1239.83,
+    "date": "2025-09-25T08:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-70",
+    "userId": "user-004",
+    "industry": "Fitness & Sports"
+  },
+  {
+    "amount": 1582.04,
+    "date": "2025-05-04T09:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-68",
+    "userId": "user-001",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 2287.5,
+    "date": "2025-06-15T08:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-94",
+    "userId": "user-001",
+    "industry": "Health & Wellness"
+  },
+  {
+    "amount": 520.63,
+    "date": "2025-01-21T10:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-11",
+    "userId": "user-002",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 1435.64,
+    "date": "2025-05-25T08:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-38",
+    "userId": "user-004",
+    "industry": "Fitness & Sports"
+  },
+  {
+    "amount": 581.02,
+    "date": "2025-04-17T19:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-58",
+    "userId": "user-001",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 279.07,
+    "date": "2025-04-14T08:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-56",
+    "userId": "user-001",
+    "industry": "Health & Wellness"
+  },
+  {
+    "amount": 1435.64,
+    "date": "2025-02-07T09:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-15",
+    "userId": "user-001",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 878.4,
+    "date": "2025-06-02T15:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-86",
+    "userId": "user-001",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 588.35,
+    "date": "2025-02-02T09:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-27",
+    "userId": "user-002",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 1189.5,
+    "date": "2025-05-02T15:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-67",
+    "userId": "user-001",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 1633.28,
+    "date": "2025-03-22T14:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-92",
+    "userId": "user-002",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 3466.93,
+    "date": "2025-03-15T09:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-19",
+    "userId": "user-004",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 23789.82,
+    "date": "2025-11-08T14:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-81",
+    "userId": "user-004",
+    "industry": "Technology"
+  },
+  {
+    "amount": 58560.0,
+    "date": "2025-02-18T12:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-12",
+    "userId": "user-004",
+    "industry": "Investment Services"
+  },
+  {
+    "amount": 345.87,
+    "date": "2025-01-18T12:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-4",
+    "userId": "user-001",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 3463.28,
+    "date": "2025-11-15T09:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-83",
+    "userId": "user-004",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 3060.68,
+    "date": "2025-05-13T11:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-74",
+    "userId": "user-001",
+    "industry": "Home & Garden"
+  },
+  {
+    "amount": 1747.65,
+    "date": "2025-03-16T15:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-84",
+    "userId": "user-002",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 347.52,
+    "date": "2025-02-23T16:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-25",
+    "userId": "user-001",
+    "industry": "Books"
+  },
+  {
+    "amount": 823.5,
+    "date": "2025-03-23T19:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-93",
+    "userId": "user-002",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 473.97,
+    "date": "2025-02-16T13:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-46",
+    "userId": "user-002",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 54900.0,
+    "date": "2025-06-05T10:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-40",
+    "userId": "user-004",
+    "industry": "Investment Services"
+  },
+  {
+    "amount": 309.27,
+    "date": "2025-01-26T11:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-18",
+    "userId": "user-002",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 571.88,
+    "date": "2025-06-18T19:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-96",
+    "userId": "user-001",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 695.4,
+    "date": "2025-02-21T18:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-53",
+    "userId": "user-002",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 526.12,
+    "date": "2025-03-04T08:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-67",
+    "userId": "user-002",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 428.22,
+    "date": "2025-02-10T12:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-38",
+    "userId": "user-002",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 1449.36,
+    "date": "2025-05-10T10:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-72",
+    "userId": "user-001",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 16469.82,
+    "date": "2025-07-08T14:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-49",
+    "userId": "user-004",
+    "industry": "Technology"
+  },
+  {
+    "amount": 14639.82,
+    "date": "2026-01-08T14:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-97",
+    "userId": "user-004",
+    "industry": "Technology"
+  },
+  {
+    "amount": 1230.67,
+    "date": "2025-02-22T14:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-24",
+    "userId": "user-001",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 1689.09,
+    "date": "2025-02-01T10:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-11",
+    "userId": "user-001",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 413.58,
+    "date": "2025-03-18T13:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-86",
+    "userId": "user-002",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 11894.82,
+    "date": "2025-06-22T15:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-45",
+    "userId": "user-004",
+    "industry": "Technology"
+  },
+  {
+    "amount": 651.48,
+    "date": "2025-03-28T19:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-46",
+    "userId": "user-001",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 14639.82,
+    "date": "2025-05-20T15:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-78",
+    "userId": "user-001",
+    "industry": "Electronics"
+  },
+  {
+    "amount": 1600.34,
+    "date": "2025-03-27T09:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-45",
+    "userId": "user-001",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 43920.0,
+    "date": "2025-04-18T12:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-28",
+    "userId": "user-004",
+    "industry": "Investment Services"
+  },
+  {
+    "amount": 1443.87,
+    "date": "2025-07-25T08:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-54",
+    "userId": "user-004",
+    "industry": "Fitness & Sports"
+  },
+  {
+    "amount": 538.02,
+    "date": "2025-03-07T09:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-71",
+    "userId": "user-002",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 10979.82,
+    "date": "2025-04-19T15:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-59",
+    "userId": "user-001",
+    "industry": "Electronics"
+  },
+  {
+    "amount": 521.55,
+    "date": "2025-01-25T20:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-8",
+    "userId": "user-001",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 571.88,
+    "date": "2025-03-16T09:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-83",
+    "userId": "user-002",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 823.5,
+    "date": "2025-01-28T15:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-10",
+    "userId": "user-001",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 391.62,
+    "date": "2025-03-27T13:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-98",
+    "userId": "user-002",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 1560.08,
+    "date": "2025-08-25T08:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-62",
+    "userId": "user-004",
+    "industry": "Fitness & Sports"
+  },
+  {
+    "amount": 2287.5,
+    "date": "2025-01-28T08:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-6",
+    "userId": "user-004",
+    "industry": "Fitness & Sports"
+  },
+  {
+    "amount": 1743.08,
+    "date": "2025-02-25T08:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-14",
+    "userId": "user-004",
+    "industry": "Fitness & Sports"
+  },
+  {
+    "amount": 1239.83,
+    "date": "2025-03-13T14:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-80",
+    "userId": "user-002",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 599.33,
+    "date": "2025-01-15T19:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-2",
+    "userId": "user-001",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 420.72,
+    "date": "2025-04-25T16:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-63",
+    "userId": "user-001",
+    "industry": "Books"
+  },
+  {
+    "amount": 1752.23,
+    "date": "2025-03-28T16:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-100",
+    "userId": "user-002",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 1670.79,
+    "date": "2025-04-27T10:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-64",
+    "userId": "user-001",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 563.64,
+    "date": "2025-02-23T08:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-55",
+    "userId": "user-002",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 38430.0,
+    "date": "2025-11-18T12:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-84",
+    "userId": "user-004",
+    "industry": "Investment Services"
+  },
+  {
+    "amount": 1669.88,
+    "date": "2025-12-28T20:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-95",
+    "userId": "user-004",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 649.65,
+    "date": "2025-01-19T20:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-9",
+    "userId": "user-002",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 1753.14,
+    "date": "2025-05-10T11:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-34",
+    "userId": "user-004",
+    "industry": "Fitness & Sports"
+  },
+  {
+    "amount": 471.23,
+    "date": "2025-03-04T20:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-31",
+    "userId": "user-001",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 534.36,
+    "date": "2025-02-17T10:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-47",
+    "userId": "user-002",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 2869.44,
+    "date": "2025-05-07T14:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-70",
+    "userId": "user-001",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 2301.22,
+    "date": "2025-02-14T14:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-44",
+    "userId": "user-002",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 45750.0,
+    "date": "2025-07-05T10:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-48",
+    "userId": "user-004",
+    "industry": "Investment Services"
+  },
+  {
+    "amount": 736.58,
+    "date": "2025-03-17T20:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-85",
+    "userId": "user-002",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 11894.82,
+    "date": "2025-09-08T14:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-65",
+    "userId": "user-004",
+    "industry": "Technology"
+  },
+  {
+    "amount": 365.08,
+    "date": "2025-04-10T12:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-54",
+    "userId": "user-001",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 45750.0,
+    "date": "2025-01-22T11:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-4",
+    "userId": "user-004",
+    "industry": "Investment Services"
+  },
+  {
+    "amount": 16469.82,
+    "date": "2025-09-22T15:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-69",
+    "userId": "user-004",
+    "industry": "Technology"
+  },
+  {
+    "amount": 3273.87,
+    "date": "2025-12-15T09:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-91",
+    "userId": "user-004",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 711.87,
+    "date": "2025-02-26T19:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-27",
+    "userId": "user-001",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 570.96,
+    "date": "2025-03-10T19:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-35",
+    "userId": "user-001",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 1646.82,
+    "date": "2025-03-12T11:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-36",
+    "userId": "user-001",
+    "industry": "Home & Garden"
+  },
+  {
+    "amount": 16469.82,
+    "date": "2025-02-08T14:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-9",
+    "userId": "user-004",
+    "industry": "Technology"
+  },
+  {
+    "amount": 1443.87,
+    "date": "2025-10-25T08:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-78",
+    "userId": "user-004",
+    "industry": "Fitness & Sports"
+  },
+  {
+    "amount": 521.55,
+    "date": "2025-04-07T16:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-52",
+    "userId": "user-001",
+    "industry": "Books"
+  },
+  {
+    "amount": 452.93,
+    "date": "2025-05-05T20:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-69",
+    "userId": "user-001",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 1569.23,
+    "date": "2025-04-10T11:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-26",
+    "userId": "user-004",
+    "industry": "Fitness & Sports"
+  },
+  {
+    "amount": 500.51,
+    "date": "2025-01-27T08:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-19",
+    "userId": "user-002",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 841.62,
+    "date": "2025-01-16T11:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-3",
+    "userId": "user-002",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 47580.0,
+    "date": "2025-09-05T10:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-64",
+    "userId": "user-004",
+    "industry": "Investment Services"
+  },
+  {
+    "amount": 417.24,
+    "date": "2025-01-16T19:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-4",
+    "userId": "user-002",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 2063.33,
+    "date": "2025-04-06T14:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-51",
+    "userId": "user-001",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 40260.0,
+    "date": "2026-01-18T12:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-100",
+    "userId": "user-004",
+    "industry": "Investment Services"
+  },
+  {
+    "amount": 1753.14,
+    "date": "2025-09-10T11:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-66",
+    "userId": "user-004",
+    "industry": "Fitness & Sports"
+  },
+  {
+    "amount": 2063.33,
+    "date": "2025-12-10T11:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-90",
+    "userId": "user-004",
+    "industry": "Fitness & Sports"
+  },
+  {
+    "amount": 43920.0,
+    "date": "2025-12-18T12:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-92",
+    "userId": "user-004",
+    "industry": "Investment Services"
+  },
+  {
+    "amount": 711.87,
+    "date": "2025-04-28T19:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-65",
+    "userId": "user-001",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 5489.82,
+    "date": "2025-01-22T11:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-6",
+    "userId": "user-001",
+    "industry": "Electronics"
+  },
+  {
+    "amount": 1875.75,
+    "date": "2025-09-28T19:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-71",
+    "userId": "user-004",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 32940.0,
+    "date": "2025-10-18T12:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-76",
+    "userId": "user-004",
+    "industry": "Investment Services"
+  },
+  {
+    "amount": 1637.85,
+    "date": "2025-02-11T15:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-40",
+    "userId": "user-002",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 365.08,
+    "date": "2025-03-21T11:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-90",
+    "userId": "user-002",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 1566.48,
+    "date": "2025-05-28T09:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-83",
+    "userId": "user-001",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 512.4,
+    "date": "2025-03-14T19:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-81",
+    "userId": "user-002",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 510.57,
+    "date": "2025-05-29T19:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-84",
+    "userId": "user-001",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 338.55,
+    "date": "2025-01-25T19:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-17",
+    "userId": "user-002",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 511.49,
+    "date": "2025-02-26T09:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-59",
+    "userId": "user-002",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 823.5,
+    "date": "2025-04-30T08:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-66",
+    "userId": "user-001",
+    "industry": "Health & Wellness"
+  },
+  {
+    "amount": 409.92,
+    "date": "2025-02-22T11:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-54",
+    "userId": "user-002",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 10064.82,
+    "date": "2025-04-08T14:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-25",
+    "userId": "user-004",
+    "industry": "Technology"
+  },
+  {
+    "amount": 322.08,
+    "date": "2025-02-13T11:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-42",
+    "userId": "user-002",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 1753.14,
+    "date": "2025-03-04T14:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-68",
+    "userId": "user-002",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 490.44,
+    "date": "2025-02-04T11:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-30",
+    "userId": "user-002",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 508.74,
+    "date": "2025-02-11T09:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-39",
+    "userId": "user-002",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 11894.82,
+    "date": "2025-12-22T15:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-93",
+    "userId": "user-004",
+    "industry": "Technology"
+  },
+  {
+    "amount": 544.43,
+    "date": "2025-03-22T08:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-91",
+    "userId": "user-002",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 524.29,
+    "date": "2025-02-20T09:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-51",
+    "userId": "user-002",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 10979.82,
+    "date": "2025-01-25T16:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-5",
+    "userId": "user-004",
+    "industry": "Technology"
+  },
+  {
+    "amount": 336.72,
+    "date": "2025-02-01T12:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-26",
+    "userId": "user-002",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 38430.0,
+    "date": "2025-07-18T12:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-52",
+    "userId": "user-004",
+    "industry": "Investment Services"
+  },
+  {
+    "amount": 2662.65,
+    "date": "2025-03-06T14:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-32",
+    "userId": "user-001",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 608.48,
+    "date": "2025-05-23T20:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-80",
+    "userId": "user-001",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 409.92,
+    "date": "2025-03-17T12:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-39",
+    "userId": "user-001",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 11894.82,
+    "date": "2025-03-22T15:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-21",
+    "userId": "user-004",
+    "industry": "Technology"
+  },
+  {
+    "amount": 709.12,
+    "date": "2025-01-31T20:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-25",
+    "userId": "user-002",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 1930.65,
+    "date": "2025-04-28T20:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-31",
+    "userId": "user-004",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 16469.82,
+    "date": "2025-12-08T14:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-89",
+    "userId": "user-004",
+    "industry": "Technology"
+  },
+  {
+    "amount": 1753.14,
+    "date": "2025-02-02T14:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-28",
+    "userId": "user-002",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 290.97,
+    "date": "2025-01-18T12:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-7",
+    "userId": "user-002",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 51240.0,
+    "date": "2025-12-05T10:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-88",
+    "userId": "user-004",
+    "industry": "Investment Services"
+  },
+  {
+    "amount": 777.75,
+    "date": "2025-02-18T20:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-49",
+    "userId": "user-002",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 3265.63,
+    "date": "2025-08-15T09:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-59",
+    "userId": "user-004",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 1651.58,
+    "date": "2025-06-04T10:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-87",
+    "userId": "user-001",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 13724.82,
+    "date": "2025-05-08T14:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-33",
+    "userId": "user-004",
+    "industry": "Technology"
+  },
+  {
+    "amount": 8234.82,
+    "date": "2025-08-22T15:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-61",
+    "userId": "user-004",
+    "industry": "Technology"
+  },
+  {
+    "amount": 1431.98,
+    "date": "2025-02-08T16:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-36",
+    "userId": "user-002",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 1235.25,
+    "date": "2025-03-01T16:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-64",
+    "userId": "user-002",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 388.88,
+    "date": "2025-01-29T13:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-22",
+    "userId": "user-002",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 2667.22,
+    "date": "2025-01-20T09:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-3",
+    "userId": "user-004",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 575.53,
+    "date": "2025-02-14T08:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-43",
+    "userId": "user-002",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 545.34,
+    "date": "2025-05-18T19:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-77",
+    "userId": "user-001",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 54900.0,
+    "date": "2025-10-05T10:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-72",
+    "userId": "user-004",
+    "industry": "Investment Services"
+  },
+  {
+    "amount": 585.6,
+    "date": "2025-03-02T18:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-65",
+    "userId": "user-002",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 23789.82,
+    "date": "2025-02-17T15:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-21",
+    "userId": "user-001",
+    "industry": "Electronics"
+  },
+  {
+    "amount": 47580.0,
+    "date": "2026-01-05T10:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-96",
+    "userId": "user-004",
+    "industry": "Investment Services"
+  },
+  {
+    "amount": 362.34,
+    "date": "2025-03-03T11:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-66",
+    "userId": "user-002",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 40260.0,
+    "date": "2025-09-18T12:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-68",
+    "userId": "user-004",
+    "industry": "Investment Services"
+  },
+  {
+    "amount": 645.08,
+    "date": "2025-02-15T19:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-45",
+    "userId": "user-002",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 1564.65,
+    "date": "2025-01-30T19:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-7",
+    "userId": "user-004",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 13724.82,
+    "date": "2025-10-08T14:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-73",
+    "userId": "user-004",
+    "industry": "Technology"
+  },
+  {
+    "amount": 3573.99,
+    "date": "2025-09-15T09:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-67",
+    "userId": "user-004",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 3070.74,
+    "date": "2025-10-15T09:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-75",
+    "userId": "user-004",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 1608.57,
+    "date": "2025-05-28T19:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-39",
+    "userId": "user-004",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 1646.82,
+    "date": "2025-06-07T14:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-89",
+    "userId": "user-001",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 512.4,
+    "date": "2025-01-17T16:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-6",
+    "userId": "user-002",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 453.84,
+    "date": "2025-06-11T12:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-92",
+    "userId": "user-001",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 471.23,
+    "date": "2025-02-24T19:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-57",
+    "userId": "user-002",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 508.74,
+    "date": "2025-03-13T08:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-79",
+    "userId": "user-002",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 47580.0,
+    "date": "2025-05-05T10:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-32",
+    "userId": "user-004",
+    "industry": "Investment Services"
+  },
+  {
+    "amount": 782.33,
+    "date": "2025-03-08T20:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-73",
+    "userId": "user-002",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 599.33,
+    "date": "2025-03-07T16:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-33",
+    "userId": "user-001",
+    "industry": "Books"
+  },
+  {
+    "amount": 1743.08,
+    "date": "2025-02-20T15:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-52",
+    "userId": "user-002",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 1020.23,
+    "date": "2025-01-24T14:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-16",
+    "userId": "user-002",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 528.87,
+    "date": "2025-02-05T08:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-31",
+    "userId": "user-002",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 45750.0,
+    "date": "2025-11-05T10:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-80",
+    "userId": "user-004",
+    "industry": "Investment Services"
+  },
+  {
+    "amount": 365.08,
+    "date": "2025-02-15T12:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-20",
+    "userId": "user-001",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 528.87,
+    "date": "2025-06-23T20:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-99",
+    "userId": "user-001",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 3579.48,
+    "date": "2025-05-15T09:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-35",
+    "userId": "user-004",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 1514.33,
+    "date": "2025-06-10T09:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-91",
+    "userId": "user-001",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 1235.25,
+    "date": "2025-02-10T11:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-10",
+    "userId": "user-004",
+    "industry": "Fitness & Sports"
+  },
+  {
+    "amount": 1743.08,
+    "date": "2025-07-10T11:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-50",
+    "userId": "user-004",
+    "industry": "Fitness & Sports"
+  },
+  {
+    "amount": 16469.82,
+    "date": "2025-04-22T15:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-29",
+    "userId": "user-004",
+    "industry": "Technology"
+  },
+  {
+    "amount": 569.13,
+    "date": "2025-03-01T10:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-63",
+    "userId": "user-002",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 528.87,
+    "date": "2025-03-19T10:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-87",
+    "userId": "user-002",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 1445.52,
+    "date": "2025-02-23T14:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-56",
+    "userId": "user-002",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 443.78,
+    "date": "2025-02-28T13:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-62",
+    "userId": "user-002",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 1340.48,
+    "date": "2025-04-09T09:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-53",
+    "userId": "user-001",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 516.98,
+    "date": "2025-06-08T16:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-90",
+    "userId": "user-001",
+    "industry": "Books"
+  },
+  {
+    "amount": 1230.67,
+    "date": "2025-01-18T15:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-8",
+    "userId": "user-002",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 1230.67,
+    "date": "2025-11-25T08:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-86",
+    "userId": "user-004",
+    "industry": "Fitness & Sports"
+  },
+  {
+    "amount": 437.37,
+    "date": "2025-03-09T13:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-74",
+    "userId": "user-002",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 16469.82,
+    "date": "2025-03-19T15:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-40",
+    "userId": "user-001",
+    "industry": "Electronics"
+  },
+  {
+    "amount": 395.28,
+    "date": "2025-03-06T12:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-70",
+    "userId": "user-002",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 7319.82,
+    "date": "2025-05-22T15:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-37",
+    "userId": "user-004",
+    "industry": "Technology"
+  },
+  {
+    "amount": 283.65,
+    "date": "2025-02-20T08:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-23",
+    "userId": "user-001",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 524.29,
+    "date": "2025-03-28T10:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-99",
+    "userId": "user-002",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 14639.82,
+    "date": "2025-03-08T14:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-17",
+    "userId": "user-004",
+    "industry": "Technology"
+  },
+  {
+    "amount": 1564.65,
+    "date": "2025-01-15T10:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-1",
+    "userId": "user-001",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 8234.82,
+    "date": "2025-06-20T15:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-97",
+    "userId": "user-001",
+    "industry": "Electronics"
+  },
+  {
+    "amount": 3070.74,
+    "date": "2025-02-15T09:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-11",
+    "userId": "user-004",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 1724.78,
+    "date": "2025-03-03T09:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-30",
+    "userId": "user-001",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 785.07,
+    "date": "2025-04-04T20:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-50",
+    "userId": "user-001",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 1626.87,
+    "date": "2025-08-28T20:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-63",
+    "userId": "user-004",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 1724.78,
+    "date": "2025-06-28T20:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-47",
+    "userId": "user-004",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 1670.79,
+    "date": "2025-03-21T10:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-41",
+    "userId": "user-001",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 3473.34,
+    "date": "2025-07-15T09:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-51",
+    "userId": "user-004",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 2058.75,
+    "date": "2025-03-25T08:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-22",
+    "userId": "user-004",
+    "industry": "Fitness & Sports"
+  },
+  {
+    "amount": 1715.62,
+    "date": "2025-05-17T09:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-76",
+    "userId": "user-001",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 553.58,
+    "date": "2025-02-08T10:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-35",
+    "userId": "user-002",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 2058.75,
+    "date": "2025-08-10T11:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-58",
+    "userId": "user-004",
+    "industry": "Fitness & Sports"
+  },
+  {
+    "amount": 7319.82,
+    "date": "2025-10-22T15:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-77",
+    "userId": "user-004",
+    "industry": "Technology"
+  },
+  {
+    "amount": 649.65,
+    "date": "2025-03-11T18:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-77",
+    "userId": "user-002",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 551.75,
+    "date": "2025-03-10T10:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-75",
+    "userId": "user-002",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 1240.74,
+    "date": "2025-02-17T16:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-48",
+    "userId": "user-002",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 1797.98,
+    "date": "2025-03-28T19:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-23",
+    "userId": "user-004",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 1738.5,
+    "date": "2025-05-31T08:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-85",
+    "userId": "user-001",
+    "industry": "Health & Wellness"
+  },
+  {
+    "amount": 23789.82,
+    "date": "2025-01-15T10:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-1",
+    "userId": "user-004",
+    "industry": "Technology"
+  },
+  {
+    "amount": 695.4,
+    "date": "2025-04-01T15:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-48",
+    "userId": "user-001",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 2063.33,
+    "date": "2025-06-10T11:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-42",
+    "userId": "user-004",
+    "industry": "Fitness & Sports"
+  },
+  {
+    "amount": 370.57,
+    "date": "2025-03-12T11:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-78",
+    "userId": "user-002",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 832.65,
+    "date": "2025-02-27T20:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-61",
+    "userId": "user-002",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 2054.18,
+    "date": "2025-10-10T11:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-74",
+    "userId": "user-004",
+    "industry": "Fitness & Sports"
+  },
+  {
+    "amount": 3579.48,
+    "date": "2026-01-15T09:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-99",
+    "userId": "user-004",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 379.73,
+    "date": "2025-02-19T12:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-50",
+    "userId": "user-002",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 365.08,
+    "date": "2025-02-07T13:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-34",
+    "userId": "user-002",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 453.84,
+    "date": "2025-03-24T12:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-94",
+    "userId": "user-002",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 823.5,
+    "date": "2025-02-06T19:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-33",
+    "userId": "user-002",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 1637.85,
+    "date": "2025-06-25T08:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-46",
+    "userId": "user-004",
+    "industry": "Fitness & Sports"
+  },
+  {
+    "amount": 43920.0,
+    "date": "2025-08-18T12:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-60",
+    "userId": "user-004",
+    "industry": "Investment Services"
+  },
+  {
+    "amount": 828.08,
+    "date": "2025-01-30T16:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-24",
+    "userId": "user-002",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 1278.25,
+    "date": "2025-03-16T09:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-38",
+    "userId": "user-001",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 526.12,
+    "date": "2025-03-22T20:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-42",
+    "userId": "user-001",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 667.95,
+    "date": "2025-06-05T20:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-88",
+    "userId": "user-001",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 1697.33,
+    "date": "2025-02-28T20:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-15",
+    "userId": "user-004",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 345.87,
+    "date": "2025-02-25T12:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-58",
+    "userId": "user-002",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 23789.82,
+    "date": "2025-06-08T14:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-41",
+    "userId": "user-004",
+    "industry": "Technology"
+  },
+  {
+    "amount": 40260.0,
+    "date": "2025-05-18T12:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-36",
+    "userId": "user-004",
+    "industry": "Investment Services"
+  },
+  {
+    "amount": 233.33,
+    "date": "2025-01-15T14:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-2",
+    "userId": "user-002",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 429.13,
+    "date": "2025-02-12T08:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-18",
+    "userId": "user-001",
+    "industry": "Health & Wellness"
+  },
+  {
+    "amount": 556.32,
+    "date": "2025-03-25T09:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-95",
+    "userId": "user-002",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 1642.42,
+    "date": "2025-10-28T20:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-79",
+    "userId": "user-004",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 1789.74,
+    "date": "2025-11-28T19:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-87",
+    "userId": "user-004",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 764.02,
+    "date": "2025-05-26T16:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-82",
+    "userId": "user-001",
+    "industry": "Books"
+  },
+  {
+    "amount": 1511.58,
+    "date": "2025-03-09T10:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-34",
+    "userId": "user-001",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 14639.82,
+    "date": "2025-08-08T14:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-57",
+    "userId": "user-004",
+    "industry": "Technology"
+  },
+  {
+    "amount": 457.5,
+    "date": "2025-01-28T17:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-21",
+    "userId": "user-002",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 1431.98,
+    "date": "2025-03-07T15:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-72",
+    "userId": "user-002",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 1628.7,
+    "date": "2025-01-27T08:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-9",
+    "userId": "user-001",
+    "industry": "Health & Wellness"
+  },
+  {
+    "amount": 768.6,
+    "date": "2025-01-22T18:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-13",
+    "userId": "user-002",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 1679.94,
+    "date": "2025-06-22T09:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-98",
+    "userId": "user-001",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 32940.0,
+    "date": "2025-06-18T12:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-44",
+    "userId": "user-004",
+    "industry": "Investment Services"
+  },
+  {
+    "amount": 594.75,
+    "date": "2025-03-20T18:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-89",
+    "userId": "user-002",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 1743.08,
+    "date": "2026-01-10T11:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-98",
+    "userId": "user-004",
+    "industry": "Fitness & Sports"
+  },
+  {
+    "amount": 51240.0,
+    "date": "2025-03-18T12:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-20",
+    "userId": "user-004",
+    "industry": "Investment Services"
+  },
+  {
+    "amount": 343.12,
+    "date": "2025-03-30T08:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-47",
+    "userId": "user-001",
+    "industry": "Health & Wellness"
+  },
+  {
+    "amount": 3273.87,
+    "date": "2025-04-15T09:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-27",
+    "userId": "user-004",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 8234.82,
+    "date": "2025-02-22T15:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-13",
+    "userId": "user-004",
+    "industry": "Technology"
+  },
+  {
+    "amount": 599.33,
+    "date": "2025-02-09T20:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-37",
+    "userId": "user-002",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 1550.92,
+    "date": "2025-04-21T09:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-60",
+    "userId": "user-001",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 1431.98,
+    "date": "2025-03-24T14:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-43",
+    "userId": "user-001",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 951.6,
+    "date": "2025-03-01T15:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-29",
+    "userId": "user-001",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 1230.67,
+    "date": "2025-04-25T08:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-30",
+    "userId": "user-004",
+    "industry": "Fitness & Sports"
+  },
+  {
+    "amount": 1599.42,
+    "date": "2025-06-17T10:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-95",
+    "userId": "user-001",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 1442.04,
+    "date": "2025-03-19T16:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-88",
+    "userId": "user-002",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 3060.68,
+    "date": "2025-06-15T09:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-43",
+    "userId": "user-004",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 827.16,
+    "date": "2025-01-17T14:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-3",
+    "userId": "user-001",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 338.55,
+    "date": "2025-01-15T08:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-1",
+    "userId": "user-002",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 709.12,
+    "date": "2025-03-26T20:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-97",
+    "userId": "user-002",
+    "industry": "Entertainment"
+  },
+  {
+    "amount": 448.35,
+    "date": "2025-02-05T16:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-14",
+    "userId": "user-001",
+    "industry": "Books"
+  },
+  {
+    "amount": 361.43,
+    "date": "2025-01-20T13:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-10",
+    "userId": "user-002",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 1626.87,
+    "date": "2025-05-22T10:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-79",
+    "userId": "user-001",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 1646.82,
+    "date": "2025-01-15T14:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-2",
+    "userId": "user-004",
+    "industry": "Fitness & Sports"
+  },
+  {
+    "amount": 1646.82,
+    "date": "2025-03-10T16:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-76",
+    "userId": "user-002",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 1436.55,
+    "date": "2025-01-27T15:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-20",
+    "userId": "user-002",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 3060.68,
+    "date": "2025-06-25T14:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-100",
+    "userId": "user-001",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 1646.82,
+    "date": "2025-01-21T16:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-12",
+    "userId": "user-002",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 1372.5,
+    "date": "2025-02-28T08:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-28",
+    "userId": "user-001",
+    "industry": "Health & Wellness"
+  },
+  {
+    "amount": 2461.35,
+    "date": "2025-05-25T14:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-81",
+    "userId": "user-001",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 1747.65,
+    "date": "2025-11-10T11:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-82",
+    "userId": "user-004",
+    "industry": "Fitness & Sports"
+  },
+  {
+    "amount": 581.94,
+    "date": "2025-01-24T09:45:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-002-15",
+    "userId": "user-002",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 1646.82,
+    "date": "2025-02-04T14:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-13",
+    "userId": "user-001",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 783.24,
+    "date": "2025-02-08T20:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-16",
+    "userId": "user-001",
+    "industry": "Restaurants"
+  },
+  {
+    "amount": 32940.0,
+    "date": "2025-02-05T10:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-8",
+    "userId": "user-004",
+    "industry": "Investment Services"
+  },
+  {
+    "amount": 1639.68,
+    "date": "2025-04-16T10:30:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-57",
+    "userId": "user-001",
+    "industry": "Groceries"
+  },
+  {
+    "amount": 1743.08,
+    "date": "2025-04-24T14:20:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-62",
+    "userId": "user-001",
+    "industry": "Apparel"
+  },
+  {
+    "amount": 4291.35,
+    "date": "2025-04-12T11:00:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-001-55",
+    "userId": "user-001",
+    "industry": "Home & Garden"
+  },
+  {
+    "amount": 34770.0,
+    "date": "2025-04-05T10:15:00.000Z",
+    "currency": "MXN",
+    "transactionId": "txn-user-004-24",
+    "userId": "user-004",
+    "industry": "Investment Services"
+  }
+]

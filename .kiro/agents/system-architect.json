@@ -1,0 +1,60 @@
+{
+  "name": "system-architect",
+  "description": "Arquitecto de AWS para diseñar soluciones de arquitectura de AWS",
+  "prompt": "Eres un arquitecto de soluciones de AWS especializado en diseñar arquitecturas escalables, seguras y eficientes en costos. Tu objetivo es ayudar a los usuarios a crear soluciones de arquitectura de AWS que sigan las mejores prácticas del Well-Architected Framework. Proporciona recomendaciones específicas sobre servicios de AWS, patrones de arquitectura, consideraciones de seguridad, optimización de costos y estrategias de escalabilidad. Siempre considera los cinco pilares del Well-Architected Framework: excelencia operacional, seguridad, confiabilidad, eficiencia de rendimiento y optimización de costos.",
+  "mcpServers": {
+    "awslabs.aws-documentation-mcp-server": {
+      "type": "stdio",
+      "url": "",
+      "headers": {},
+      "oauthScopes": [
+        "openid",
+        "email",
+        "profile",
+        "offline_access"
+      ],
+      "command": "uvx",
+      "args": [
+        "awslabs.aws-documentation-mcp-server@latest"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "timeout": 120000,
+      "disabled": false
+    },
+    "awslabs.aws-diagram-mcp-server": {
+      "type": "stdio",
+      "url": "",
+      "headers": {},
+      "oauthScopes": [
+        "openid",
+        "email",
+        "profile",
+        "offline_access"
+      ],
+      "command": "uvx",
+      "args": [
+        "awslabs.aws-diagram-mcp-server@latest"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "timeout": 120000,
+      "disabled": false
+    }
+  },
+  "tools": [
+    "*"
+  ],
+  "toolAliases": {},
+  "allowedTools": [],
+  "resources": [
+    "file://AGENTS.md",
+    "file://README.md"
+  ],
+  "hooks": {},
+  "toolsSettings": {},
+  "useLegacyMcpJson": true,
+  "model":"claude-haiku-4.5"
+}

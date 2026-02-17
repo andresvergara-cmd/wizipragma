@@ -1,0 +1,246 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: PoC WiZi Mex Pragma
+
+Parameters:
+  Stage: 
+    Type: String
+    Default: dev
+    AllowedValues:
+      - dev
+      - qa
+      - prod
+  ProjectName:
+    Type: String
+    Description: Financial Coach Pragma - WiZi Mex
+    Default: financial-coach-wizi-mex
+  ProjectPrefix:
+    Type: String
+    Description: Project Prefix
+    Default: poc-wizi-mex
+  ModelId:
+    Type: String
+    Description: LLM to use
+    Default: us.anthropic.claude-3-7-sonnet-20250219-v1:0
+  LayerSelected:
+    Type: String
+    Description: LC and Loguru Layer
+    Default: pragma-bankia-layer-dev
+
+Resources:
+  # ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  #                                                    DYNAMODB TABLE                                                       #
+  # ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ChatHistoryDynamodbTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      TableName: !Sub ${ProjectPrefix}-chat-history-${Stage}
+      PrimaryKey:
+        Name: session_id
+        Type: String
+
+  UserDynamodbTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      TableName: !Sub ${ProjectPrefix}-user-profile-${Stage}
+      PrimaryKey:
+        Name: userId
+        Type: String
+
+  TransactionsDynamodbTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      TableName: !Sub ${ProjectPrefix}-transactions-${Stage}
+      PrimaryKey:
+        Name: transactionId
+        Type: String
+
+  RetailersDynamodbTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      TableName: !Sub ${ProjectPrefix}-retailers-${Stage}
+      PrimaryKey:
+        Name: retailerId
+        Type: String
+
+  # ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  #                                                     LAMBDA FUNCTIONS                                                    #
+  # ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  ConnectApiFn:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${ProjectPrefix}-lambda-connect-${Stage}
+      Handler: app_connect.lambda_handler
+      Runtime: python3.10
+      CodeUri: src_aws/app_connect/
+      Description: An AWS lambda function to establish connection.
+      MemorySize: 512
+      Timeout: 60
+      Environment:
+        Variables:
+          REGION_NAME: !Ref AWS::Region
+          ACCOUNT_ID: !Ref AWS::AccountId
+          STAGE: !Ref Stage
+      Architectures:
+        - x86_64
+
+  DisconnectApiFn:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${ProjectPrefix}-lambda-disconnect-${Stage}
+      Handler: app_disconnect.lambda_handler
+      Runtime: python3.10
+      CodeUri: src_aws/app_disconnect/
+      Description: An AWS lambda function to close connection.
+      MemorySize: 512
+      Timeout: 60
+      Environment:
+        Variables:
+          REGION_NAME: !Ref AWS::Region
+          ACCOUNT_ID: !Ref AWS::AccountId
+          STAGE: !Ref Stage
+      Architectures:
+        - x86_64
+
+  InferenceAPIFn:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${ProjectPrefix}-lambda-inference-model-${Stage}
+      Handler: app.lambda_handler
+      Runtime: python3.10
+      CodeUri: src_aws/app_inference/
+      Layers:
+        - !Sub arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:layer:${LayerSelected}:1
+      Description: An AWS lambda function To manage Bedrock resources
+      MemorySize: 1024
+      Timeout: 600
+      Environment:
+        Variables:
+          REGION_NAME: !Ref AWS::Region
+          ACCOUNT_ID: !Ref AWS::AccountId
+          STAGE: !Ref Stage
+          MODEL_ID: !Ref ModelId
+          API_ENDPOINT: !Sub "https://${WebSocketApi}.execute-api.${AWS::Region}.amazonaws.com/${Stage}"
+          CHAT_HISTORY_TABLE: !Ref ChatHistoryDynamodbTable
+      Architectures:
+        - x86_64
+      Policies:
+        - Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Action:
+                - bedrock:*
+                - execute-api:ManageConnections
+                - dynamodb:Query
+                - dynamodb:PutItem
+                - dynamodb:DeleteItem
+                - dynamodb:Scan
+              Resource: "*"
+
+  # ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  #                                                   APIGATEWAY WEB SOCKET                                                 #
+  # ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  WebSocketApi:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      Name: !Sub ${ProjectPrefix}-apigateway-ws-${Stage}
+      Description: An WebSocket API to expose generated text
+      ProtocolType: WEBSOCKET
+      RouteSelectionExpression: "$request.body.action"
+
+  ConnectFunctionPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref ConnectApiFn
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${WebSocketApi}/*
+  ConnectFunctionIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref WebSocketApi
+      Description: Route Connection Integration
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !Sub 
+        - 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaConnectionArn}/invocations'
+        - lambdaConnectionArn: !GetAtt ConnectApiFn.Arn
+  ConnectionFunctionRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref WebSocketApi
+      RouteKey: $connect
+      AuthorizationType: NONE
+      Target: !Join ["/", ["integrations", !Ref ConnectFunctionIntegration]]
+
+  DisconnectFunctionPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref DisconnectApiFn
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${WebSocketApi}/*
+  DisconnectFunctionIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref WebSocketApi
+      Description: Route Close Connection Integration
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !Sub 
+        - 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaDisconnectionArn}/invocations'
+        - lambdaDisconnectionArn: !GetAtt DisconnectApiFn.Arn
+  DisconnectionFunctionRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref WebSocketApi
+      RouteKey: $disconnect
+      AuthorizationType: NONE
+      Target: !Join ["/", ["integrations", !Ref DisconnectFunctionIntegration]]
+
+  InferenceFunctionPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref InferenceAPIFn
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${WebSocketApi}/*
+  InferenceFunctionIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref WebSocketApi
+      Description: Route Send Message
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !Sub 
+        - 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${lambdaInferenceArn}/invocations'
+        - lambdaInferenceArn: !GetAtt InferenceAPIFn.Arn
+  InferenceFunctionRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref WebSocketApi
+      RouteKey: sendMessage
+      AuthorizationType: NONE
+      Target: !Join ["/", ["integrations", !Ref InferenceFunctionIntegration]]
+
+  WsStage:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties:
+      StageName: !Ref Stage
+      Description: Web socket API Stage
+      ApiId: !Ref WebSocketApi
+      DeploymentId: !Ref WsDeployment
+  WsDeployment:
+    Type: AWS::ApiGatewayV2::Deployment
+    DependsOn:
+      - ConnectionFunctionRoute
+      - DisconnectionFunctionRoute
+      - InferenceFunctionRoute
+    Properties:
+      ApiId: !Ref WebSocketApi
+
+
+Outputs:
+  # connections URL
+  ConnectionsURL:
+    Value: !Sub "https://${WebSocketApi}.execute-api.${AWS::Region}.amazonaws.com/${Stage}"
+  # WebSocket URL
+  WebSocketURL:
+    Value: !Sub "wss://${WebSocketApi}.execute-api.${AWS::Region}.amazonaws.com/${Stage}/"

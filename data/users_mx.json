@@ -1,0 +1,1245 @@
+[
+  {
+    "creditLine": {
+      "isApproved": false,
+      "limit": 396780.6,
+      "available": 0.0
+    },
+    "habits": {
+      "preferredPaymentMethod": "credit_card",
+      "savingsRate": 0.15,
+      "investmentStyle": "conservative",
+      "shoppingHabits": [
+        "online",
+        "supermercados",
+        "tecnología"
+      ],
+      "spendingFrequency": "weekly"
+    },
+    "lastName": "Rodríguez",
+    "userId": "user-001",
+    "importantDates": {
+      "creditCardDueDate": "25th",
+      "childrenBirthdays": [
+        "2019-08-12",
+        "2021-11-03"
+      ],
+      "mortgageDueDate": "15th",
+      "anniversary": "2018-06-20"
+    },
+    "joinDate": "2025-07-11T00:21:10.114Z",
+    "preferences": {
+      "communicationChannel": "email",
+      "language": "Spanish",
+      "timezone": "COT",
+      "notificationFrequency": "weekly"
+    },
+    "financialInfo": {
+      "hasMortgage": true,
+      "incomeAnnual": 1322595.9,
+      "creditScore": 542
+    },
+    "goals": {
+      "longTerm": [
+        "ahorros_jubilacion",
+        "educacion_hijos"
+      ],
+      "shortTerm": [
+        "pagar_tarjeta_credito",
+        "crear_fondo_emergencia"
+      ],
+      "mediumTerm": [
+        "ahorrar_vacaciones",
+        "mejoras_hogar"
+      ],
+      "targetSavings": 915000.0
+    },
+    "email": "carlos.rodriguez@example.com",
+    "personalInfo": {
+      "location": "Ciudad de México, México",
+      "occupation": "Ingeniero de Software",
+      "birthDate": "1985-03-15",
+      "children": 2,
+      "maritalStatus": "married"
+    },
+    "firstName": "Carlos"
+  },
+  {
+    "creditLine": {
+      "isApproved": false,
+      "limit": 229244.1,
+      "available": 0.0
+    },
+    "habits": {
+      "preferredPaymentMethod": "debit_card",
+      "savingsRate": 0.08,
+      "investmentStyle": "moderate",
+      "shoppingHabits": [
+        "restaurantes",
+        "entretenimiento",
+        "moda"
+      ],
+      "spendingFrequency": "daily"
+    },
+    "lastName": "García",
+    "userId": "user-002",
+    "importantDates": {
+      "creditCardDueDate": "20th",
+      "mortgageDueDate": "1st"
+    },
+    "joinDate": "2025-07-11T00:21:10.122Z",
+    "preferences": {
+      "communicationChannel": "push_notifications",
+      "language": "Spanish",
+      "timezone": "COT",
+      "notificationFrequency": "daily"
+    },
+    "financialInfo": {
+      "hasMortgage": true,
+      "incomeAnnual": 764134.8,
+      "creditScore": 842
+    },
+    "goals": {
+      "longTerm": [
+        "comprar_casa",
+        "jubilacion_temprana"
+      ],
+      "shortTerm": [
+        "reducir_gastos_restaurantes",
+        "ahorrar_emergencia"
+      ],
+      "mediumTerm": [
+        "fondo_viajes",
+        "pagar_prestamos_estudiantiles"
+      ],
+      "targetSavings": 457500.0
+    },
+    "email": "ana.garcia@example.com",
+    "personalInfo": {
+      "location": "Guadalajara, México",
+      "occupation": "Especialista en Marketing",
+      "birthDate": "1992-07-22",
+      "children": 0,
+      "maritalStatus": "single"
+    },
+    "firstName": "Ana"
+  },
+  {
+    "creditLine": {
+      "isApproved": false,
+      "limit": 290402.7,
+      "available": 0.0
+    },
+    "habits": {
+      "preferredPaymentMethod": "cash",
+      "savingsRate": 0.12,
+      "investmentStyle": "conservative",
+      "shoppingHabits": [
+        "salud",
+        "supermercados",
+        "cuidado_ninos"
+      ],
+      "spendingFrequency": "biweekly"
+    },
+    "lastName": "López",
+    "userId": "user-003",
+    "importantDates": {
+      "creditCardDueDate": "15th",
+      "rentDueDate": "1st",
+      "childBirthday": "2016-04-25"
+    },
+    "joinDate": "2025-07-11T00:21:10.122Z",
+    "preferences": {
+      "communicationChannel": "sms",
+      "language": "Spanish",
+      "timezone": "COT",
+      "notificationFrequency": "biweekly"
+    },
+    "financialInfo": {
+      "hasMortgage": false,
+      "incomeAnnual": 968015.1,
+      "creditScore": 577
+    },
+    "goals": {
+      "longTerm": [
+        "independencia_financiera",
+        "fondo_universidad_hijo"
+      ],
+      "shortTerm": [
+        "mejorar_credito",
+        "ahorrar_educacion_hijo"
+      ],
+      "mediumTerm": [
+        "comprar_carro",
+        "ahorrar_entrada_casa"
+      ],
+      "targetSavings": 640500.0
+    },
+    "email": "maria.lopez@example.com",
+    "personalInfo": {
+      "location": "Monterrey, México",
+      "occupation": "Enfermera",
+      "birthDate": "1988-11-08",
+      "children": 1,
+      "maritalStatus": "divorced"
+    },
+    "firstName": "María"
+  },
+  {
+    "creditLine": {
+      "isApproved": true,
+      "limit": 424175.7,
+      "available": 424175.7
+    },
+    "habits": {
+      "preferredPaymentMethod": "credit_card",
+      "savingsRate": 0.25,
+      "investmentStyle": "aggressive",
+      "shoppingHabits": [
+        "inversiones",
+        "tecnología",
+        "fitness"
+      ],
+      "spendingFrequency": "monthly"
+    },
+    "lastName": "Martínez",
+    "userId": "user-004",
+    "importantDates": {
+      "creditCardDueDate": "28th",
+      "anniversary": "2020-09-14",
+      "rentDueDate": "1st"
+    },
+    "joinDate": "2025-07-11T00:21:10.122Z",
+    "preferences": {
+      "communicationChannel": "email",
+      "language": "Spanish",
+      "timezone": "COT",
+      "notificationFrequency": "monthly"
+    },
+    "financialInfo": {
+      "hasMortgage": false,
+      "incomeAnnual": 1413912.9,
+      "creditScore": 742
+    },
+    "goals": {
+      "longTerm": [
+        "libertad_financiera",
+        "jubilacion_temprana"
+      ],
+      "shortTerm": [
+        "maximizar_inversiones",
+        "ahorrar_casa"
+      ],
+      "mediumTerm": [
+        "comprar_propiedad",
+        "iniciar_negocio"
+      ],
+      "targetSavings": 1830000.0
+    },
+    "email": "andres.martinez@example.com",
+    "personalInfo": {
+      "location": "Puebla, México",
+      "occupation": "Analista Financiero",
+      "birthDate": "1990-01-30",
+      "children": 0,
+      "maritalStatus": "married"
+    },
+    "firstName": "Andrés"
+  },
+  {
+    "creditLine": {
+      "isApproved": true,
+      "limit": 169586.1,
+      "available": 169586.1
+    },
+    "habits": {
+      "preferredPaymentMethod": "debit_card",
+      "savingsRate": 0.05,
+      "investmentStyle": "conservative",
+      "shoppingHabits": [
+        "supermercados",
+        "productos_ninos",
+        "educacion"
+      ],
+      "spendingFrequency": "weekly"
+    },
+    "lastName": "Herrera",
+    "userId": "user-005",
+    "importantDates": {
+      "creditCardDueDate": "20th",
+      "childrenBirthdays": [
+        "2012-07-15",
+        "2015-02-28",
+        "2018-10-12"
+      ],
+      "mortgageDueDate": "1st",
+      "anniversary": "2010-03-08"
+    },
+    "joinDate": "2025-07-11T00:21:10.122Z",
+    "preferences": {
+      "communicationChannel": "email",
+      "language": "Spanish",
+      "timezone": "COT",
+      "notificationFrequency": "weekly"
+    },
+    "financialInfo": {
+      "hasMortgage": true,
+      "incomeAnnual": 565268.7,
+      "creditScore": 642
+    },
+    "goals": {
+      "longTerm": [
+        "educacion_hijos",
+        "jubilacion"
+      ],
+      "shortTerm": [
+        "reducir_gastos",
+        "ahorrar_emergencia"
+      ],
+      "mediumTerm": [
+        "vacaciones_familia",
+        "reparaciones_hogar"
+      ],
+      "targetSavings": 274500.0
+    },
+    "email": "carmen.herrera@example.com",
+    "personalInfo": {
+      "location": "Tijuana, México",
+      "occupation": "Profesora",
+      "birthDate": "1983-05-12",
+      "children": 3,
+      "maritalStatus": "married"
+    },
+    "firstName": "Carmen"
+  },
+  {
+    "creditLine": {
+      "isApproved": true,
+      "limit": 520140.9,
+      "available": 520140.9
+    },
+    "habits": {
+      "preferredPaymentMethod": "credit_card",
+      "savingsRate": 0.18,
+      "investmentStyle": "moderate",
+      "shoppingHabits": [
+        "tecnología",
+        "restaurantes",
+        "entretenimiento"
+      ],
+      "spendingFrequency": "daily"
+    },
+    "lastName": "Silva",
+    "userId": "user-006",
+    "importantDates": {
+      "creditCardDueDate": "30th",
+      "mortgageDueDate": "15th",
+      "childBirthday": "2022-03-10",
+      "anniversary": "2019-11-20"
+    },
+    "joinDate": "2025-07-11T00:21:10.122Z",
+    "preferences": {
+      "communicationChannel": "push_notifications",
+      "language": "Spanish",
+      "timezone": "COT",
+      "notificationFrequency": "daily"
+    },
+    "financialInfo": {
+      "hasMortgage": true,
+      "incomeAnnual": 1733778.6,
+      "creditScore": 734
+    },
+    "goals": {
+      "longTerm": [
+        "independencia_financiera",
+        "educacion_hijo"
+      ],
+      "shortTerm": [
+        "pagar_tarjeta_credito",
+        "ahorrar_hijo"
+      ],
+      "mediumTerm": [
+        "mejoras_hogar",
+        "viajes_familia"
+      ],
+      "targetSavings": 1372500.0
+    },
+    "email": "diego.silva@example.com",
+    "personalInfo": {
+      "location": "León, México",
+      "occupation": "Gerente de Producto",
+      "birthDate": "1987-12-03",
+      "children": 1,
+      "maritalStatus": "married"
+    },
+    "firstName": "Diego"
+  },
+  {
+    "creditLine": {
+      "isApproved": false,
+      "limit": 379212.6,
+      "available": 0.0
+    },
+    "habits": {
+      "preferredPaymentMethod": "credit_card",
+      "savingsRate": 0.2,
+      "investmentStyle": "aggressive",
+      "shoppingHabits": [
+        "tecnología",
+        "equipo_aire_libre",
+        "libros"
+      ],
+      "spendingFrequency": "weekly"
+    },
+    "lastName": "Ramírez",
+    "userId": "user-007",
+    "importantDates": {
+      "creditCardDueDate": "25th",
+      "rentDueDate": "1st"
+    },
+    "joinDate": "2025-07-11T00:21:10.122Z",
+    "preferences": {
+      "communicationChannel": "email",
+      "language": "Spanish",
+      "timezone": "COT",
+      "notificationFrequency": "weekly"
+    },
+    "financialInfo": {
+      "hasMortgage": false,
+      "incomeAnnual": 1264054.2,
+      "creditScore": 767
+    },
+    "goals": {
+      "longTerm": [
+        "libertad_financiera",
+        "jubilacion_temprana"
+      ],
+      "shortTerm": [
+        "crear_fondo_emergencia",
+        "pagar_prestamos_estudiantiles"
+      ],
+      "mediumTerm": [
+        "comprar_casa",
+        "iniciar_inversiones"
+      ],
+      "targetSavings": 1098000.0
+    },
+    "email": "sofia.ramirez@example.com",
+    "personalInfo": {
+      "location": "Juárez, México",
+      "occupation": "Científica de Datos",
+      "birthDate": "1995-08-18",
+      "children": 0,
+      "maritalStatus": "single"
+    },
+    "firstName": "Sofia"
+  },
+  {
+    "creditLine": {
+      "isApproved": true,
+      "limit": 353080.2,
+      "available": 353080.2
+    },
+    "habits": {
+      "preferredPaymentMethod": "credit_card",
+      "savingsRate": 0.1,
+      "investmentStyle": "moderate",
+      "shoppingHabits": [
+        "automotriz",
+        "deportes",
+        "entretenimiento_familia"
+      ],
+      "spendingFrequency": "biweekly"
+    },
+    "lastName": "Torres",
+    "userId": "user-008",
+    "importantDates": {
+      "creditCardDueDate": "20th",
+      "childrenBirthdays": [
+        "2017-09-05",
+        "2020-01-18"
+      ],
+      "mortgageDueDate": "1st",
+      "anniversary": "2015-06-12"
+    },
+    "joinDate": "2025-07-11T00:21:10.122Z",
+    "preferences": {
+      "communicationChannel": "sms",
+      "language": "Spanish",
+      "timezone": "COT",
+      "notificationFrequency": "biweekly"
+    },
+    "financialInfo": {
+      "hasMortgage": true,
+      "incomeAnnual": 1176909.6,
+      "creditScore": 769
+    },
+    "goals": {
+      "longTerm": [
+        "ahorros_jubilacion",
+        "educacion_hijos"
+      ],
+      "shortTerm": [
+        "ahorrar_vacaciones",
+        "pagar_tarjeta_credito"
+      ],
+      "mediumTerm": [
+        "mejoras_hogar",
+        "actividades_hijos"
+      ],
+      "targetSavings": 732000.0
+    },
+    "email": "juan.torres@example.com",
+    "personalInfo": {
+      "location": "Torreón, México",
+      "occupation": "Gerente de Ventas",
+      "birthDate": "1986-04-25",
+      "children": 2,
+      "maritalStatus": "married"
+    },
+    "firstName": "Juan"
+  },
+  {
+    "creditLine": {
+      "isApproved": true,
+      "limit": 253143.9,
+      "available": 253143.9
+    },
+    "habits": {
+      "preferredPaymentMethod": "debit_card",
+      "savingsRate": 0.12,
+      "investmentStyle": "conservative",
+      "shoppingHabits": [
+        "suministros_arte",
+        "supermercados",
+        "negocios_locales"
+      ],
+      "spendingFrequency": "weekly"
+    },
+    "lastName": "Castro",
+    "userId": "user-009",
+    "importantDates": {
+      "creditCardDueDate": "15th",
+      "mortgageDueDate": "1st",
+      "childBirthday": "2021-12-08",
+      "anniversary": "2017-04-22"
+    },
+    "joinDate": "2025-07-11T00:21:10.122Z",
+    "preferences": {
+      "communicationChannel": "email",
+      "language": "Spanish",
+      "timezone": "COT",
+      "notificationFrequency": "weekly"
+    },
+    "financialInfo": {
+      "hasMortgage": true,
+      "incomeAnnual": 843831.3,
+      "creditScore": 791
+    },
+    "goals": {
+      "longTerm": [
+        "estabilidad_financiera",
+        "educacion_hijo"
+      ],
+      "shortTerm": [
+        "ahorrar_emergencia",
+        "pagar_tarjeta_credito"
+      ],
+      "mediumTerm": [
+        "configuracion_oficina_hogar",
+        "vacaciones_familia"
+      ],
+      "targetSavings": 549000.0
+    },
+    "email": "valentina.castro@example.com",
+    "personalInfo": {
+      "location": "Querétaro, México",
+      "occupation": "Diseñadora Gráfica",
+      "birthDate": "1989-10-07",
+      "children": 1,
+      "maritalStatus": "married"
+    },
+    "firstName": "Valentina"
+  },
+  {
+    "creditLine": {
+      "isApproved": true,
+      "limit": 268113.3,
+      "available": 268113.3
+    },
+    "habits": {
+      "preferredPaymentMethod": "credit_card",
+      "savingsRate": 0.15,
+      "investmentStyle": "moderate",
+      "shoppingHabits": [
+        "equipo_musica",
+        "libros",
+        "cafeterias"
+      ],
+      "spendingFrequency": "monthly"
+    },
+    "lastName": "Vargas",
+    "userId": "user-010",
+    "importantDates": {
+      "creditCardDueDate": "25th",
+      "rentDueDate": "1st"
+    },
+    "joinDate": "2025-07-11T00:21:10.122Z",
+    "preferences": {
+      "communicationChannel": "push_notifications",
+      "language": "Spanish",
+      "timezone": "COT",
+      "notificationFrequency": "monthly"
+    },
+    "financialInfo": {
+      "hasMortgage": false,
+      "incomeAnnual": 893680.5,
+      "creditScore": 711
+    },
+    "goals": {
+      "longTerm": [
+        "independencia_financiera",
+        "jubilacion_temprana"
+      ],
+      "shortTerm": [
+        "crear_fondo_emergencia",
+        "pagar_prestamos_estudiantiles"
+      ],
+      "mediumTerm": [
+        "comprar_casa",
+        "iniciar_inversiones"
+      ],
+      "targetSavings": 823500.0
+    },
+    "email": "miguel.vargas@example.com",
+    "personalInfo": {
+      "location": "Mérida, México",
+      "occupation": "Contador",
+      "birthDate": "1993-02-14",
+      "children": 0,
+      "maritalStatus": "single"
+    },
+    "firstName": "Miguel"
+  },
+  {
+    "creditLine": {
+      "isApproved": true,
+      "limit": 287200.2,
+      "available": 287200.2
+    },
+    "habits": {
+      "preferredPaymentMethod": "cash",
+      "savingsRate": 0.08,
+      "investmentStyle": "conservative",
+      "shoppingHabits": [
+        "gastos_inmobiliarios",
+        "cuidado_ninos",
+        "entretenimiento"
+      ],
+      "spendingFrequency": "daily"
+    },
+    "lastName": "Moreno",
+    "userId": "user-011",
+    "importantDates": {
+      "creditCardDueDate": "20th",
+      "rentDueDate": "1st",
+      "childBirthday": "2014-03-17"
+    },
+    "joinDate": "2025-07-11T00:21:10.122Z",
+    "preferences": {
+      "communicationChannel": "sms",
+      "language": "Spanish",
+      "timezone": "COT",
+      "notificationFrequency": "daily"
+    },
+    "financialInfo": {
+      "hasMortgage": false,
+      "incomeAnnual": 957346.2,
+      "creditScore": 537
+    },
+    "goals": {
+      "longTerm": [
+        "estabilidad_financiera",
+        "jubilacion"
+      ],
+      "shortTerm": [
+        "mejorar_credito",
+        "ahorrar_hijo"
+      ],
+      "mediumTerm": [
+        "comprar_casa",
+        "educacion_hijo"
+      ],
+      "targetSavings": 457500.0
+    },
+    "email": "isabella.moreno@example.com",
+    "personalInfo": {
+      "location": "Cancún, México",
+      "occupation": "Agente Inmobiliaria",
+      "birthDate": "1984-06-30",
+      "children": 1,
+      "maritalStatus": "divorced"
+    },
+    "firstName": "Isabella"
+  },
+  {
+    "creditLine": {
+      "isApproved": true,
+      "limit": 205966.5,
+      "available": 205966.5
+    },
+    "habits": {
+      "preferredPaymentMethod": "debit_card",
+      "savingsRate": 0.1,
+      "investmentStyle": "conservative",
+      "shoppingHabits": [
+        "supermercados",
+        "equipo_cocina",
+        "restaurantes"
+      ],
+      "spendingFrequency": "weekly"
+    },
+    "lastName": "Jiménez",
+    "userId": "user-012",
+    "importantDates": {
+      "creditCardDueDate": "15th",
+      "anniversary": "2018-12-03",
+      "mortgageDueDate": "1st"
+    },
+    "joinDate": "2025-07-11T00:21:10.122Z",
+    "preferences": {
+      "communicationChannel": "email",
+      "language": "Spanish",
+      "timezone": "COT",
+      "notificationFrequency": "weekly"
+    },
+    "financialInfo": {
+      "hasMortgage": true,
+      "incomeAnnual": 686542.8,
+      "creditScore": 749
+    },
+    "goals": {
+      "longTerm": [
+        "propiedad_negocio",
+        "libertad_financiera"
+      ],
+      "shortTerm": [
+        "ahorrar_emergencia",
+        "pagar_tarjeta_credito"
+      ],
+      "mediumTerm": [
+        "abrir_restaurante",
+        "mejoras_hogar"
+      ],
+      "targetSavings": 640500.0
+    },
+    "email": "alejandro.jimenez@example.com",
+    "personalInfo": {
+      "location": "Toluca, México",
+      "occupation": "Chef",
+      "birthDate": "1991-09-11",
+      "children": 0,
+      "maritalStatus": "married"
+    },
+    "firstName": "Alejandro"
+  },
+  {
+    "creditLine": {
+      "isApproved": true,
+      "limit": 180492.9,
+      "available": 180492.9
+    },
+    "habits": {
+      "preferredPaymentMethod": "debit_card",
+      "savingsRate": 0.08,
+      "investmentStyle": "conservative",
+      "shoppingHabits": [
+        "supermercados",
+        "productos_ninos",
+        "deportes"
+      ],
+      "spendingFrequency": "biweekly"
+    },
+    "lastName": "Rojas",
+    "userId": "user-013",
+    "importantDates": {
+      "creditCardDueDate": "20th",
+      "childrenBirthdays": [
+        "2010-11-25",
+        "2013-05-08",
+        "2016-02-14"
+      ],
+      "mortgageDueDate": "1st",
+      "anniversary": "2008-07-19"
+    },
+    "joinDate": "2025-07-11T00:21:10.122Z",
+    "preferences": {
+      "communicationChannel": "sms",
+      "language": "Spanish",
+      "timezone": "COT",
+      "notificationFrequency": "biweekly"
+    },
+    "financialInfo": {
+      "hasMortgage": true,
+      "incomeAnnual": 601612.5,
+      "creditScore": 584
+    },
+    "goals": {
+      "longTerm": [
+        "educacion_hijos",
+        "jubilacion"
+      ],
+      "shortTerm": [
+        "reducir_gastos",
+        "ahorrar_emergencia"
+      ],
+      "mediumTerm": [
+        "vacaciones_familia",
+        "reparaciones_hogar"
+      ],
+      "targetSavings": 366000.0
+    },
+    "email": "daniela.rojas@example.com",
+    "personalInfo": {
+      "location": "Mexicali, México",
+      "occupation": "Oficial de Policía",
+      "birthDate": "1982-12-05",
+      "children": 3,
+      "maritalStatus": "married"
+    },
+    "firstName": "Daniela"
+  },
+  {
+    "creditLine": {
+      "isApproved": false,
+      "limit": 497467.2,
+      "available": 0.0
+    },
+    "habits": {
+      "preferredPaymentMethod": "credit_card",
+      "savingsRate": 0.2,
+      "investmentStyle": "aggressive",
+      "shoppingHabits": [
+        "salud",
+        "educacion",
+        "articulos_lujo"
+      ],
+      "spendingFrequency": "monthly"
+    },
+    "lastName": "Díaz",
+    "userId": "user-014",
+    "importantDates": {
+      "creditCardDueDate": "30th",
+      "childrenBirthdays": [
+        "2018-04-12",
+        "2020-08-30"
+      ],
+      "mortgageDueDate": "1st",
+      "anniversary": "2016-10-28"
+    },
+    "joinDate": "2025-07-11T00:21:10.122Z",
+    "preferences": {
+      "communicationChannel": "email",
+      "language": "Spanish",
+      "timezone": "COT",
+      "notificationFrequency": "monthly"
+    },
+    "financialInfo": {
+      "hasMortgage": true,
+      "incomeAnnual": 1658199.6,
+      "creditScore": 592
+    },
+    "goals": {
+      "longTerm": [
+        "independencia_financiera",
+        "jubilacion_temprana"
+      ],
+      "shortTerm": [
+        "pagar_prestamos_estudiantiles",
+        "crear_fondo_emergencia"
+      ],
+      "mediumTerm": [
+        "educacion_hijos",
+        "mejoras_hogar"
+      ],
+      "targetSavings": 2745000.0
+    },
+    "email": "roberto.diaz@example.com",
+    "personalInfo": {
+      "location": "Aguascalientes, México",
+      "occupation": "Médico",
+      "birthDate": "1988-01-20",
+      "children": 2,
+      "maritalStatus": "married"
+    },
+    "firstName": "Roberto"
+  },
+  {
+    "creditLine": {
+      "isApproved": false,
+      "limit": 299241.6,
+      "available": 0.0
+    },
+    "habits": {
+      "preferredPaymentMethod": "credit_card",
+      "savingsRate": 0.12,
+      "investmentStyle": "moderate",
+      "shoppingHabits": [
+        "tecnología",
+        "fitness",
+        "viajes"
+      ],
+      "spendingFrequency": "weekly"
+    },
+    "lastName": "Ortiz",
+    "userId": "user-015",
+    "importantDates": {
+      "creditCardDueDate": "25th",
+      "rentDueDate": "1st"
+    },
+    "joinDate": "2025-07-11T00:21:10.122Z",
+    "preferences": {
+      "communicationChannel": "push_notifications",
+      "language": "Spanish",
+      "timezone": "COT",
+      "notificationFrequency": "weekly"
+    },
+    "financialInfo": {
+      "hasMortgage": false,
+      "incomeAnnual": 997459.8,
+      "creditScore": 643
+    },
+    "goals": {
+      "longTerm": [
+        "libertad_financiera",
+        "jubilacion_temprana"
+      ],
+      "shortTerm": [
+        "crear_fondo_emergencia",
+        "pagar_tarjeta_credito"
+      ],
+      "mediumTerm": [
+        "comprar_casa",
+        "iniciar_inversiones"
+      ],
+      "targetSavings": 915000.0
+    },
+    "email": "camila.ortiz@example.com",
+    "personalInfo": {
+      "location": "Cuernavaca, México",
+      "occupation": "Diseñadora UX",
+      "birthDate": "1994-07-04",
+      "children": 0,
+      "maritalStatus": "single"
+    },
+    "firstName": "Camila"
+  },
+  {
+    "creditLine": {
+      "isApproved": true,
+      "limit": 199524.9,
+      "available": 199524.9
+    },
+    "habits": {
+      "preferredPaymentMethod": "debit_card",
+      "savingsRate": 0.08,
+      "investmentStyle": "conservative",
+      "shoppingHabits": [
+        "supermercados",
+        "cuidado_ninos",
+        "libros"
+      ],
+      "spendingFrequency": "biweekly"
+    },
+    "lastName": "Mendoza",
+    "userId": "user-016",
+    "importantDates": {
+      "creditCardDueDate": "20th",
+      "mortgageDueDate": "1st",
+      "childBirthday": "2022-09-07",
+      "anniversary": "2019-03-25"
+    },
+    "joinDate": "2025-07-11T00:21:10.122Z",
+    "preferences": {
+      "communicationChannel": "email",
+      "language": "Spanish",
+      "timezone": "COT",
+      "notificationFrequency": "biweekly"
+    },
+    "financialInfo": {
+      "hasMortgage": true,
+      "incomeAnnual": 665076.9,
+      "creditScore": 618
+    },
+    "goals": {
+      "longTerm": [
+        "educacion_hijo",
+        "jubilacion"
+      ],
+      "shortTerm": [
+        "ahorrar_emergencia",
+        "pagar_tarjeta_credito"
+      ],
+      "mediumTerm": [
+        "vacaciones_familia",
+        "mejoras_hogar"
+      ],
+      "targetSavings": 457500.0
+    },
+    "email": "felipe.mendoza@example.com",
+    "personalInfo": {
+      "location": "Oaxaca, México",
+      "occupation": "Trabajador Social",
+      "birthDate": "1987-11-16",
+      "children": 1,
+      "maritalStatus": "married"
+    },
+    "firstName": "Felipe"
+  },
+  {
+    "creditLine": {
+      "isApproved": false,
+      "limit": 311685.6,
+      "available": 0.0
+    },
+    "habits": {
+      "preferredPaymentMethod": "credit_card",
+      "savingsRate": 0.15,
+      "investmentStyle": "moderate",
+      "shoppingHabits": [
+        "tecnología",
+        "restaurantes",
+        "entretenimiento"
+      ],
+      "spendingFrequency": "weekly"
+    },
+    "lastName": "Pérez",
+    "userId": "user-017",
+    "importantDates": {
+      "creditCardDueDate": "25th",
+      "rentDueDate": "1st"
+    },
+    "joinDate": "2025-07-11T00:21:10.122Z",
+    "preferences": {
+      "communicationChannel": "push_notifications",
+      "language": "Spanish",
+      "timezone": "COT",
+      "notificationFrequency": "weekly"
+    },
+    "financialInfo": {
+      "hasMortgage": false,
+      "incomeAnnual": 1038927.6,
+      "creditScore": 752
+    },
+    "goals": {
+      "longTerm": [
+        "independencia_financiera",
+        "jubilacion_temprana"
+      ],
+      "shortTerm": [
+        "crear_fondo_emergencia",
+        "pagar_prestamos_estudiantiles"
+      ],
+      "mediumTerm": [
+        "comprar_casa",
+        "iniciar_inversiones"
+      ],
+      "targetSavings": 1098000.0
+    },
+    "email": "laura.perez@example.com",
+    "personalInfo": {
+      "location": "Veracruz, México",
+      "occupation": "Gerente de Proyectos",
+      "birthDate": "1990-03-28",
+      "children": 0,
+      "maritalStatus": "single"
+    },
+    "firstName": "Laura"
+  },
+  {
+    "creditLine": {
+      "isApproved": false,
+      "limit": 437809.2,
+      "available": 0.0
+    },
+    "habits": {
+      "preferredPaymentMethod": "credit_card",
+      "savingsRate": 0.18,
+      "investmentStyle": "aggressive",
+      "shoppingHabits": [
+        "tecnología",
+        "automotriz",
+        "inversiones"
+      ],
+      "spendingFrequency": "monthly"
+    },
+    "lastName": "González",
+    "userId": "user-018",
+    "importantDates": {
+      "creditCardDueDate": "30th",
+      "anniversary": "2014-05-17",
+      "rentDueDate": "1st"
+    },
+    "joinDate": "2025-07-11T00:21:10.122Z",
+    "preferences": {
+      "communicationChannel": "email",
+      "language": "Spanish",
+      "timezone": "COT",
+      "notificationFrequency": "monthly"
+    },
+    "financialInfo": {
+      "hasMortgage": false,
+      "incomeAnnual": 1459370.1,
+      "creditScore": 717
+    },
+    "goals": {
+      "longTerm": [
+        "libertad_financiera",
+        "jubilacion_temprana"
+      ],
+      "shortTerm": [
+        "pagar_tarjeta_credito",
+        "crear_fondo_emergencia"
+      ],
+      "mediumTerm": [
+        "comprar_casa",
+        "iniciar_inversiones"
+      ],
+      "targetSavings": 1464000.0
+    },
+    "email": "carlos.gonzalez@example.com",
+    "personalInfo": {
+      "location": "Morelia, México",
+      "occupation": "Ingeniero",
+      "birthDate": "1985-12-10",
+      "children": 0,
+      "maritalStatus": "married"
+    },
+    "firstName": "Carlos"
+  },
+  {
+    "creditLine": {
+      "isApproved": true,
+      "limit": 171782.1,
+      "available": 171782.1
+    },
+    "habits": {
+      "preferredPaymentMethod": "debit_card",
+      "savingsRate": 0.05,
+      "investmentStyle": "conservative",
+      "shoppingHabits": [
+        "libros",
+        "cafeterias",
+        "transporte_publico"
+      ],
+      "spendingFrequency": "daily"
+    },
+    "lastName": "Ruiz",
+    "userId": "user-019",
+    "importantDates": {
+      "creditCardDueDate": "20th",
+      "rentDueDate": "1st"
+    },
+    "joinDate": "2025-07-11T00:21:10.122Z",
+    "preferences": {
+      "communicationChannel": "sms",
+      "language": "Spanish",
+      "timezone": "COT",
+      "notificationFrequency": "daily"
+    },
+    "financialInfo": {
+      "hasMortgage": false,
+      "incomeAnnual": 572588.7,
+      "creditScore": 846
+    },
+    "goals": {
+      "longTerm": [
+        "estabilidad_financiera",
+        "avance_carrera"
+      ],
+      "shortTerm": [
+        "pagar_prestamos_estudiantiles",
+        "ahorrar_emergencia"
+      ],
+      "mediumTerm": [
+        "comprar_carro",
+        "iniciar_inversiones"
+      ],
+      "targetSavings": 274500.0
+    },
+    "email": "natalia.ruiz@example.com",
+    "personalInfo": {
+      "location": "Xalapa, México",
+      "occupation": "Estudiante de Posgrado",
+      "birthDate": "1996-06-22",
+      "children": 0,
+      "maritalStatus": "single"
+    },
+    "firstName": "Natalia"
+  },
+  {
+    "creditLine": {
+      "isApproved": true,
+      "limit": 566073.9,
+      "available": 566073.9
+    },
+    "habits": {
+      "preferredPaymentMethod": "credit_card",
+      "savingsRate": 0.22,
+      "investmentStyle": "aggressive",
+      "shoppingHabits": [
+        "articulos_lujo",
+        "educacion",
+        "entretenimiento"
+      ],
+      "spendingFrequency": "weekly"
+    },
+    "lastName": "Herrera",
+    "userId": "user-020",
+    "importantDates": {
+      "creditCardDueDate": "30th",
+      "childrenBirthdays": [
+        "2015-02-28",
+        "2018-07-12"
+      ],
+      "anniversary": "2012-11-15",
+      "rentDueDate": "1st"
+    },
+    "joinDate": "2025-07-11T00:21:10.122Z",
+    "preferences": {
+      "communicationChannel": "email",
+      "language": "Spanish",
+      "timezone": "COT",
+      "notificationFrequency": "weekly"
+    },
+    "financialInfo": {
+      "hasMortgage": false,
+      "incomeAnnual": 1886894.7,
+      "creditScore": 703
+    },
+    "goals": {
+      "longTerm": [
+        "independencia_financiera",
+        "jubilacion_temprana"
+      ],
+      "shortTerm": [
+        "pagar_tarjeta_credito",
+        "crear_fondo_emergencia"
+      ],
+      "mediumTerm": [
+        "comprar_casa",
+        "educacion_hijos"
+      ],
+      "targetSavings": 2196000.0
+    },
+    "email": "gabriel.herrera@example.com",
+    "personalInfo": {
+      "location": "Chihuahua, México",
+      "occupation": "Abogado",
+      "birthDate": "1983-09-08",
+      "children": 2,
+      "maritalStatus": "married"
+    },
+    "firstName": "Gabriel"
+  }
+]

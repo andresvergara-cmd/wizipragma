@@ -1,0 +1,2198 @@
+[
+  {
+    "retailerId": "store-001",
+    "benefits": [
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      },
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      }
+    ],
+    "name": "Ambiente Gourmet",
+    "industry": "Home & Garden",
+    "name_mx": "Williams Sonoma México"
+  },
+  {
+    "retailerId": "store-002",
+    "benefits": [
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      },
+      {
+        "type": "cashback",
+        "description": "6% cashback"
+      }
+    ],
+    "name": "Ani-k makeup",
+    "industry": "Apparel",
+    "name_mx": "Sephora México"
+  },
+  {
+    "retailerId": "store-003",
+    "benefits": [
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      },
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      }
+    ],
+    "name": "Avemaría",
+    "industry": "Apparel",
+    "name_mx": "Tula Accesorios"
+  },
+  {
+    "retailerId": "store-004",
+    "benefits": [
+      {
+        "type": "freebie",
+        "description": "Free drink with any meal"
+      },
+      {
+        "type": "cashback",
+        "description": "5% cashback"
+      }
+    ],
+    "name": "Casaldeas",
+    "industry": "Home & Garden",
+    "name_mx": "Casa Palacio"
+  },
+  {
+    "retailerId": "store-005",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "8% cashback"
+      }
+    ],
+    "name": "Citybags",
+    "industry": "Apparel",
+    "name_mx": "Aldo México"
+  },
+  {
+    "retailerId": "store-006",
+    "benefits": [
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      },
+      {
+        "type": "cashback",
+        "description": "6% cashback"
+      }
+    ],
+    "name": "Flashy",
+    "industry": "Apparel",
+    "name_mx": "Zara México"
+  },
+  {
+    "retailerId": "store-007",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "6% cashback"
+      },
+      {
+        "type": "discount",
+        "description": "10% off on Tuesdays"
+      }
+    ],
+    "name": "Four Elements",
+    "industry": "Apparel",
+    "name_mx": "Benito Santos"
+  },
+  {
+    "retailerId": "store-008",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "6% cashback"
+      }
+    ],
+    "name": "Go Rigo Go",
+    "industry": "Health & Wellness",
+    "name_mx": "GNC México"
+  },
+  {
+    "retailerId": "store-009",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      }
+    ],
+    "name": "Indu Cascos",
+    "industry": "Apparel",
+    "name_mx": "Bike World México"
+  },
+  {
+    "retailerId": "store-010",
+    "benefits": [
+      {
+        "type": "exclusive",
+        "description": "Member-only access to new arrivals"
+      },
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      }
+    ],
+    "name": "Kanú",
+    "industry": "Groceries",
+    "name_mx": "Del Monte México"
+  },
+  {
+    "retailerId": "store-011",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% Cashback"
+      },
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      }
+    ],
+    "name": "Koaj",
+    "industry": "Apparel",
+    "name_mx": "C&A México"
+  },
+  {
+    "retailerId": "store-012",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "5% Cashback"
+      },
+      {
+        "type": "exclusive",
+        "description": "Member-only access to new arrivals"
+      }
+    ],
+    "name": "Leo by Leonisa",
+    "industry": "Apparel",
+    "name_mx": "Vicky Form"
+  },
+  {
+    "retailerId": "store-013",
+    "benefits": [
+      {
+        "type": "discount",
+        "description": "10% off on Tuesdays"
+      },
+      {
+        "type": "cashback",
+        "description": "5% Cashback"
+      }
+    ],
+    "name": "Leonisa",
+    "industry": "Apparel",
+    "name_mx": "ILusion México"
+  },
+  {
+    "retailerId": "store-014",
+    "benefits": [
+      {
+        "type": "freebie",
+        "description": "Free drink with any meal"
+      },
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      }
+    ],
+    "name": "Línea estética",
+    "industry": "Health & Wellness",
+    "name_mx": "Salud Digna"
+  },
+  {
+    "retailerId": "store-015",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "5% cashback"
+      }
+    ],
+    "name": "Locatel",
+    "industry": "Health & Wellness",
+    "name_mx": "Farmacias Similares"
+  },
+  {
+    "retailerId": "store-016",
+    "benefits": [
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      },
+      {
+        "type": "exclusive",
+        "description": "Member-only access to new arrivals"
+      },
+      {
+        "type": "cashback",
+        "description": "4% Cashback"
+      }
+    ],
+    "name": "Maaji",
+    "industry": "Apparel",
+    "name_mx": "Maaji México"
+  },
+  {
+    "retailerId": "store-017",
+    "benefits": [
+      {
+        "type": "exclusive",
+        "description": "Member-only access to new arrivals"
+      },
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      }
+    ],
+    "name": "Monastery",
+    "industry": "Apparel",
+    "name_mx": "Collectiva Concepción"
+  },
+  {
+    "retailerId": "store-018",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "5% Cashback"
+      }
+    ],
+    "name": "Nipskin",
+    "industry": "Apparel",
+    "name_mx": "Ópticas Devlyn"
+  },
+  {
+    "retailerId": "store-019",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "5% cashback"
+      },
+      {
+        "type": "freebie",
+        "description": "Free gift with any purchase"
+      }
+    ],
+    "name": "Novelty Home",
+    "industry": "Home & Garden",
+    "name_mx": "Liverpool Casa"
+  },
+  {
+    "retailerId": "store-020",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback on weekends"
+      },
+      {
+        "type": "discount",
+        "description": "10% off on Tuesdays"
+      }
+    ],
+    "name": "Pasteur",
+    "industry": "Health & Wellness",
+    "name_mx": "Farmacia San Pablo"
+  },
+  {
+    "retailerId": "store-021",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "10% cashback"
+      }
+    ],
+    "name": "Piel sobre Piel",
+    "industry": "Health & Wellness",
+    "name_mx": "Dermalogica México"
+  },
+  {
+    "retailerId": "store-022",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2% cashback"
+      }
+    ],
+    "name": "Procinal",
+    "industry": "Entertainment",
+    "name_mx": "Cinemex"
+  },
+  {
+    "retailerId": "store-023",
+    "benefits": [
+      {
+        "type": "discount",
+        "description": "10% off on Tuesdays"
+      },
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      }
+    ],
+    "name": "Refurbi",
+    "industry": "Electronics",
+    "name_mx": "MercadoLibre Refurbished"
+  },
+  {
+    "retailerId": "store-024",
+    "benefits": [
+      {
+        "type": "exclusive",
+        "description": "Member-only access to new arrivals"
+      },
+      {
+        "type": "cashback",
+        "description": "7% Cashback"
+      }
+    ],
+    "name": "St. EVEN",
+    "industry": "Apparel",
+    "name_mx": "Massimo Dutti México"
+  },
+  {
+    "retailerId": "store-025",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% Cashback"
+      }
+    ],
+    "name": "Surticosmeticos",
+    "industry": "Apparel",
+    "name_mx": "Makeup Store México"
+  },
+  {
+    "retailerId": "store-026",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% Cashback"
+      },
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      }
+    ],
+    "name": "Tellenzi",
+    "industry": "Apparel",
+    "name_mx": "Coppel Moda"
+  },
+  {
+    "retailerId": "store-027",
+    "benefits": [
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      },
+      {
+        "type": "cashback",
+        "description": "6% Cashback"
+      }
+    ],
+    "name": "Tennis",
+    "industry": "Apparel",
+    "name_mx": "Tennis México"
+  },
+  {
+    "retailerId": "store-028",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "8% Cashback"
+      },
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      }
+    ],
+    "name": "Win Sports",
+    "industry": "Entertainment",
+    "name_mx": "ESPN México"
+  },
+  {
+    "retailerId": "store-029",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2,7% cashback on weekends"
+      }
+    ],
+    "name": "Animal Cocina",
+    "industry": "Entertainment",
+    "name_mx": "Sonora Grill"
+  },
+  {
+    "retailerId": "store-030",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2,7% cashback"
+      },
+      {
+        "type": "discount",
+        "description": "10% off on Tuesdays"
+      }
+    ],
+    "name": "Buffalo Wings",
+    "industry": "Restaurants",
+    "name_mx": "Buffalo Wild Wings México"
+  },
+  {
+    "retailerId": "store-031",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2,7% cashback"
+      }
+    ],
+    "name": "Dunkin",
+    "industry": "Restaurants",
+    "name_mx": "Dunkin México"
+  },
+  {
+    "retailerId": "store-032",
+    "benefits": [
+      {
+        "type": "freebie",
+        "description": "Free drink with any meal"
+      },
+      {
+        "type": "cashback",
+        "description": "2,7% cashback"
+      }
+    ],
+    "name": "Il Forno",
+    "industry": "Restaurants",
+    "name_mx": "Dominos Pizza México"
+  },
+  {
+    "retailerId": "store-033",
+    "benefits": [
+      {
+        "type": "freebie",
+        "description": "Free drink with any meal"
+      },
+      {
+        "type": "cashback",
+        "description": "2,7% cashback"
+      }
+    ],
+    "name": "Justo",
+    "industry": "Restaurants",
+    "name_mx": "Uber Eats México"
+  },
+  {
+    "retailerId": "store-034",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2,7% cashback on weekends"
+      }
+    ],
+    "name": "Luisa Postres",
+    "industry": "Restaurants",
+    "name_mx": "Sanborns Café"
+  },
+  {
+    "retailerId": "store-035",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2,7% cashback"
+      }
+    ],
+    "name": "Manzato",
+    "industry": "Restaurants",
+    "name_mx": "Italian Coffee Company"
+  },
+  {
+    "retailerId": "store-036",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2,7% cashback"
+      },
+      {
+        "type": "discount",
+        "description": "10% off on Tuesdays"
+      }
+    ],
+    "name": "Pollo Pizza Carne",
+    "industry": "Restaurants",
+    "name_mx": "El Pollo Pepe"
+  },
+  {
+    "retailerId": "store-037",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2,7% cashback"
+      },
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      }
+    ],
+    "name": "Tierra Querida",
+    "industry": "Restaurants",
+    "name_mx": "Pujol"
+  },
+  {
+    "retailerId": "store-038",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "6% cashback"
+      },
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      }
+    ],
+    "name": "Boris Brejcha BGT",
+    "industry": "Entertainment",
+    "name_mx": "Ticketmaster México"
+  },
+  {
+    "retailerId": "store-039",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "6% cashback"
+      },
+      {
+        "type": "discount",
+        "description": "10% off on Tuesdays"
+      }
+    ],
+    "name": "Boris Brejcha MDE",
+    "industry": "Entertainment",
+    "name_mx": "Live Nation México"
+  },
+  {
+    "retailerId": "store-041",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      },
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      }
+    ],
+    "name": "Ktronix",
+    "industry": "Electronics",
+    "name_mx": "Best Buy México"
+  },
+  {
+    "retailerId": "store-042",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      },
+      {
+        "type": "exclusive",
+        "description": "Member-only access to new arrivals"
+      }
+    ],
+    "name": "Alkosto",
+    "industry": "Electronics",
+    "name_mx": "Coppel"
+  },
+  {
+    "retailerId": "store-043",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      },
+      {
+        "type": "discount",
+        "description": "10% off on Tuesdays"
+      }
+    ],
+    "name": "Alkomprar",
+    "industry": "Electronics",
+    "name_mx": "Elektra"
+  },
+  {
+    "retailerId": "store-044",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2% cashback"
+      },
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      }
+    ],
+    "name": "Éxito",
+    "industry": "Electronics",
+    "name_mx": "Walmart México"
+  },
+  {
+    "retailerId": "store-045",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2% cashback"
+      }
+    ],
+    "name": "Jumbo",
+    "industry": "Electronics",
+    "name_mx": "Soriana"
+  },
+  {
+    "retailerId": "store-046",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      },
+      {
+        "type": "exclusive",
+        "description": "Member-only access to new arrivals"
+      }
+    ],
+    "name": "Falabella",
+    "industry": "Electronics",
+    "name_mx": "Liverpool"
+  },
+  {
+    "retailerId": "store-047",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "5% cashback"
+      }
+    ],
+    "name": "Claro",
+    "industry": "Electronics",
+    "name_mx": "Telcel"
+  },
+  {
+    "retailerId": "store-048",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      },
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      }
+    ],
+    "name": "Tigo",
+    "industry": "Electronics",
+    "name_mx": "AT&T México"
+  },
+  {
+    "retailerId": "store-049",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      }
+    ],
+    "name": "Movistar",
+    "industry": "Electronics",
+    "name_mx": "Movistar México"
+  },
+  {
+    "retailerId": "store-050",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "6% cashback"
+      },
+      {
+        "type": "exclusive",
+        "description": "Member-only access to new arrivals"
+      }
+    ],
+    "name": "Samsung",
+    "industry": "Electronics",
+    "name_mx": "Samsung México"
+  },
+  {
+    "retailerId": "store-051",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "5% cashback"
+      },
+      {
+        "type": "exclusive",
+        "description": "Member-only access to new arrivals"
+      }
+    ],
+    "name": "Apple",
+    "industry": "Electronics",
+    "name_mx": "Apple México"
+  },
+  {
+    "retailerId": "store-052",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      },
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      }
+    ],
+    "name": "LG",
+    "industry": "Electronics",
+    "name_mx": "LG México"
+  },
+  {
+    "retailerId": "store-053",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "5% cashback"
+      }
+    ],
+    "name": "Sony",
+    "industry": "Electronics",
+    "name_mx": "Sony México"
+  },
+  {
+    "retailerId": "store-054",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      },
+      {
+        "type": "discount",
+        "description": "10% off on Tuesdays"
+      }
+    ],
+    "name": "HP",
+    "industry": "Electronics",
+    "name_mx": "HP México"
+  },
+  {
+    "retailerId": "store-055",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      },
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      }
+    ],
+    "name": "Dell",
+    "industry": "Electronics",
+    "name_mx": "Dell México"
+  },
+  {
+    "retailerId": "store-056",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2,7% cashback"
+      },
+      {
+        "type": "freebie",
+        "description": "Free drink with any meal"
+      }
+    ],
+    "name": "Crepes & Waffles",
+    "industry": "Restaurants",
+    "name_mx": "IHOP México"
+  },
+  {
+    "retailerId": "store-057",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2,7% cashback"
+      },
+      {
+        "type": "discount",
+        "description": "10% off on Tuesdays"
+      }
+    ],
+    "name": "El Corral",
+    "industry": "Restaurants",
+    "name_mx": "Carls Jr. México"
+  },
+  {
+    "retailerId": "store-058",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2,7% cashback"
+      }
+    ],
+    "name": "Frisby",
+    "industry": "Restaurants",
+    "name_mx": "Churchs Chicken México"
+  },
+  {
+    "retailerId": "store-059",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2,7% cashback"
+      },
+      {
+        "type": "freebie",
+        "description": "Free drink with any meal"
+      }
+    ],
+    "name": "McDonald's",
+    "industry": "Restaurants",
+    "name_mx": "McDonalds México"
+  },
+  {
+    "retailerId": "store-060",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2,7% cashback"
+      }
+    ],
+    "name": "Subway",
+    "industry": "Restaurants",
+    "name_mx": "Subway México"
+  },
+  {
+    "retailerId": "store-061",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2,7% cashback"
+      },
+      {
+        "type": "discount",
+        "description": "10% off on Tuesdays"
+      }
+    ],
+    "name": "KFC",
+    "industry": "Restaurants",
+    "name_mx": "KFC México"
+  },
+  {
+    "retailerId": "store-062",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2,7% cashback"
+      }
+    ],
+    "name": "Burger King",
+    "industry": "Restaurants",
+    "name_mx": "Burger King México"
+  },
+  {
+    "retailerId": "store-063",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2,7% cashback"
+      },
+      {
+        "type": "freebie",
+        "description": "Free drink with any meal"
+      }
+    ],
+    "name": "Domino's Pizza",
+    "industry": "Restaurants",
+    "name_mx": "Dominos Pizza México"
+  },
+  {
+    "retailerId": "store-064",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2,7% cashback"
+      }
+    ],
+    "name": "Papa John's",
+    "industry": "Restaurants",
+    "name_mx": "Papa Johns México"
+  },
+  {
+    "retailerId": "store-065",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2,7% cashback"
+      },
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      }
+    ],
+    "name": "Tostao'",
+    "industry": "Restaurants",
+    "name_mx": "100% Natural"
+  },
+  {
+    "retailerId": "store-066",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2,7% cashback"
+      }
+    ],
+    "name": "Juan Valdez",
+    "industry": "Restaurants",
+    "name_mx": "Starbucks México"
+  },
+  {
+    "retailerId": "store-067",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2,7% cashback"
+      },
+      {
+        "type": "freebie",
+        "description": "Free drink with any meal"
+      }
+    ],
+    "name": "Oma",
+    "industry": "Restaurants",
+    "name_mx": "Sanborns"
+  },
+  {
+    "retailerId": "store-068",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2,7% cashback"
+      }
+    ],
+    "name": "Wok",
+    "industry": "Restaurants",
+    "name_mx": "P.F. Changs México"
+  },
+  {
+    "retailerId": "store-069",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2,7% cashback"
+      },
+      {
+        "type": "exclusive",
+        "description": "Member-only access to new arrivals"
+      }
+    ],
+    "name": "Andrés Carne de Res",
+    "industry": "Restaurants",
+    "name_mx": "La Bifería México"
+  },
+  {
+    "retailerId": "store-070",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2,7% cashback"
+      }
+    ],
+    "name": "La Bifería",
+    "industry": "Restaurants",
+    "name_mx": "New York Steak House"
+  },
+  {
+    "retailerId": "store-071",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2% cashback"
+      },
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      }
+    ],
+    "name": "Éxito",
+    "industry": "Groceries",
+    "name_mx": "Walmart México"
+  },
+  {
+    "retailerId": "store-072",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2% cashback"
+      }
+    ],
+    "name": "Carulla",
+    "industry": "Groceries",
+    "name_mx": "Soriana"
+  },
+  {
+    "retailerId": "store-073",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2% cashback"
+      },
+      {
+        "type": "discount",
+        "description": "10% off on Tuesdays"
+      }
+    ],
+    "name": "Olímpica",
+    "industry": "Groceries",
+    "name_mx": "Chedraui"
+  },
+  {
+    "retailerId": "store-074",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2% cashback"
+      }
+    ],
+    "name": "Jumbo",
+    "industry": "Groceries",
+    "name_mx": "La Comer"
+  },
+  {
+    "retailerId": "store-075",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2% cashback"
+      },
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      }
+    ],
+    "name": "Metro",
+    "industry": "Groceries",
+    "name_mx": "HEB México"
+  },
+  {
+    "retailerId": "store-076",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2% cashback"
+      }
+    ],
+    "name": "D1",
+    "industry": "Groceries",
+    "name_mx": "Oxxo"
+  },
+  {
+    "retailerId": "store-077",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2% cashback"
+      }
+    ],
+    "name": "Ara",
+    "industry": "Groceries",
+    "name_mx": "7-Eleven México"
+  },
+  {
+    "retailerId": "store-078",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2% cashback"
+      }
+    ],
+    "name": "Makro",
+    "industry": "Groceries",
+    "name_mx": "Costco México"
+  },
+  {
+    "retailerId": "store-079",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2% cashback"
+      }
+    ],
+    "name": "Colsubsidio",
+    "industry": "Groceries",
+    "name_mx": "Sams Club México"
+  },
+  {
+    "retailerId": "store-080",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2% cashback"
+      }
+    ],
+    "name": "Cafam",
+    "industry": "Groceries",
+    "name_mx": "Casa Ley"
+  },
+  {
+    "retailerId": "store-081",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2% cashback"
+      }
+    ],
+    "name": "Surtimax",
+    "industry": "Groceries",
+    "name_mx": "Súper Kompras"
+  },
+  {
+    "retailerId": "store-082",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2% cashback"
+      },
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      }
+    ],
+    "name": "La 14",
+    "industry": "Groceries",
+    "name_mx": "Tiendas de Barrio"
+  },
+  {
+    "retailerId": "store-083",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2% cashback"
+      },
+      {
+        "type": "exclusive",
+        "description": "Member-only access to new arrivals"
+      }
+    ],
+    "name": "Merqueo",
+    "industry": "Groceries",
+    "name_mx": "Rappi México"
+  },
+  {
+    "retailerId": "store-084",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2% cashback"
+      }
+    ],
+    "name": "Rappi",
+    "industry": "Groceries",
+    "name_mx": "Cornershop México"
+  },
+  {
+    "retailerId": "store-085",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2% cashback"
+      }
+    ],
+    "name": "Cornershop",
+    "industry": "Groceries",
+    "name_mx": "Mercado Libre Envíos"
+  },
+  {
+    "retailerId": "store-086",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      },
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      }
+    ],
+    "name": "Librería Nacional",
+    "industry": "Books",
+    "name_mx": "Gandhi"
+  },
+  {
+    "retailerId": "store-087",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      }
+    ],
+    "name": "Panamericana",
+    "industry": "Books",
+    "name_mx": "Sanborns Librería"
+  },
+  {
+    "retailerId": "store-088",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      },
+      {
+        "type": "discount",
+        "description": "10% off on Tuesdays"
+      }
+    ],
+    "name": "Librería Lerner",
+    "industry": "Books",
+    "name_mx": "Porrúa"
+  },
+  {
+    "retailerId": "store-089",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      }
+    ],
+    "name": "Tornamesa",
+    "industry": "Books",
+    "name_mx": "Librería Rosario Castellanos"
+  },
+  {
+    "retailerId": "store-090",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      }
+    ],
+    "name": "Fondo de Cultura Económica",
+    "industry": "Books",
+    "name_mx": "FCE México"
+  },
+  {
+    "retailerId": "store-091",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      }
+    ],
+    "name": "Siglo del Hombre Editores",
+    "industry": "Books",
+    "name_mx": "Era Editorial"
+  },
+  {
+    "retailerId": "store-092",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      },
+      {
+        "type": "freebie",
+        "description": "Free drink with any meal"
+      }
+    ],
+    "name": "Casa Tomada Libros y Café",
+    "industry": "Books",
+    "name_mx": "Librería del FCE"
+  },
+  {
+    "retailerId": "store-093",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      }
+    ],
+    "name": "Wilborada 1047",
+    "industry": "Books",
+    "name_mx": "Librería Octavio Paz"
+  },
+  {
+    "retailerId": "store-094",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      }
+    ],
+    "name": "Luvina",
+    "industry": "Books",
+    "name_mx": "Libros Antimateria"
+  },
+  {
+    "retailerId": "store-095",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      }
+    ],
+    "name": "La Madriguera del Conejo",
+    "industry": "Books",
+    "name_mx": "Under the Volcano Books"
+  },
+  {
+    "retailerId": "store-096",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      }
+    ],
+    "name": "Hojas de Parra",
+    "industry": "Books",
+    "name_mx": "Cafebrería El Péndulo"
+  },
+  {
+    "retailerId": "store-097",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      }
+    ],
+    "name": "El Gato de Schrödinger",
+    "industry": "Books",
+    "name_mx": "Librería Científica"
+  },
+  {
+    "retailerId": "store-098",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      }
+    ],
+    "name": "La Valija de Fuego",
+    "industry": "Books",
+    "name_mx": "Casa del Libro México"
+  },
+  {
+    "retailerId": "store-099",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      }
+    ],
+    "name": "Libros Mr. Fox",
+    "industry": "Books",
+    "name_mx": "Librerías Gonvill"
+  },
+  {
+    "retailerId": "store-100",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      }
+    ],
+    "name": "Librería Central",
+    "industry": "Books",
+    "name_mx": "Educal"
+  },
+  {
+    "retailerId": "store-101",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "6% cashback"
+      },
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      }
+    ],
+    "name": "Studio F",
+    "industry": "Apparel",
+    "name_mx": "Marti Moda"
+  },
+  {
+    "retailerId": "store-102",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "5% cashback"
+      },
+      {
+        "type": "exclusive",
+        "description": "Member-only access to new arrivals"
+      }
+    ],
+    "name": "Arturo Calle",
+    "industry": "Apparel",
+    "name_mx": "Alejandro Carlin"
+  },
+  {
+    "retailerId": "store-103",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      },
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      }
+    ],
+    "name": "Koaj",
+    "industry": "Apparel",
+    "name_mx": "Suburbia"
+  },
+  {
+    "retailerId": "store-104",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      }
+    ],
+    "name": "Gef",
+    "industry": "Apparel",
+    "name_mx": "Gef México"
+  },
+  {
+    "retailerId": "store-105",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      },
+      {
+        "type": "discount",
+        "description": "10% off on Tuesdays"
+      }
+    ],
+    "name": "Punto Blanco",
+    "industry": "Apparel",
+    "name_mx": "Hanes México"
+  },
+  {
+    "retailerId": "store-106",
+    "benefits": [
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      },
+      {
+        "type": "cashback",
+        "description": "6% cashback"
+      }
+    ],
+    "name": "Tennis",
+    "industry": "Apparel",
+    "name_mx": "Flexi"
+  },
+  {
+    "retailerId": "store-107",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "5% cashback"
+      }
+    ],
+    "name": "Ela",
+    "industry": "Apparel",
+    "name_mx": "Mango México"
+  },
+  {
+    "retailerId": "store-108",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      },
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      }
+    ],
+    "name": "Naf Naf",
+    "industry": "Apparel",
+    "name_mx": "Naf Naf México"
+  },
+  {
+    "retailerId": "store-109",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "5% cashback"
+      }
+    ],
+    "name": "Chevignon",
+    "industry": "Apparel",
+    "name_mx": "Chevignon México"
+  },
+  {
+    "retailerId": "store-110",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      },
+      {
+        "type": "discount",
+        "description": "10% off on Tuesdays"
+      }
+    ],
+    "name": "Americanino",
+    "industry": "Apparel",
+    "name_mx": "American Eagle México"
+  },
+  {
+    "retailerId": "store-111",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "5% cashback"
+      }
+    ],
+    "name": "Esprit",
+    "industry": "Apparel",
+    "name_mx": "Esprit México"
+  },
+  {
+    "retailerId": "store-112",
+    "benefits": [
+      {
+        "type": "discount",
+        "description": "10% off on Tuesdays"
+      },
+      {
+        "type": "cashback",
+        "description": "5% cashback"
+      }
+    ],
+    "name": "Leonisa",
+    "industry": "Apparel",
+    "name_mx": "Lover México"
+  },
+  {
+    "retailerId": "store-113",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      }
+    ],
+    "name": "Patprimo",
+    "industry": "Apparel",
+    "name_mx": "Dockers México"
+  },
+  {
+    "retailerId": "store-114",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      },
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      }
+    ],
+    "name": "Facol",
+    "industry": "Apparel",
+    "name_mx": "Furor México"
+  },
+  {
+    "retailerId": "store-115",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "5% cashback"
+      }
+    ],
+    "name": "Seven Seven",
+    "industry": "Apparel",
+    "name_mx": "Levis México"
+  },
+  {
+    "retailerId": "store-116",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      },
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      }
+    ],
+    "name": "Homecenter",
+    "industry": "Home & Garden",
+    "name_mx": "The Home Depot México"
+  },
+  {
+    "retailerId": "store-117",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      }
+    ],
+    "name": "Easy",
+    "industry": "Home & Garden",
+    "name_mx": "Home Depot Express"
+  },
+  {
+    "retailerId": "store-118",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      },
+      {
+        "type": "discount",
+        "description": "10% off on Tuesdays"
+      }
+    ],
+    "name": "Tugó",
+    "industry": "Home & Garden",
+    "name_mx": "Coppel Hogar"
+  },
+  {
+    "retailerId": "store-119",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      }
+    ],
+    "name": "Home Sentry",
+    "industry": "Home & Garden",
+    "name_mx": "Casa Cuervo"
+  },
+  {
+    "retailerId": "store-120",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      }
+    ],
+    "name": "Jammar",
+    "industry": "Home & Garden",
+    "name_mx": "Muebles Dico"
+  },
+  {
+    "retailerId": "store-121",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      },
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      }
+    ],
+    "name": "Muebles y Accesorios",
+    "industry": "Home & Garden",
+    "name_mx": "Muebles Europa"
+  },
+  {
+    "retailerId": "store-122",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      }
+    ],
+    "name": "Zientte",
+    "industry": "Home & Garden",
+    "name_mx": "Zara Home México"
+  },
+  {
+    "retailerId": "store-123",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "5% cashback"
+      },
+      {
+        "type": "exclusive",
+        "description": "Member-only access to new arrivals"
+      }
+    ],
+    "name": "BoConcept",
+    "industry": "Home & Garden",
+    "name_mx": "BoConcept México"
+  },
+  {
+    "retailerId": "store-124",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "5% cashback"
+      },
+      {
+        "type": "exclusive",
+        "description": "Member-only access to new arrivals"
+      }
+    ],
+    "name": "Crate & Barrel",
+    "industry": "Home & Garden",
+    "name_mx": "Crate & Barrel México"
+  },
+  {
+    "retailerId": "store-125",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "5% cashback"
+      },
+      {
+        "type": "exclusive",
+        "description": "Member-only access to new arrivals"
+      }
+    ],
+    "name": "Pottery Barn",
+    "industry": "Home & Garden",
+    "name_mx": "Pottery Barn México"
+  },
+  {
+    "retailerId": "store-126",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "5% cashback"
+      },
+      {
+        "type": "exclusive",
+        "description": "Member-only access to new arrivals"
+      }
+    ],
+    "name": "Williams-Sonoma",
+    "industry": "Home & Garden",
+    "name_mx": "Kitchen Center México"
+  },
+  {
+    "retailerId": "store-127",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      }
+    ],
+    "name": "Vivero El Rosal",
+    "industry": "Home & Garden",
+    "name_mx": "Viveros San Andrés"
+  },
+  {
+    "retailerId": "store-128",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      }
+    ],
+    "name": "Jardines del Country",
+    "industry": "Home & Garden",
+    "name_mx": "Garden Center Querétaro"
+  },
+  {
+    "retailerId": "store-129",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      }
+    ],
+    "name": "Vivero La Estación",
+    "industry": "Home & Garden",
+    "name_mx": "Viveros Coyoacán"
+  },
+  {
+    "retailerId": "store-130",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      }
+    ],
+    "name": "Jardiland",
+    "industry": "Home & Garden",
+    "name_mx": "Koblenz Garden"
+  },
+  {
+    "retailerId": "store-131",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "6% cashback"
+      },
+      {
+        "type": "points",
+        "description": "2x points on all purchases"
+      }
+    ],
+    "name": "Bodytech",
+    "industry": "Health & Wellness",
+    "name_mx": "Sport City"
+  },
+  {
+    "retailerId": "store-132",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "5% cashback"
+      }
+    ],
+    "name": "Smart Fit",
+    "industry": "Health & Wellness",
+    "name_mx": "Smart Fit México"
+  },
+  {
+    "retailerId": "store-133",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "6% cashback"
+      }
+    ],
+    "name": "Spinning Center",
+    "industry": "Health & Wellness",
+    "name_mx": "Spinning Works"
+  },
+  {
+    "retailerId": "store-134",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "5% cashback"
+      }
+    ],
+    "name": "Athletic",
+    "industry": "Health & Wellness",
+    "name_mx": "Sports World"
+  },
+  {
+    "retailerId": "store-135",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "5% cashback"
+      }
+    ],
+    "name": "Stark",
+    "industry": "Health & Wellness",
+    "name_mx": "Golds Gym México"
+  },
+  {
+    "retailerId": "store-136",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      }
+    ],
+    "name": "Farmatodo",
+    "industry": "Health & Wellness",
+    "name_mx": "Farmacias del Ahorro"
+  },
+  {
+    "retailerId": "store-137",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      }
+    ],
+    "name": "Cruz Verde",
+    "industry": "Health & Wellness",
+    "name_mx": "Farmacia Guadalajara"
+  },
+  {
+    "retailerId": "store-138",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      }
+    ],
+    "name": "La Rebaja",
+    "industry": "Health & Wellness",
+    "name_mx": "Farmacias Similares"
+  },
+  {
+    "retailerId": "store-139",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      }
+    ],
+    "name": "Colsubsidio",
+    "industry": "Health & Wellness",
+    "name_mx": "IMSS"
+  },
+  {
+    "retailerId": "store-140",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      }
+    ],
+    "name": "Cafam",
+    "industry": "Health & Wellness",
+    "name_mx": "ISSSTE"
+  },
+  {
+    "retailerId": "store-141",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      }
+    ],
+    "name": "Sanitas",
+    "industry": "Health & Wellness",
+    "name_mx": "Seguros Monterrey"
+  },
+  {
+    "retailerId": "store-142",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      }
+    ],
+    "name": "Sura",
+    "industry": "Health & Wellness",
+    "name_mx": "MetLife México"
+  },
+  {
+    "retailerId": "store-143",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      }
+    ],
+    "name": "Compensar",
+    "industry": "Health & Wellness",
+    "name_mx": "AXA México"
+  },
+  {
+    "retailerId": "store-144",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      }
+    ],
+    "name": "Coomeva",
+    "industry": "Health & Wellness",
+    "name_mx": "Seguros Atlas"
+  },
+  {
+    "retailerId": "store-145",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      }
+    ],
+    "name": "MedPlus",
+    "industry": "Health & Wellness",
+    "name_mx": "Farmacias Benavides"
+  },
+  {
+    "retailerId": "store-146",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2% cashback"
+      }
+    ],
+    "name": "Cine Colombia",
+    "industry": "Entertainment",
+    "name_mx": "Cineteca Nacional de México"
+  },
+  {
+    "retailerId": "store-147",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2% cashback"
+      }
+    ],
+    "name": "Cinemark",
+    "industry": "Entertainment",
+    "name_mx": "Cinépolis México"
+  },
+  {
+    "retailerId": "store-148",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2% cashback"
+      }
+    ],
+    "name": "Cinépolis",
+    "industry": "Entertainment",
+    "name_mx": "Cinemex Premium"
+  },
+  {
+    "retailerId": "store-149",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2% cashback"
+      }
+    ],
+    "name": "Royal Films",
+    "industry": "Entertainment",
+    "name_mx": "MMCinemas"
+  },
+  {
+    "retailerId": "store-150",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "2% cashback"
+      }
+    ],
+    "name": "Procinal",
+    "industry": "Entertainment",
+    "name_mx": "Yelmo Cines México"
+  },
+  {
+    "retailerId": "store-151",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      }
+    ],
+    "name": "Tuboleta",
+    "industry": "Entertainment",
+    "name_mx": "Boletia"
+  },
+  {
+    "retailerId": "store-152",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      }
+    ],
+    "name": "Ticketmaster",
+    "industry": "Entertainment",
+    "name_mx": "OCESA México"
+  },
+  {
+    "retailerId": "store-153",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      }
+    ],
+    "name": "Ocesa",
+    "industry": "Entertainment",
+    "name_mx": "Funticket"
+  },
+  {
+    "retailerId": "store-154",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "3% cashback"
+      }
+    ],
+    "name": "Páramo Presenta",
+    "industry": "Entertainment",
+    "name_mx": "Superboletos"
+  },
+  {
+    "retailerId": "store-155",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      }
+    ],
+    "name": "Salitre Mágico",
+    "industry": "Entertainment",
+    "name_mx": "Six Flags México"
+  },
+  {
+    "retailerId": "store-156",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      }
+    ],
+    "name": "Mundo Aventura",
+    "industry": "Entertainment",
+    "name_mx": "La Feria de Chapultepec"
+  },
+  {
+    "retailerId": "store-157",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      }
+    ],
+    "name": "Parque del Café",
+    "industry": "Entertainment",
+    "name_mx": "Xcaret"
+  },
+  {
+    "retailerId": "store-158",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      }
+    ],
+    "name": "Panaca",
+    "industry": "Entertainment",
+    "name_mx": "Reino Aventura"
+  },
+  {
+    "retailerId": "store-159",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      }
+    ],
+    "name": "Divercity",
+    "industry": "Entertainment",
+    "name_mx": "KidZania México"
+  },
+  {
+    "retailerId": "store-160",
+    "benefits": [
+      {
+        "type": "cashback",
+        "description": "4% cashback"
+      }
+    ],
+    "name": "Playland",
+    "industry": "Entertainment",
+    "name_mx": "Chuck E. Cheeses México"
+  }
+]

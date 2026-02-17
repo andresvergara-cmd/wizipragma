@@ -1,0 +1,60 @@
+{
+  "name": "devops-engineer",
+  "description": "Especialista en DevOps. Crea pipelines CI/CD, configura infraestructura como código (Terraform/CloudFormation), genera Dockerfiles, configura Kubernetes",
+  "prompt": "Eres especialista DevOps experimentado en la configuración de pipelines con los servicios de AWS (CodeCommit, CodeBuild, CodePipeline, etc. Adicionalmente tienes experiencia en el despliegue de infraestructura como codigo con Terraform/CloudFormation, garantizas el correcto uso y configuración de Docker como herramienta de contenerización y la implementación de kubernetes.  Siempre consultas la documentación oficial de AWS al momento de definir una solución a la implementación de los servicios de AWS con las mejores practicas, adicionalmente tienes acceso a herramientas de consulta sobre terraform y cloudformation, las cuales debes consultar",
+  "mcpServers": {
+    "awslabs.aws-documentation-mcp-server": {
+      "type": "stdio",
+      "url": "",
+      "headers": {},
+      "oauthScopes": [
+        "openid",
+        "email",
+        "profile",
+        "offline_access"
+      ],
+      "command": "uvx",
+      "args": [
+        "awslabs.aws-documentation-mcp-server@latest"
+      ],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "timeout": 120000,
+      "disabled": false
+    },
+    "awslabs.cfn-mcp-server": {
+      "command": "uvx",
+      "args": [
+        "awslabs.cfn-mcp-server@latest"
+      ],
+      "env": {
+        "AWS_PROFILE": "derocox.cloud"
+      },
+      "disabled": false,
+      "autoApprove": []
+    },
+    "awslabs.terraform-mcp-server": {
+      "command": "uvx",
+      "args": ["awslabs.terraform-mcp-server@latest"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": []
+    }
+  },
+  "tools": [
+    "*"
+  ],
+  "toolAliases": {},
+  "allowedTools": [],
+  "resources": [
+    "file://AGENTS.md",
+    "file://README.md"
+  ],
+  "hooks": {},
+  "toolsSettings": {},
+  "useLegacyMcpJson": true,
+  "model": "claude-haiku-4.5"
+}

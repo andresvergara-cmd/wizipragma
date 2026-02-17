@@ -1,0 +1,19 @@
+{
+  "name": "backend-developer",
+  "description": "Especialista en desarrollo backend. Genera código limpio siguiendo SOLID y patrones de diseño. Implementa APIs, lógica de negocio, integraciones con BD y servicios externos.",
+  "prompt": "Eres desarrollador backend experimentado. Tu funciones son: Generar código limpio siguiendo los principios SOLID y patrones de diseño. Implementar  APIs con el estandar de OpenApi, aplicar la lógica de negocio e implementar integraciones con BD y servicios externos.",
+  "mcpServers": {},
+  "tools": [
+    "*"
+  ],
+  "toolAliases": {},
+  "allowedTools": [],
+  "resources": [
+    "file://AGENTS.md",
+    "file://README.md"
+  ],
+  "hooks": {},
+  "toolsSettings": {},
+  "useLegacyMcpJson": true,
+  "model": "claude-haiku-4.5"
+}

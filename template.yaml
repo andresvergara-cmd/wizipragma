@@ -1,0 +1,504 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Description: >
+  CENTLI - Multimodal Banking Assistant Hackathon
+  Complete infrastructure for AgentCore, Action Groups, and Frontend
+
+Metadata:
+  AWS::ServerlessRepo::Application:
+    Name: centli-hackathon
+    Description: Multimodal banking assistant with AWS Bedrock AgentCore
+    Author: CENTLI Team
+    Labels: ['bedrock', 'agentcore', 'banking', 'multimodal']
+
+Globals:
+  Function:
+    Runtime: python3.11
+    Timeout: 30
+    MemorySize: 512
+    Environment:
+      Variables:
+        EVENT_BUS_NAME: centli-event-bus
+        ASSETS_BUCKET_NAME: !Ref CentliAssetsBucket
+        LOG_LEVEL: !Ref LogLevel
+        AWS_ACCOUNT_ID: !Ref AWS::AccountId
+    Tags:
+      Project: CENTLI
+      Environment: !Ref Environment
+
+Parameters:
+  Environment:
+    Type: String
+    Default: hackathon
+    Description: Environment name (hackathon, dev, prod)
+    AllowedValues:
+      - hackathon
+      - dev
+      - prod
+  
+  LogLevel:
+    Type: String
+    Default: INFO
+    Description: CloudWatch log level for Lambda functions
+    AllowedValues:
+      - DEBUG
+      - INFO
+      - WARN
+      - ERROR
+
+Resources:
+  # ============================================================================
+  # UNIT 1: INFRASTRUCTURE FOUNDATION
+  # ============================================================================
+  
+  # EventBridge Event Bus for event-driven communication
+  CentliEventBus:
+    Type: AWS::Events::EventBus
+    Properties:
+      Name: centli-event-bus
+      Tags:
+        - Key: Project
+          Value: CENTLI
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Unit
+          Value: Infrastructure Foundation
+  
+  # S3 Bucket for images and static assets
+  CentliAssetsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub 'centli-assets-${AWS::AccountId}'
+      CorsConfiguration:
+        CorsRules:
+          - AllowedOrigins:
+              - 'http://localhost:3000'
+              - 'http://localhost:8080'
+              - 'http://127.0.0.1:*'
+            AllowedMethods:
+              - GET
+              - PUT
+              - POST
+              - DELETE
+            AllowedHeaders:
+              - '*'
+            MaxAge: 3600
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      Tags:
+        - Key: Project
+          Value: CENTLI
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Unit
+          Value: Infrastructure Foundation
+  
+  # S3 Bucket Policy for Lambda access
+  CentliAssetsBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref CentliAssetsBucket
+      PolicyDocument:
+        Statement:
+          - Sid: AllowLambdaAccess
+            Effect: Allow
+            Principal:
+              AWS: !GetAtt CentliLambdaExecutionRole.Arn
+            Action:
+              - 's3:GetObject'
+              - 's3:PutObject'
+              - 's3:DeleteObject'
+            Resource: !Sub '${CentliAssetsBucket.Arn}/*'
+  
+  # IAM Role for Lambda execution with all required permissions
+  CentliLambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: CentliLambdaExecutionRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        # EventBridge permissions
+        - PolicyName: CentliEventBridgePolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'events:PutEvents'
+                Resource: !GetAtt CentliEventBus.Arn
+        
+        # DynamoDB permissions
+        - PolicyName: CentliDynamoDBPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'dynamodb:GetItem'
+                  - 'dynamodb:PutItem'
+                  - 'dynamodb:UpdateItem'
+                  - 'dynamodb:DeleteItem'
+                  - 'dynamodb:Query'
+                  - 'dynamodb:Scan'
+                  - 'dynamodb:BatchGetItem'
+                  - 'dynamodb:BatchWriteItem'
+                Resource:
+                  - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/centli-*'
+                  - !Sub 'arn:aws:dynamodb:${AWS::Region}:${AWS::AccountId}:table/centli-*/index/*'
+        
+        # S3 permissions
+        - PolicyName: CentliS3Policy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 's3:GetObject'
+                  - 's3:PutObject'
+                  - 's3:DeleteObject'
+                  - 's3:ListBucket'
+                Resource:
+                  - !GetAtt CentliAssetsBucket.Arn
+                  - !Sub '${CentliAssetsBucket.Arn}/*'
+        
+        # Bedrock permissions
+        - PolicyName: CentliBedrockPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'bedrock:InvokeModel'
+                  - 'bedrock:InvokeAgent'
+                  - 'bedrock:Retrieve'
+                  - 'bedrock:InvokeModelWithResponseStream'
+                Resource:
+                  - !Sub 'arn:aws:bedrock:${AWS::Region}::foundation-model/*'
+                  - !Sub 'arn:aws:bedrock:${AWS::Region}:${AWS::AccountId}:agent/*'
+                  - !Sub 'arn:aws:bedrock:${AWS::Region}:${AWS::AccountId}:agent-alias/*'
+                  - !Sub 'arn:aws:bedrock:${AWS::Region}:${AWS::AccountId}:knowledge-base/*'
+        
+        # API Gateway permissions for WebSocket
+        - PolicyName: CentliAPIGatewayPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'execute-api:ManageConnections'
+                  - 'execute-api:Invoke'
+                Resource: !Sub 'arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:*/@connections/*'
+      Tags:
+        - Key: Project
+          Value: CENTLI
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Unit
+          Value: Infrastructure Foundation
+  
+  # CloudWatch Log Group for centralized logging
+  CentliLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: /aws/lambda/centli
+      RetentionInDays: 7
+      Tags:
+        - Key: Project
+          Value: CENTLI
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Unit
+          Value: Infrastructure Foundation
+
+  # ============================================================================
+  # UNIT 2: AGENTCORE & ORCHESTRATION
+  # ============================================================================
+  
+  # WebSocket API for real-time communication
+  CentliWebSocketAPI:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      Name: centli-websocket-api
+      ProtocolType: WEBSOCKET
+      RouteSelectionExpression: $request.body.action
+      Tags:
+        Project: CENTLI
+        Environment: !Ref Environment
+        Unit: AgentCore & Orchestration
+  
+  # WebSocket Stage
+  CentliWebSocketStage:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties:
+      ApiId: !Ref CentliWebSocketAPI
+      StageName: prod
+      AutoDeploy: true
+      DefaultRouteSettings:
+        ThrottlingBurstLimit: 100
+        ThrottlingRateLimit: 50
+      Tags:
+        Project: CENTLI
+        Environment: !Ref Environment
+  
+  # DynamoDB Sessions Table
+  CentliSessionsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: centli-sessions
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: session_id
+          AttributeType: S
+        - AttributeName: user_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: session_id
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        - IndexName: user-index
+          KeySchema:
+            - AttributeName: user_id
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
+      TimeToLiveSpecification:
+        AttributeName: expires_at
+        Enabled: true
+      SSESpecification:
+        SSEEnabled: true
+      Tags:
+        - Key: Project
+          Value: CENTLI
+        - Key: Environment
+          Value: !Ref Environment
+        - Key: Unit
+          Value: AgentCore & Orchestration
+  
+  # Lambda Function: Connect Handler
+  ConnectFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: centli-app-connect
+      CodeUri: src_aws/app_connect/
+      Handler: app_connect.lambda_handler
+      Role: !GetAtt CentliLambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          SESSIONS_TABLE: !Ref CentliSessionsTable
+      Tags:
+        Unit: AgentCore & Orchestration
+  
+  # Lambda Function: Disconnect Handler
+  DisconnectFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: centli-app-disconnect
+      CodeUri: src_aws/app_disconnect/
+      Handler: app_disconnect.lambda_handler
+      Role: !GetAtt CentliLambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          SESSIONS_TABLE: !Ref CentliSessionsTable
+      Tags:
+        Unit: AgentCore & Orchestration
+  
+  # Lambda Function: Message Handler
+  MessageFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: centli-app-message
+      CodeUri: src_aws/app_message/
+      Handler: app_message.lambda_handler
+      Role: !GetAtt CentliLambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          SESSIONS_TABLE: !Ref CentliSessionsTable
+          EVENT_BUS_NAME: !Ref CentliEventBus
+          AGENTCORE_ID: ''  # To be updated after Bedrock Agent creation
+          ASSETS_BUCKET: !Ref CentliAssetsBucket
+      Tags:
+        Unit: AgentCore & Orchestration
+  
+  # WebSocket Routes and Integrations
+  ConnectRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref CentliWebSocketAPI
+      RouteKey: $connect
+      AuthorizationType: NONE
+      Target: !Sub integrations/${ConnectIntegration}
+  
+  DisconnectRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref CentliWebSocketAPI
+      RouteKey: $disconnect
+      Target: !Sub integrations/${DisconnectIntegration}
+  
+  DefaultRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref CentliWebSocketAPI
+      RouteKey: $default
+      Target: !Sub integrations/${MessageIntegration}
+  
+  ConnectIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref CentliWebSocketAPI
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${ConnectFunction.Arn}/invocations
+  
+  DisconnectIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref CentliWebSocketAPI
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${DisconnectFunction.Arn}/invocations
+  
+  MessageIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref CentliWebSocketAPI
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !Sub arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${MessageFunction.Arn}/invocations
+  
+  # Lambda Permissions for API Gateway
+  ConnectPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref ConnectFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${CentliWebSocketAPI}/*
+  
+  DisconnectPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref DisconnectFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${CentliWebSocketAPI}/*
+  
+  MessagePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref MessageFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${CentliWebSocketAPI}/*
+
+  # ============================================================================
+  # UNIT 3: ACTION GROUPS
+  # (To be added in Unit 3 code generation)
+  # ============================================================================
+
+  # ============================================================================
+  # UNIT 4: FRONTEND
+  # (To be added in Unit 4 code generation)
+  # ============================================================================
+
+Outputs:
+  # Unit 1 Outputs - Shared Infrastructure
+  EventBusArn:
+    Description: EventBridge Event Bus ARN for event-driven communication
+    Value: !GetAtt CentliEventBus.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-EventBusArn'
+  
+  EventBusName:
+    Description: EventBridge Event Bus Name
+    Value: !Ref CentliEventBus
+    Export:
+      Name: !Sub '${AWS::StackName}-EventBusName'
+  
+  AssetsBucketName:
+    Description: S3 Assets Bucket Name for images and static files
+    Value: !Ref CentliAssetsBucket
+    Export:
+      Name: !Sub '${AWS::StackName}-AssetsBucketName'
+  
+  AssetsBucketArn:
+    Description: S3 Assets Bucket ARN
+    Value: !GetAtt CentliAssetsBucket.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-AssetsBucketArn'
+  
+  LambdaExecutionRoleArn:
+    Description: Lambda Execution Role ARN for all Lambda functions
+    Value: !GetAtt CentliLambdaExecutionRole.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-LambdaExecutionRoleArn'
+  
+  LogGroupName:
+    Description: CloudWatch Log Group Name for centralized logging
+    Value: !Ref CentliLogGroup
+    Export:
+      Name: !Sub '${AWS::StackName}-LogGroupName'
+  
+  StackName:
+    Description: CloudFormation Stack Name
+    Value: !Ref AWS::StackName
+  
+  Region:
+    Description: AWS Region
+    Value: !Ref AWS::Region
+  
+  AccountId:
+    Description: AWS Account ID
+    Value: !Ref AWS::AccountId
+  
+  # Unit 2 Outputs - AgentCore & Orchestration
+  WebSocketURL:
+    Description: WebSocket API URL for real-time communication
+    Value: !Sub 'wss://${CentliWebSocketAPI}.execute-api.${AWS::Region}.amazonaws.com/prod'
+    Export:
+      Name: !Sub '${AWS::StackName}-WebSocketURL'
+  
+  WebSocketAPIId:
+    Description: WebSocket API ID
+    Value: !Ref CentliWebSocketAPI
+    Export:
+      Name: !Sub '${AWS::StackName}-WebSocketAPIId'
+  
+  SessionsTableName:
+    Description: DynamoDB Sessions Table Name
+    Value: !Ref CentliSessionsTable
+    Export:
+      Name: !Sub '${AWS::StackName}-SessionsTableName'
+  
+  SessionsTableArn:
+    Description: DynamoDB Sessions Table ARN
+    Value: !GetAtt CentliSessionsTable.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-SessionsTableArn'
+  
+  ConnectFunctionArn:
+    Description: Connect Lambda Function ARN
+    Value: !GetAtt ConnectFunction.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-ConnectFunctionArn'
+  
+  DisconnectFunctionArn:
+    Description: Disconnect Lambda Function ARN
+    Value: !GetAtt DisconnectFunction.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-DisconnectFunctionArn'
+  
+  MessageFunctionArn:
+    Description: Message Lambda Function ARN
+    Value: !GetAtt MessageFunction.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-MessageFunctionArn'
