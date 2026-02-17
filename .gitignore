@@ -310,6 +310,19 @@ deployment-artifacts/
 # Test scripts
 test-websocket.js
 generate-test-jwt.js
+test-bedrock-agent.js
+test-bedrock-direct.py
+test-agent-draft.js
+test-agent-draft.py
+create-agent-version.py
+list-agent-methods.py
+update-alias.py
+bedrock-test-body.json
+invoke-claude-test.json
+response.json
+
+# Python virtual environment
+venv/
 
 # Package files
 package.json

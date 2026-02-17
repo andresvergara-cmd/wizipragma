@@ -141,10 +141,13 @@ def process_text_message(content: str, session_id: str, user_id: str, connection
                 "metadata": {"timestamp": datetime.utcnow().isoformat()}
             }
         
+        # Get agent alias ID from environment
+        agent_alias_id = os.environ.get('AGENTCORE_ALIAS_ID', 'TSTALIASID')
+        
         # Invoke Bedrock Agent
         response = bedrock_agent.invoke_agent(
             agentId=AGENTCORE_ID,
-            agentAliasId='TSTALIASID',  # Test alias
+            agentAliasId=agent_alias_id,
             sessionId=session_id,
             inputText=content
         )
