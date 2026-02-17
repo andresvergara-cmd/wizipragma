@@ -389,3 +389,25 @@
     display: none;
   }
 }
+
+/* Updated Chat FAB with WOW effect */
+.chat-fab {
+  animation: fabPulse 2s infinite !important;
+}
+
+@keyframes fabPulse {
+  0%, 100% {
+    box-shadow: 0 8px 24px rgba(173, 55, 224, 0.4);
+  }
+  50% {
+    box-shadow: 0 8px 32px rgba(173, 55, 224, 0.6), 0 0 0 8px rgba(173, 55, 224, 0.1);
+  }
+}
+
+.chat-fab.open {
+  transform: rotate(90deg) !important;
+}
+
+.chat-fab.open:hover {
+  transform: rotate(90deg) scale(1.1) !important;
+}

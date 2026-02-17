@@ -4,12 +4,25 @@
 
 /* Hero Section */
 .hero {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  background: linear-gradient(135deg, #ad37e0 0%, #8b2bb3 100%);
   color: white;
   padding: 4rem 2rem;
   min-height: 500px;
   display: flex;
   align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+  opacity: 0.3;
 }
 
 .hero-content {
@@ -19,6 +32,8 @@
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
   align-items: center;
+  position: relative;
+  z-index: 1;
 }
 
 .hero-text {
@@ -32,18 +47,20 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+  line-height: 1.2;
+  letter-spacing: -1px;
 }
 
 .hero-icon {
   font-size: 3.5rem;
-  animation: bounce 2s infinite;
+  animation: float 3s ease-in-out infinite;
 }
 
 .hero-subtitle {
   font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 1rem;
-  color: var(--accent);
+  color: #e0aaff;
 }
 
 .hero-description {
@@ -66,7 +83,6 @@
 }
 
 .hero-owl {
-  font-size: 15rem;
   animation: float 3s ease-in-out infinite;
   filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
 }
@@ -74,7 +90,7 @@
 /* Benefits Section */
 .benefits {
   padding: 4rem 2rem;
-  background: var(--bg-secondary);
+  background: #f5f5f7;
 }
 
 .section-title {
@@ -82,7 +98,8 @@
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 3rem;
-  color: var(--text-primary);
+  color: #1a1a1a;
+  letter-spacing: -0.5px;
 }
 
 .benefits-grid {
@@ -96,15 +113,17 @@
 .benefit-card {
   background: white;
   padding: 2rem;
-  border-radius: var(--radius-lg);
+  border-radius: 12px;
   text-align: center;
-  box-shadow: var(--shadow-md);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e8e8e8;
+  transition: all 0.3s ease;
 }
 
 .benefit-card:hover {
   transform: translateY(-5px);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 12px 24px rgba(173, 55, 224, 0.15);
+  border-color: #ad37e0;
 }
 
 .benefit-icon {
@@ -116,12 +135,13 @@
   font-size: 1.3rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: var(--primary);
+  color: #ad37e0;
 }
 
 .benefit-card p {
-  color: var(--text-secondary);
+  color: #666;
   line-height: 1.5;
+  font-size: 0.95rem;
 }
 
 /* Featured Products */
@@ -140,22 +160,31 @@
 
 .featured-card {
   background: white;
-  border-radius: var(--radius-lg);
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: var(--shadow-md);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e8e8e8;
+  transition: all 0.3s ease;
   cursor: pointer;
+  text-decoration: none;
+  color: inherit;
 }
 
 .featured-card:hover {
   transform: translateY(-8px);
-  box-shadow: var(--shadow-xl);
+  box-shadow: 0 12px 24px rgba(173, 55, 224, 0.15);
+  border-color: #ad37e0;
 }
 
 .featured-card img {
   width: 100%;
   height: 250px;
   object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.featured-card:hover img {
+  transform: scale(1.05);
 }
 
 .featured-content {
@@ -166,22 +195,22 @@
   font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: var(--text-primary);
+  color: #1a1a1a;
 }
 
 .featured-price {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--primary);
+  color: #ad37e0;
   margin-bottom: 0.5rem;
 }
 
 .featured-badge {
   display: inline-block;
-  background: var(--success);
+  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
   color: white;
   padding: 0.25rem 0.75rem;
-  border-radius: var(--radius-full);
+  border-radius: 16px;
   font-size: 0.875rem;
   font-weight: 600;
 }
@@ -193,7 +222,7 @@
 /* Categories */
 .categories {
   padding: 4rem 2rem;
-  background: var(--bg-secondary);
+  background: #f5f5f7;
 }
 
 .categories-grid {
@@ -207,19 +236,21 @@
 .category-card {
   background: white;
   padding: 3rem 2rem;
-  border-radius: var(--radius-lg);
+  border-radius: 12px;
   text-align: center;
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e8e8e8;
   transition: all 0.3s ease;
   text-decoration: none;
-  color: var(--text-primary);
+  color: #1a1a1a;
 }
 
 .category-card:hover {
   transform: translateY(-5px);
-  box-shadow: var(--shadow-lg);
-  background: var(--primary);
+  box-shadow: 0 12px 24px rgba(173, 55, 224, 0.15);
+  background: #ad37e0;
   color: white;
+  border-color: #ad37e0;
 }
 
 .category-icon {
@@ -241,15 +272,6 @@
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes bounce {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
   }
 }
 
@@ -284,10 +306,6 @@
 
   .hero-actions {
     justify-content: center;
-  }
-
-  .hero-owl {
-    font-size: 8rem;
   }
 
   .section-title {
