@@ -1187,3 +1187,41 @@ Unit 1 (Infrastructure Foundation) is infrastructure-only (SAM templates, EventB
 4. Proceed to Build and Test stage
 
 ---
+
+## AWS SSO Authentication and Profile Update
+**Timestamp**: 2026-02-17T15:15:00Z
+**User Input**: "quiero autenticarme desde la cli en https://pragmaaws.awsapps.com/start/# en la region us-east-1"
+**AI Action**: Configured AWS SSO authentication and updated deployment guide with correct profile name
+**Context**: Preparing for Unit 3 deployment
+
+**AWS SSO Configuration**:
+- SSO Session: oscar.morales
+- SSO Start URL: https://pragmaaws.awsapps.com/start/#
+- SSO Region: us-east-1
+- Account ID: 777937796305
+- Role: Ps-HackatonAgentic-Mexico
+- Profile Name: Ps-HackatonAgentic-Mexico-777937796305
+
+**Authentication Verified**:
+```
+UserId: AROA3KIFUXTIRAT5FGITM:oscar.morales
+Account: 777937796305
+Arn: arn:aws:sts::777937796305:assumed-role/AWSReservedSSO_Ps-HackatonAgentic-Mexico_0d1a7597896244cf/oscar.morales
+```
+
+**Files Updated**:
+- aidlc-docs/construction/action-groups/code/deployment-guide.md (corrected profile name in all commands)
+
+**Git Operations**:
+- Commit: 2046c35 - "fix: Update AWS profile name in deployment guide"
+- Pushed to origin/feature/hackaton
+
+**Status**: ✅ Authenticated and ready for deployment
+
+**Next Steps**:
+1. Deploy Unit 3 with `sam build && sam deploy --profile Ps-HackatonAgentic-Mexico-777937796305`
+2. Verify all resources are created
+3. Run seed scripts
+4. Execute integration tests
+
+---
