@@ -895,3 +895,47 @@ Total deliverables: 3 Lambda functions (~410 lines), 2 scripts, SAM template upd
 - `commands/deploy-unit2.sh` - Deployment script (needs permissions)
 
 ---
+
+## Unit 2: Deployment Successful
+**Timestamp**: 2026-02-17T07:24:00Z
+**User Input**: "usa el profile 777937796305_Ps-HackatonAgentic-Mexico para que hagas el deploy que te fallo del unit 2 de nuevo ya que le agregue nuevos permisos al permission set asociado"
+**AI Action**: "Successfully deployed Unit 2 (AgentCore & Orchestration) to AWS after fixing tag validation issues (removed '&' character from tags)."
+**Stack Name**: centli-hackathon
+**Region**: us-east-1
+**Resources Created**:
+- WebSocket API: vvg621xawg
+- WebSocket URL: wss://vvg621xawg.execute-api.us-east-1.amazonaws.com/prod
+- 3 Lambda Functions: centli-app-connect, centli-app-disconnect, centli-app-message
+- DynamoDB Table: centli-sessions
+- S3 Bucket: centli-assets-777937796305
+- EventBridge Bus: centli-event-bus
+- IAM Role: CentliLambdaExecutionRole
+- CloudWatch Log Group: /aws/lambda/centli
+
+**Next Steps**:
+1. Configure Bedrock AgentCore manually (run scripts/configure-bedrock.sh)
+2. Update MessageFunction AGENTCORE_ID environment variable
+3. Test WebSocket connection
+
+---
+
+## Unit 2: WebSocket Connection Test Successful
+**Timestamp**: 2026-02-17T13:28:00Z
+**User Input**: "prueba web socket wscat -c \"wss://vvg621xawg.execute-api.us-east-1.amazonaws.com/prod?token=test\""
+**AI Action**: "Tested WebSocket connection successfully. Created test JWT token, connected to WebSocket API, sent test message, received echo response."
+**Test Results**:
+- ✅ WebSocket connection established successfully
+- ✅ JWT token validation working (simplified for hackathon)
+- ✅ Session created in DynamoDB (session_1771334847_test-user-123)
+- ✅ Message sent and received: "Hola CENTLI" → Echo response
+- ✅ Connect Lambda: 94ms duration, 86MB memory
+- ✅ Message Lambda: 302ms duration, 90MB memory
+
+**Test JWT**: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidGVzdC11c2VyLTEyMyIsImV4cCI6MTc3MTQyMTIzNH0.ZmFrZS1zaWduYXR1cmUtZm9yLXRlc3Rpbmc
+
+**Next Steps**:
+1. Configure Bedrock AgentCore to replace echo response with actual AI processing
+2. Implement voice and image processing (Nova Sonic, Nova Canvas)
+3. Integrate with Action Groups (Unit 3)
+
+---

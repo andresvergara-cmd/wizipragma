@@ -307,6 +307,14 @@ gen2/
 # Deployment artifacts
 deployment-artifacts/
 
+# Test scripts
+test-websocket.js
+generate-test-jwt.js
+
+# Package files
+package.json
+package-lock.json
+
 # ============================================================================
 # Keep These Files (Exceptions)
 # ============================================================================
