@@ -12,37 +12,37 @@
 ## Functional Design Steps
 
 ### Step 1: Business Logic Modeling
-- [ ] Define Core Banking workflows (account queries, balance updates, transfers)
-- [ ] Define Marketplace workflows (product catalog, benefits calculation, purchase execution)
-- [ ] Define CRM workflows (beneficiary management, alias resolution)
-- [ ] Define cross-Action Group workflows (Marketplace → Core Banking payment)
-- [ ] Define event-driven communication patterns (EventBridge pub/sub)
+- [x] Define Core Banking workflows (account queries, balance updates, transfers)
+- [x] Define Marketplace workflows (product catalog, benefits calculation, purchase execution)
+- [x] Define CRM workflows (beneficiary management, alias resolution)
+- [x] Define cross-Action Group workflows (Marketplace → Core Banking payment)
+- [x] Define event-driven communication patterns (EventBridge pub/sub)
 
 ### Step 2: Domain Entities
-- [ ] Define Core Banking entities (Account, Transaction, Balance)
-- [ ] Define Marketplace entities (Product, Purchase, Benefit)
-- [ ] Define CRM entities (Beneficiary, UserProfile, Alias)
-- [ ] Define entity relationships and cardinalities
-- [ ] Define entity attributes and data types
+- [x] Define Core Banking entities (Account, Transaction, Balance)
+- [x] Define Marketplace entities (Product, Purchase, Benefit)
+- [x] Define CRM entities (Beneficiary, UserProfile, Alias)
+- [x] Define entity relationships and cardinalities
+- [x] Define entity attributes and data types
 
 ### Step 3: Business Rules
-- [ ] Define Core Banking rules (balance validation, transfer limits, account validation)
-- [ ] Define Marketplace rules (benefit eligibility, purchase validation, payment processing)
-- [ ] Define CRM rules (alias resolution, beneficiary validation, frequency tracking)
-- [ ] Define cross-unit rules (payment authorization, credit line validation)
-- [ ] Define error handling and validation rules
+- [x] Define Core Banking rules (balance validation, transfer limits, account validation)
+- [x] Define Marketplace rules (benefit eligibility, purchase validation, payment processing)
+- [x] Define CRM rules (alias resolution, beneficiary validation, frequency tracking)
+- [x] Define cross-unit rules (payment authorization, credit line validation)
+- [x] Define error handling and validation rules
 
 ### Step 4: Data Flow Design
-- [ ] Define EventBridge event schemas (action requests, action responses)
-- [ ] Define DynamoDB data access patterns
-- [ ] Define data transformations between events and entities
-- [ ] Define data persistence strategies
+- [x] Define EventBridge event schemas (action requests, action responses)
+- [x] Define DynamoDB data access patterns
+- [x] Define data transformations between events and entities
+- [x] Define data persistence strategies
 
 ### Step 5: Integration Points
-- [ ] Define AgentCore → Action Groups integration (event consumption)
-- [ ] Define Action Groups → AgentCore integration (response publishing)
-- [ ] Define Marketplace → Core Banking integration (payment events)
-- [ ] Define error propagation and retry strategies
+- [x] Define AgentCore → Action Groups integration (event consumption)
+- [x] Define Action Groups → AgentCore integration (response publishing)
+- [x] Define Marketplace → Core Banking integration (payment events)
+- [x] Define error propagation and retry strategies
 
 ---
 
@@ -57,7 +57,7 @@ When validating a P2P transfer, what business rules should apply?
 - Should we validate beneficiary relationship before allowing transfer?
 - Should we require additional authentication for large amounts?
 
-[Answer]: 
+[Answer]: validar que exista tanto el origen como el destino, que tenga salgo y permisos minimos de seguridad
 
 ---
 
@@ -68,7 +68,7 @@ How should balance updates be handled for atomicity?
 - What happens if balance update fails mid-transaction?
 - Should we maintain transaction history for audit?
 
-[Answer]: 
+[Answer]: toda la información transaccional debe estar en dynamoDB, implementa un bloqueo optimista, si el balance update fail debería hacer un retry and important manteint transaction
 
 ---
 
@@ -79,7 +79,7 @@ How do we determine if a user is eligible for a specific benefit?
 - Should we check user's purchase history for loyalty benefits?
 - Should benefits have expiration dates or usage limits?
 
-[Answer]: 
+[Answer]: Debería haber una base que maneje los beneficios por producto y tarjeta pero con limite de tiempo
 
 ---
 
@@ -90,7 +90,7 @@ When multiple benefits are available for a product, how should we handle them?
 - Should we present all options and let user choose?
 - How do we calculate "best" benefit (highest savings, lowest monthly payment, etc.)?
 
-[Answer]: 
+[Answer]: se pueden usar multiples beneficios
 
 ---
 
@@ -101,7 +101,7 @@ How should the purchase payment flow work between Marketplace and Core Banking?
 - What happens if payment fails after purchase is recorded?
 - Should we implement compensation logic (rollback purchase if payment fails)?
 
-[Answer]: 
+[Answer]: El marketplace notifica al banco y el banco de forma asíncrona gestiona y aprueba el pago.
 
 ---
 
@@ -112,7 +112,7 @@ How should we handle ambiguous aliases (e.g., "mi hermano" matches multiple bene
 - Should we use context from conversation to disambiguate?
 - Should we maintain alias history to improve resolution over time?
 
-[Answer]: 
+[Answer]: que valide todas las consecuencias semanticas y valide con el cliente en casode existir varias para saber si el match es correcto
 
 ---
 
@@ -123,7 +123,7 @@ How should we track and use beneficiary usage frequency?
 - Should we use frequency to suggest beneficiaries proactively?
 - Should we limit suggested beneficiaries to top N most frequent?
 
-[Answer]: 
+[Answer]: deberíamos recomendar proactiamente beneficios
 
 ---
 
@@ -134,7 +134,7 @@ How should Action Groups handle EventBridge events?
 - How should we handle event ordering (if multiple events for same user)?
 - Should we implement idempotency for duplicate events?
 
-[Answer]: 
+[Answer]: multiples lambdas por accion y se deben filtrar los eventos a nivel de event bridge
 
 ---
 
@@ -145,7 +145,7 @@ How should Action Groups handle errors and communicate them back to AgentCore?
 - How should we categorize errors (validation, business logic, technical)?
 - Should we include error details in response or just error codes?
 
-[Answer]: 
+[Answer]: Debe haber un reintento de la operacion en caso de que falle el reintento el agent core lo debe manejar
 
 ---
 
@@ -156,7 +156,7 @@ How should we ensure data consistency across Action Groups?
 - How should we handle race conditions (e.g., concurrent transfers)?
 - Should we use DynamoDB streams for cross-Action Group synchronization?
 
-[Answer]: 
+[Answer]: use consistencia fuerte en dynamo db
 
 ---
 
@@ -169,7 +169,7 @@ What attributes should the Account entity have?
 - Should we track account status (active, frozen, closed)?
 - Should we include account metadata (opening date, branch, etc.)?
 
-[Answer]: 
+[Answer]: debería separar cuentas de ahorro, checkes y credito
 
 ---
 
@@ -180,7 +180,7 @@ What attributes should the Transaction entity have?
 - Should we include merchant/beneficiary information?
 - Should we include geolocation or device information?
 
-[Answer]: 
+[Answer]: debe tener tipo de transaccion, estado de la transaccion, geolocalizacion y beneficiary information
 
 ---
 
@@ -191,7 +191,7 @@ What attributes should the Product entity have?
 - Should we include product ratings/reviews?
 - Should we include multiple images per product?
 
-[Answer]: 
+[Answer]: debería tener caracteristica del producto, imagen y stock
 
 ---
 
@@ -202,7 +202,7 @@ Should Benefit be a separate entity or embedded in Product?
 - Should we track benefit usage per user?
 - Should we support benefit stacking rules?
 
-[Answer]: 
+[Answer]: deberían estar separados del producto vinculado de alguna manera que permita relacionar el producto con el beneficio y el bneficio su propio ciclio de vida
 
 ---
 
@@ -213,7 +213,7 @@ What attributes should the Beneficiary entity have?
 - Should we include beneficiary bank information (bank name, account type)?
 - Should we include beneficiary contact information (phone, email)?
 
-[Answer]: 
+[Answer]: debe incluir relacionamiento es decir si es familia, amigo, tienda, informacion bancaria y de contacto
 
 ---
 
@@ -226,7 +226,7 @@ What transfer limits should we enforce?
 - Should limits vary by account type or user profile?
 - Should we allow temporary limit increases with additional authentication?
 
-[Answer]: 
+[Answer]:  que tenga limites diarios y mensuales
 
 ---
 
@@ -237,7 +237,7 @@ What rules govern benefit application?
 - Should discounts be applied before or after other benefits?
 - Should benefits be mutually exclusive or stackable?
 
-[Answer]: 
+[Answer]: el cashback debe verse reflejado inmediatamente, no requiere minimo de compra, puede otro benificio ser aplicado 
 
 ---
 
@@ -248,7 +248,7 @@ What validations should we perform before allowing a purchase?
 - Should we validate shipping address (if applicable)?
 - Should we validate purchase limits (e.g., max 1 per user for promotions)?
 
-[Answer]: 
+[Answer]: validar que esta e stock, el saldo, y la cuenta destino está habilitada
 
 ---
 
@@ -259,7 +259,7 @@ What rules should govern alias creation and usage?
 - Should we validate alias doesn't conflict with existing beneficiary names?
 - Should we allow multiple aliases for same beneficiary?
 
-[Answer]: 
+[Answer]: un alias por persona
 
 ---
 
@@ -270,22 +270,23 @@ What data retention rules should we follow?
 - Should we keep purchase history for analytics?
 - Should we implement TTL for session data or temporary records?
 
-[Answer]: 
+[Answer]: mantener transacciones del ultimo mes
 
 ---
 
 ## Success Criteria
 
-- [ ] All clarification questions answered
-- [ ] Business logic models documented
-- [ ] Domain entities defined with attributes
-- [ ] Business rules documented with validation logic
-- [ ] Data flow patterns defined
-- [ ] Integration contracts specified
-- [ ] User approval obtained
+- [x] All clarification questions answered
+- [x] Business logic models documented
+- [x] Domain entities defined with attributes
+- [x] Business rules documented with validation logic
+- [x] Data flow patterns defined
+- [x] Integration contracts specified
+- [x] User approval obtained
 
 ---
 
-**Plan Status**: Awaiting user answers  
-**Total Questions**: 20 questions across business logic, domain model, and business rules  
-**Next Step**: Collect answers and generate functional design artifacts
+**Plan Status**: Complete - Awaiting user approval  
+**Total Questions**: 20 questions answered  
+**Artifacts Generated**: 3 documents (business-logic-model.md, domain-entities.md, business-rules.md)  
+**Next Step**: User approval to proceed to NFR Requirements stage

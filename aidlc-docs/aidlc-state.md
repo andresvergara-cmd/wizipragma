@@ -63,12 +63,28 @@
 
 ## Current Status
 - **Lifecycle Phase**: CONSTRUCTION
-- **Current Stage**: Per-Unit Loop - Unit 1 Complete
-- **Next Unit**: Unit 2 (AgentCore & Orchestration)
-- **Status**: Unit 1 (Infrastructure Foundation) complete, ready for Unit 2
+- **Current Stage**: Per-Unit Loop - Unit 2 Complete, Unit 3 Functional Design Planning
+- **Next Unit**: Unit 3 (Action Groups) - Awaiting answers to 20 functional design questions
+- **Status**: Unit 1 and Unit 2 complete and deployed, Unit 3 planning started
 
 ## Unit Completion Status
 - [x] Unit 1: Infrastructure Foundation (COMPLETED - 2026-02-17T00:10:00Z)
-- [ ] Unit 2: AgentCore & Orchestration
-- [ ] Unit 3: Action Groups
+  - [x] Infrastructure Design
+  - [x] Code Generation
+  - [x] Deployment (SAM template with EventBridge, S3, IAM)
+- [x] Unit 2: AgentCore & Orchestration (COMPLETED - 2026-02-17T14:30:00Z)
+  - [x] Functional Design
+  - [x] NFR Requirements
+  - [x] NFR Design
+  - [x] Infrastructure Design
+  - [x] Code Generation (3 Lambda functions: connect, disconnect, message)
+  - [x] Deployment (WebSocket API, DynamoDB sessions table)
+  - [x] Bedrock AgentCore Configuration (Claude 3.5 Sonnet v2)
+  - [x] Testing (WebSocket connection and agent invocation successful)
+- [ ] Unit 3: Action Groups (IN PROGRESS - Functional Design Planning)
+  - [ ] Functional Design - 20 questions pending answers
+  - [ ] NFR Requirements
+  - [ ] NFR Design
+  - [ ] Infrastructure Design
+  - [ ] Code Generation
 - [ ] Unit 4: Frontend Multimodal UI
