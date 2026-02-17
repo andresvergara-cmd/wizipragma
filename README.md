@@ -53,10 +53,25 @@ wizipragma/
 
 Cada componente tiene su propio README con instrucciones de setup específicas.
 
+## AWS Configuration
+
+**Cuenta AWS del Proyecto:**
+- Account ID: 777937796305
+- Email: pra_hackaton_agentic_mexico@pragma.com.co
+- Región: us-east-1
+
+Ver [AWS Setup Guide](docs/AWS_SETUP.md) para configuración detallada.
+
+## Deployment
+
+Ver [Deployment Guide](docs/DEPLOYMENT.md) para instrucciones de despliegue a AWS.
+
 ## Documentación
 
 - [Especificación de API](shared/contracts/api-spec.yaml)
 - [Tipos Compartidos](shared/types/)
+- [Configuración AWS](docs/AWS_SETUP.md)
+- [Guía de Despliegue](docs/DEPLOYMENT.md)
 - [Documentación Completa](docs/)
 
 ## Licencia

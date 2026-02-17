@@ -6,7 +6,7 @@ Este plan establece las tareas para crear una estructura de proyecto colaborativ
 
 ## Tareas
 
-- [-] 1. Configurar estructura base del proyecto y tipos compartidos
+- [x] 1. Configurar estructura base del proyecto y tipos compartidos
   - Crear estructura de directorios raíz: shared/, agent/, backend/, frontend/, integration-tests/, docker/, docs/
   - Crear directorio shared/types/ con interfaces TypeScript base
   - Crear directorio shared/contracts/ para especificaciones OpenAPI
