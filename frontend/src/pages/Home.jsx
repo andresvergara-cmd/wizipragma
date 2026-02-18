@@ -68,7 +68,7 @@ const Home = () => {
         <h2 className="section-title">Productos Destacados</h2>
         <div className="featured-grid">
           <div className="featured-card">
-            <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400" alt="MacBook Pro" />
+            <img src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp14-spacegray-select-202310?wid=904&hei=840&fmt=jpeg&qlt=90&.v=1697311054290" alt="MacBook Pro" />
             <div className="featured-content">
               <h3>MacBook Pro 14" M3</h3>
               <p className="featured-price">$45,999</p>
@@ -76,7 +76,7 @@ const Home = () => {
             </div>
           </div>
           <div className="featured-card">
-            <img src="https://images.unsplash.com/photo-1592286927505-c0d6c9c24e5a?w=400" alt="iPhone 15 Pro" />
+            <img src="https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-pro-finish-select-202309-6-7inch-naturaltitanium?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1692845702960" alt="iPhone 15 Pro" />
             <div className="featured-content">
               <h3>iPhone 15 Pro 256GB</h3>
               <p className="featured-price">$28,999</p>
@@ -84,7 +84,7 @@ const Home = () => {
             </div>
           </div>
           <div className="featured-card">
-            <img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=400" alt="Sony WH-1000XM5" />
+            <img src="https://m.media-amazon.com/images/I/61vJN35Y5UL._AC_SL1500_.jpg" alt="Sony WH-1000XM5" />
             <div className="featured-content">
               <h3>Sony WH-1000XM5</h3>
               <p className="featured-price">$7,999</p>
