@@ -9,6 +9,7 @@ const ProductDetail = () => {
   const product = mockProducts.find(p => p.id === id)
   const [quantity, setQuantity] = useState(1)
   const [activeTab, setActiveTab] = useState('description')
+  const [imageError, setImageError] = useState(false)
 
   if (!product) {
     return (
@@ -48,6 +49,10 @@ const ProductDetail = () => {
     alert('Abriendo chat con CENTLI para hablar sobre este producto...')
   }
 
+  const handleImageError = () => {
+    setImageError(true)
+  }
+
   return (
     <div className="product-detail">
       <div className="product-detail-container">
@@ -61,7 +66,21 @@ const ProductDetail = () => {
             {/* Image Section */}
             <div className="product-image-section">
               <div className="main-image-container">
-                <img src={product.image} alt={product.name} className="main-image" />
+                {imageError ? (
+                  <div className="product-image-placeholder-large">
+                    <div className="placeholder-icon-large">📦</div>
+                    <div className="placeholder-text-large">{product.brand}</div>
+                    <div className="placeholder-subtext">{product.name}</div>
+                  </div>
+                ) : (
+                  <img 
+                    src={product.image} 
+                    alt={product.name} 
+                    className="main-image"
+                    onError={handleImageError}
+                    loading="lazy"
+                  />
+                )}
               </div>
             </div>
 

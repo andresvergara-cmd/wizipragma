@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom'
+import { useState } from 'react'
 import './ProductCard.css'
 
 const ProductCard = ({ product }) => {
+  const [imageError, setImageError] = useState(false)
+
   const formatPrice = (price) => {
     return new Intl.NumberFormat('es-MX', {
       style: 'currency',
@@ -14,10 +17,27 @@ const ProductCard = ({ product }) => {
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0
 
+  const handleImageError = () => {
+    setImageError(true)
+  }
+
   return (
     <Link to={`/product/${product.id}`} className="product-card">
       <div className="product-image-container">
-        <img src={product.image} alt={product.name} className="product-image" />
+        {imageError ? (
+          <div className="product-image-placeholder">
+            <div className="placeholder-icon">📦</div>
+            <div className="placeholder-text">{product.brand}</div>
+          </div>
+        ) : (
+          <img 
+            src={product.image} 
+            alt={product.name} 
+            className="product-image"
+            onError={handleImageError}
+            loading="lazy"
+          />
+        )}
         {discountPercentage > 0 && (
           <div className="discount-badge">-{discountPercentage}%</div>
         )}
