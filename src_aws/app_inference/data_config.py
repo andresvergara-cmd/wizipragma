@@ -78,6 +78,10 @@ def format_user_context(user: dict) -> str:
     Returns:
         str: Formatted multi-section user profile text
     """
+    # Handle empty or invalid user data
+    if not user or not isinstance(user, dict):
+        return "─────────────────────── PERFIL DEL USUARIO ───────────────────────\nNo hay información de perfil disponible."
+    
     blocks = []
 
     blocks.append("─────────────────────── PERFIL DEL USUARIO ───────────────────────")
@@ -99,15 +103,44 @@ def format_user_context(user: dict) -> str:
         blocks.append(f"Estado civil: {estado}, hijos: {hijos}")
 
     blocks.append("\n───────────────────── INFORMACIÓN FINANCIERA ─────────────────────")
+    
+    # Financial Profile (nuevo formato)
+    fin_profile = user.get('financialProfile', {})
+    if fin_profile:
+        monthly_income = float(fin_profile.get('monthlyIncome', 0))
+        currency = fin_profile.get('currency', 'MXN')
+        blocks.append(f"Ingreso mensual: {currency} ${monthly_income:,.2f}")
+        if fin_profile.get('savingsGoal'):
+            savings_goal = float(fin_profile.get('savingsGoal', 0))
+            blocks.append(f"Meta de ahorro: {currency} ${savings_goal:,.2f}")
+        if fin_profile.get('riskTolerance'):
+            blocks.append(f"Tolerancia al riesgo: {fin_profile['riskTolerance']}")
+    
+    # Financial Info (formato antiguo - fallback)
     fin = user.get('financialInfo', {})
-    blocks.append(f"Ingreso anual: USD {int(fin.get('incomeAnnual', 0))}")
-    blocks.append(f"Puntaje crediticio: {int(fin.get('creditScore', 0))}")
-    blocks.append(f"Tiene hipoteca: {'Sí' if fin.get('hasMortgage') else 'No'}")
+    if fin and not fin_profile:
+        blocks.append(f"Ingreso anual: USD {int(fin.get('incomeAnnual', 0))}")
+        blocks.append(f"Puntaje crediticio: {int(fin.get('creditScore', 0))}")
+        blocks.append(f"Tiene hipoteca: {'Sí' if fin.get('hasMortgage') else 'No'}")
 
     credit = user.get('creditLine', {})
     blocks.append(f"Límite de crédito: USD {int(credit.get('limit', 0))}")
     blocks.append(f"Crédito disponible: USD {int(credit.get('available', 0))}")
     blocks.append(f"Crédito aprobado: {'Sí' if credit.get('isApproved') else 'No'}")
+
+    # CUENTAS BANCARIAS
+    accounts = user.get('accounts', [])
+    if accounts:
+        blocks.append("\n─────────────────────── CUENTAS BANCARIAS ────────────────────────")
+        total_balance = 0
+        for acc in accounts:
+            acc_type = acc.get('accountType', 'N/A')
+            bank = acc.get('bankName', 'N/A')
+            balance = float(acc.get('balance', 0))
+            currency = acc.get('currency', 'MXN')
+            total_balance += balance
+            blocks.append(f"• {acc_type} ({bank}): {currency} ${balance:,.2f}")
+        blocks.append(f"SALDO TOTAL: MXN ${total_balance:,.2f}")
 
     imp = user.get('importantDates', {})
     if imp:
@@ -171,6 +204,11 @@ def summarize_transactions(transactions, user_id: str, last_transactions: int = 
             Summary includes monthly totals by category and recent transaction details
     """
     filtered = [t for t in transactions if t['userId'] == user_id]
+    
+    # OPTIMIZATION: Sort by date and limit to last 50 transactions
+    filtered.sort(key=lambda x: x.get('date', ''), reverse=True)
+    filtered = filtered[:50]
+    logger.info(f"Processing {len(filtered)} most recent transactions (optimized from full set)")
 
     monthly_summary = defaultdict(lambda: defaultdict(Decimal))
     unique_categories = set()

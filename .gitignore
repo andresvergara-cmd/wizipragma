@@ -1,24 +1,8 @@
-# CENTLI - Multimodal Banking Assistant
-# .gitignore for AWS SAM + Python + Frontend project
-
-# ============================================================================
-# AWS SAM
-# ============================================================================
-.aws-sam/
-samconfig.toml.bak
-
-# ============================================================================
 # Python
-# ============================================================================
-# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
-
-# C extensions
 *.so
-
-# Distribution / packaging
 .Python
 build/
 develop-eggs/
@@ -32,317 +16,101 @@ parts/
 sdist/
 var/
 wheels/
-pip-wheel-metadata/
-share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
 MANIFEST
-
-# PyInstaller
-*.manifest
-*.spec
-
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
-
-# Translations
-*.mo
-*.pot
-
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
-
-# Flask stuff:
-instance/
-.webassets-cache
-
-# Scrapy stuff:
-.scrapy
-
-# Sphinx documentation
-docs/_build/
-
-# PyBuilder
-target/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# IPython
-profile_default/
-ipython_config.py
-
-# pyenv
-.python-version
-
-# pipenv
-Pipfile.lock
-
-# PEP 582
-__pypackages__/
-
-# Celery stuff
-celerybeat-schedule
-celerybeat.pid
-
-# SageMath parsed files
-*.sage.py
-
-# Environments
-.env
-.venv
-env/
 venv/
 ENV/
-env.bak/
-venv.bak/
+env/
 
-# Spyder project settings
-.spyderproject
-.spyproject
+# Lambda packages
+lambda-*.zip
+*.zip
 
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
-/site
-
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Pyre type checker
-.pyre/
-
-# ============================================================================
-# Poetry
-# ============================================================================
-poetry.lock
-
-# ============================================================================
-# AWS
-# ============================================================================
-# AWS credentials (NEVER commit these!)
-.aws/
-*.pem
-*.key
-
-# CloudFormation outputs
-outputs.json
-stack-outputs.json
-
-# ============================================================================
-# IDE / Editor
-# ============================================================================
-# VSCode
-.vscode/
-*.code-workspace
-
-# PyCharm
-.idea/
-*.iml
-*.iws
-*.ipr
-
-# Sublime Text
-*.sublime-project
-*.sublime-workspace
-
-# Vim
-*.swp
-*.swo
-*~
-
-# Emacs
-*~
-\#*\#
-.\#*
-
-# ============================================================================
-# OS
-# ============================================================================
-# macOS
-.DS_Store
-.AppleDouble
-.LSOverride
-Icon
-._*
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
-.com.apple.timemachine.donotpresent
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
-
-# Windows
-Thumbs.db
-Thumbs.db:encryptable
-ehthumbs.db
-ehthumbs_vista.db
-*.stackdump
-[Dd]esktop.ini
-$RECYCLE.BIN/
-*.cab
-*.msi
-*.msix
-*.msm
-*.msp
-*.lnk
-
-# Linux
-*~
-.fuse_hidden*
-.directory
-.Trash-*
-.nfs*
-
-# ============================================================================
-# Node.js / Frontend (if applicable)
-# ============================================================================
+# Node
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-lerna-debug.log*
 .pnpm-debug.log*
+dist/
+build/
 
-# Dependency directories
-jspm_packages/
+# Environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# Optional npm cache directory
-.npm
+# AWS
+.aws-sam/
+samconfig.toml
 
-# Optional eslint cache
-.eslintcache
-
-# Optional REPL history
-.node_repl_history
-
-# Output of 'npm pack'
-*.tgz
-
-# Yarn Integrity file
-.yarn-integrity
-
-# parcel-bundler cache
-.cache
-.parcel-cache
-
-# Next.js build output
-.next
-out
-
-# Nuxt.js build / generate output
-.nuxt
-dist
-
-# Gatsby files
-.cache/
-public
-
-# vuepress build output
-.vuepress/dist
-
-# Serverless directories
-.serverless/
-
-# FuseBox cache
-.fusebox/
-
-# DynamoDB Local files
-.dynamodb/
-
-# TernJS port file
-.tern-port
-
-# Stores VSCode versions used for testing VSCode extensions
-.vscode-test
-
-# ============================================================================
-# Project Specific
-# ============================================================================
-# Temporary files
-*.tmp
-*.temp
-*.bak
-*.backup
-
-# Local configuration
-local.config.json
-local-settings.json
-
-# Test data
-test-data/
-mock-data/
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
 
 # Logs
-logs/
 *.log
+logs/
 
-# Generated files
-gen2/
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
 
-# Deployment artifacts
-deployment-artifacts/
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
 
-# Test scripts
-test-websocket.js
-generate-test-jwt.js
-test-bedrock-agent.js
-test-bedrock-direct.py
-test-agent-draft.js
-test-agent-draft.py
-create-agent-version.py
-list-agent-methods.py
-update-alias.py
-bedrock-test-body.json
-invoke-claude-test.json
-response.json
+# Documentation builds
+docs/_build/
+site/
 
-# Python virtual environment
-venv/
+# QR codes (keep source, ignore generated)
+# centli-qr-code.png is tracked for README
 
-# Package files
-package.json
-package-lock.json
+# Archivos temporales de desarrollo
+fix-*.py
+test-simple-*.html
+diagnose-*.html
+quick-*.sh
+check-*.sh
 
-# ============================================================================
-# Keep These Files (Exceptions)
-# ============================================================================
-# Keep samconfig.toml for deployment configuration
-!samconfig.toml
+# Archivos de sesión/debug
+*-STATUS.md
+*-FIX-*.md
+*-ISSUE.md
+*-DEPLOYED.md
+CORRECCION-*.md
+SOLUCION-*.md
+DIAGNOSTICO-*.md
+RESUMEN-*.md
+VALIDATION-*.md
+SISTEMA-*.md
+PRUEBA-*.md
+FIX-*.md
+GAPS-*.md
+SYNC-*.md
+TEAM-*.md
+FRONTEND-STATUS.md
+CHAT-FIX-REPORT.md
+INTEGRATION-GUIDE.md
+UX-UI-IMPROVEMENTS.md
+MULTIMODAL-STATUS.md
+AGREGAR-PERMISOS-MANUAL.md
 
-# Keep data files for mock data
-!data/*.json
-
-# Keep documentation
-!aidlc-docs/**/*
+# Mantener solo documentación final
+!docs/
+!demo/
+!scripts/
 !README.md
-!SESSION-RESUME.md
-!DEPLOYMENT-UNIT2.md
-
-# Keep scripts
-!commands/*.sh
-!scripts/*.sh

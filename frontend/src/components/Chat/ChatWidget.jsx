@@ -12,7 +12,8 @@ const ChatWidget = ({ isOpen, onClose }) => {
     isStreaming,
     currentStreamMessage,
     setInputValue, 
-    sendTextMessage 
+    sendTextMessage,
+    sendVoiceMessage 
   } = useChat()
 
   const [isRecording, setIsRecording] = useState(false)
@@ -65,8 +66,22 @@ const ChatWidget = ({ isOpen, onClose }) => {
   }
 
   const handleVoiceRecord = async () => {
+    // Check if we're on HTTPS or localhost
+    const isSecureContext = window.isSecureContext || window.location.protocol === 'https:' || window.location.hostname === 'localhost'
+    
+    if (!isSecureContext) {
+      alert('🎤 La grabación de voz requiere una conexión segura (HTTPS).\n\nPor ahora, puedes usar el chat de texto. Estamos trabajando en habilitar HTTPS para esta función.')
+      return
+    }
+    
     if (!isRecording) {
       try {
+        // Check if getUserMedia is available
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          alert('Tu navegador no soporta grabación de audio. Por favor, usa un navegador moderno como Chrome, Firefox o Safari.')
+          return
+        }
+        
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
         const mediaRecorder = new MediaRecorder(stream)
         mediaRecorderRef.current = mediaRecorder
@@ -76,10 +91,14 @@ const ChatWidget = ({ isOpen, onClose }) => {
           audioChunks.push(event.data)
         }
         
-        mediaRecorder.onstop = () => {
-          const audioBlob = new Blob(audioChunks, { type: 'audio/wav' })
-          // TODO: Send audio to backend
-          console.log('Audio recorded:', audioBlob)
+        mediaRecorder.onstop = async () => {
+          const audioBlob = new Blob(audioChunks, { type: 'audio/webm' })
+          console.log('🎤 Audio recorded:', audioBlob.size, 'bytes')
+          
+          // Send audio to backend via sendVoiceMessage
+          sendVoiceMessage(audioBlob)
+          
+          // Stop all tracks
           stream.getTracks().forEach(track => track.stop())
         }
         
@@ -92,7 +111,20 @@ const ChatWidget = ({ isOpen, onClose }) => {
         }, 1000)
       } catch (error) {
         console.error('Error accessing microphone:', error)
-        alert('No se pudo acceder al micrófono. Por favor, verifica los permisos.')
+        
+        let errorMessage = 'No se pudo acceder al micrófono.'
+        
+        if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
+          errorMessage = '🎤 Permiso denegado.\n\nPor favor, permite el acceso al micrófono en la configuración de tu navegador.'
+        } else if (error.name === 'NotFoundError' || error.name === 'DevicesNotFoundError') {
+          errorMessage = '🎤 No se encontró ningún micrófono.\n\nPor favor, conecta un micrófono y recarga la página.'
+        } else if (error.name === 'NotReadableError' || error.name === 'TrackStartError') {
+          errorMessage = '🎤 El micrófono está siendo usado por otra aplicación.\n\nPor favor, cierra otras aplicaciones que puedan estar usando el micrófono.'
+        } else if (error.name === 'NotSupportedError') {
+          errorMessage = '🎤 La grabación de voz requiere HTTPS.\n\nPor ahora, usa el chat de texto.'
+        }
+        
+        alert(errorMessage)
       }
     } else {
       if (mediaRecorderRef.current) {

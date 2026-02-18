@@ -23,9 +23,9 @@ class ConfigChat:
         self.ch_table = dynamodb.Table(os.environ.get('CHAT_HISTORY_TABLE'))
         self.model_id = os.environ.get('MODEL_ID')
         self.table_names = {
-            "profile": "poc-wizi-dyn-users-table",
-            "transactions": "poc-wizi-dyn-transactions-table",
-            "retailers": "poc-wizi-dyn-retailers-table"
+            "profile": "poc-wizi-mex-user-profile-dev",
+            "transactions": "poc-wizi-mex-transactions-dev",
+            "retailers": "poc-wizi-mex-retailers-dev"
         }
 
     def get_session_data(self, session_id: str):

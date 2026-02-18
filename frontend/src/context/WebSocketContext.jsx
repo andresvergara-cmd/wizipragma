@@ -20,6 +20,9 @@ export const WebSocketProvider = ({ children }) => {
   const reconnectTimeoutRef = useRef(null)
   const reconnectAttemptsRef = useRef(0)
   const streamMessageIdRef = useRef(null)
+  const streamTimeoutRef = useRef(null)
+  const isStreamingRef = useRef(false)
+  const accumulatedMessageRef = useRef('')
 
   const WEBSOCKET_URL = import.meta.env.VITE_WEBSOCKET_URL || 'wss://vvg621xawg.execute-api.us-east-1.amazonaws.com/prod'
   const MAX_RECONNECT_ATTEMPTS = 5
@@ -113,7 +116,67 @@ export const WebSocketProvider = ({ children }) => {
             }
           }
         } catch (error) {
-          console.error('❌ Error parsing WebSocket message:', error)
+          // Handle plain text streaming chunks
+          const chunk = event.data
+          console.log('📦 Streaming chunk received:', chunk.substring(0, 50))
+          
+          // Check for error messages
+          if (chunk.includes('Internal server error')) {
+            console.error('❌ Internal server error')
+            isStreamingRef.current = false
+            accumulatedMessageRef.current = ''
+            setIsStreaming(false)
+            setCurrentStreamMessage('')
+            setMessages(prev => [...prev, {
+              id: `msg-${Date.now()}`,
+              type: 'bot',
+              content: 'Lo siento, hubo un error procesando tu mensaje. Por favor intenta de nuevo.',
+              timestamp: new Date().toISOString(),
+              isError: true
+            }])
+            return
+          }
+          
+          // Start streaming if not already started
+          if (!isStreamingRef.current) {
+            console.log('🌊 Starting stream (plain text mode)')
+            isStreamingRef.current = true
+            accumulatedMessageRef.current = chunk
+            setIsStreaming(true)
+            setCurrentStreamMessage(chunk)
+            streamMessageIdRef.current = `msg-${Date.now()}`
+          } else {
+            // Accumulate chunks
+            accumulatedMessageRef.current += chunk
+            setCurrentStreamMessage(accumulatedMessageRef.current)
+          }
+          
+          // Clear existing timeout
+          if (streamTimeoutRef.current) {
+            clearTimeout(streamTimeoutRef.current)
+          }
+          
+          // Set timeout to finalize stream after 500ms of no new chunks
+          streamTimeoutRef.current = setTimeout(() => {
+            console.log('🏁 Stream ended (timeout)')
+            const finalMessage = accumulatedMessageRef.current
+            
+            if (finalMessage) {
+              setMessages(prev => [...prev, {
+                id: streamMessageIdRef.current || `msg-${Date.now()}`,
+                type: 'bot',
+                content: finalMessage,
+                timestamp: new Date().toISOString()
+              }])
+            }
+            
+            // Reset state
+            isStreamingRef.current = false
+            accumulatedMessageRef.current = ''
+            setIsStreaming(false)
+            setCurrentStreamMessage('')
+            streamMessageIdRef.current = null
+          }, 500)
         }
       }
 
@@ -154,16 +217,27 @@ export const WebSocketProvider = ({ children }) => {
       clearTimeout(reconnectTimeoutRef.current)
     }
     
+    if (streamTimeoutRef.current) {
+      clearTimeout(streamTimeoutRef.current)
+    }
+    
     if (wsRef.current) {
       wsRef.current.close()
       wsRef.current = null
     }
     
+    // Reset all refs
+    isStreamingRef.current = false
+    accumulatedMessageRef.current = ''
+    streamMessageIdRef.current = null
+    
     setIsConnected(false)
     setSessionId(null)
+    setIsStreaming(false)
+    setCurrentStreamMessage('')
   }
 
-  const sendMessage = (message, type = 'TEXT') => {
+  const sendMessage = (message, type = 'TEXT', audioData = null) => {
     if (!wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) {
       console.error('❌ WebSocket is not connected')
       setMessages(prev => [...prev, {
@@ -180,21 +254,28 @@ export const WebSocketProvider = ({ children }) => {
       const payload = {
         action: 'sendMessage',
         data: {
-          user_id: 'user-001', // TODO: Get from auth context
+          user_id: 'simple-user', // Using test user
           session_id: sessionId,
-          message: message,
           type: type
         }
       }
 
-      console.log('📤 Sending message:', payload)
+      // Add message or audio data based on type
+      if (type === 'AUDIO' && audioData) {
+        payload.data.audio = audioData
+        console.log('📤 Sending AUDIO message (base64 length:', audioData.length, ')')
+      } else {
+        payload.data.message = message
+        console.log('📤 Sending TEXT message:', message)
+      }
+
       wsRef.current.send(JSON.stringify(payload))
       
       // Add user message to local state
       setMessages(prev => [...prev, {
         id: `msg-${Date.now()}`,
         type: 'user',
-        content: type === 'TEXT' ? message : `[${type}]`,
+        content: type === 'TEXT' ? message : type === 'AUDIO' ? '🎤 Mensaje de voz' : `[${type}]`,
         timestamp: new Date().toISOString()
       }])
       

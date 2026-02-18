@@ -36,11 +36,24 @@ export const ChatProvider = ({ children }) => {
   }
 
   const sendVoiceMessage = (audioBlob) => {
+    console.log('🎤 Processing voice message, size:', audioBlob.size, 'bytes')
+    
     // Convert audio blob to base64
     const reader = new FileReader()
     reader.onloadend = () => {
       const base64Audio = reader.result.split(',')[1]
-      wsSendMessage(base64Audio, 'VOICE')
+      console.log('🎤 Audio converted to base64, length:', base64Audio.length)
+      
+      // Send with AUDIO type and audio data
+      wsSendMessage('', 'AUDIO', base64Audio)
+      
+      setIsTyping(true)
+      setTimeout(() => {
+        setIsTyping(false)
+      }, 2000)
+    }
+    reader.onerror = (error) => {
+      console.error('❌ Error reading audio blob:', error)
     }
     reader.readAsDataURL(audioBlob)
   }
