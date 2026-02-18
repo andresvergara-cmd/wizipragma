@@ -84,7 +84,7 @@ const Home = () => {
             </div>
           </div>
           <div className="featured-card">
-            <img src="https://m.media-amazon.com/images/I/61vJN35Y5UL._AC_SL1500_.jpg" alt="Sony WH-1000XM5" />
+            <img src="https://placehold.co/800x600/E91E63/FFFFFF/png?text=Sony+WH-1000XM5&font=roboto" alt="Sony WH-1000XM5" />
             <div className="featured-content">
               <h3>Sony WH-1000XM5</h3>
               <p className="featured-price">$7,999</p>
