@@ -1,4 +1,8 @@
 // Mock Products Data for CENTLI Marketplace
+// Build version: 2026-02-19-v2
+// Force new build hash to bypass CloudFront cache
+const BUILD_VERSION = '2026-02-19-v2';
+
 export const mockProducts = [
   {
     id: 'prod-001',
