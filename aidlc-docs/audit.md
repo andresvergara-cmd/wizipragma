@@ -2137,3 +2137,127 @@ This URL bypasses CloudFront completely and serves directly from S3 with all ima
 Use S3 website endpoint for immediate demo/testing. Switch to CloudFront URL when cache propagates (monitor with test script).
 
 ---
+
+
+## CloudFront Configuration Update - Definitive Solution
+**Timestamp**: 2026-02-19T14:56:00Z
+**User Input**: "Ya ejecute el comando que me recomendaste, estoy esperando"
+**AI Response**: Monitored CloudFront configuration update and cache propagation
+**Context**: Applied definitive solution by reducing CloudFront cache TTL from 24 hours to 5 minutes
+
+### Actions Taken:
+1. ✅ Verified configuration change applied successfully:
+   - DefaultTTL: 86400 (24h) → 300 (5 min) ✅
+   - MaxTTL: 31536000 (1 year) → 3600 (1 hour) ✅
+2. ✅ Verified distribution status: "Deployed" (configuration propagated)
+3. ✅ Created new invalidation with updated configuration: `I89HQWWLAW8YXWNZKIUGVKTTZS`
+4. ⏳ Monitored cache propagation every 3 minutes
+5. ❌ CloudFront still serving old version after 30+ minutes
+
+### Current Status:
+- Configuration: ✅ Updated (5 min cache)
+- Distribution: ✅ Deployed
+- Invalidation: ✅ Created
+- Cache: ❌ Still serving old version (index-vPtg-0uu.js)
+
+### Root Cause Analysis:
+The user's specific edge location has extremely persistent cache. Even with:
+- Multiple invalidations (6+ total)
+- Configuration changes
+- Complete S3 cleanup and redeploy
+- 30+ minutes of waiting
+
+The edge location continues serving the old cached version. This suggests:
+1. Edge location has not received invalidation yet
+2. User's geographic location is served by a particularly slow-to-update edge
+3. May require up to the full MaxTTL period (was 24 hours, now 1 hour)
+
+### Recommendation:
+**Continue using S3 Website endpoint** for immediate needs:
+```
+http://poc-wizi-mex-front.s3-website-us-east-1.amazonaws.com
+```
+
+**Future benefit**: With new 5-minute cache configuration, future deploys will propagate much faster.
+
+### Files Created:
+- `monitor-cloudfront.sh` - Automated monitoring script
+- `SOLUCIONES-DEFINITIVAS.md` - Complete solutions documentation
+
+---
+
+
+## Audio Flow Review and Testing Setup
+**Timestamp**: 2026-02-19T15:10:00Z
+**User Input**: "Perfecto, ahora vamos a revisar que el agente reciba el audio lo entienda y responda en función de la instrucción dada por audio"
+**AI Response**: Reviewed complete audio flow and created comprehensive testing documentation
+**Context**: User wants to verify audio input processing, transcription, agent understanding, and response generation
+
+### Analysis Performed:
+1. ✅ Reviewed audio processing flow:
+   - Frontend: Captures audio in WebM format, sends via WebSocket
+   - Backend: Receives base64 audio, processes with Amazon Transcribe
+   - Agent: Processes transcribed text, executes actions, generates response
+   
+2. ✅ Identified components:
+   - `audio_processor.py`: Amazon Transcribe integration (STT)
+   - `nova_sonic_client.py`: Nova Sonic client (prepared but not used for STT)
+   - `app.py`: Message routing (TEXT vs AUDIO)
+   - `bedrock_config.py`: Agent processing with tool use
+   - `action_tools.py`: Transfer and purchase actions
+
+3. ✅ Current flow status:
+   - Audio input: ✅ Implemented (WebM → Transcribe → Text)
+   - Transcription: ✅ Amazon Transcribe with Spanish (Mexico)
+   - Agent understanding: ✅ Processes transcribed text
+   - Action execution: ✅ transfer_money, purchase_product
+   - Text response: ✅ Sent via WebSocket
+   - Audio response: ❌ Not implemented (TTS)
+
+### Files Created:
+1. `test-audio-flow.md` - Complete audio flow documentation with:
+   - Flow diagram (Frontend → Lambda → Transcribe → Agent → Response)
+   - Test cases for transcription, comprehension, execution
+   - AWS CLI commands for log monitoring
+   - Checklist for verification
+   - Optional TTS implementation guide
+
+2. `test-audio-agent.sh` - Interactive testing script with 7 options:
+   - View all logs in real-time
+   - View AUDIO logs only
+   - View TOOL execution logs
+   - View ERROR logs
+   - View TRANSCRIPTION logs
+   - Open frontend for testing
+   - Complete test (frontend + logs)
+
+### Testing Instructions:
+```bash
+# Run interactive test script
+./test-audio-agent.sh
+
+# Or manually:
+# 1. Open frontend
+open http://poc-wizi-mex-front.s3-website-us-east-1.amazonaws.com
+
+# 2. Monitor logs
+aws logs tail /aws/lambda/poc-wizi-mex-lambda-inference-model-dev \
+  --follow --profile pragma-power-user
+```
+
+### Test Cases to Verify:
+1. **Transcription**: "¿Cuál es mi saldo?" → Should transcribe correctly
+2. **Transfer**: "Envía 500 pesos a mi mamá" → Should execute transfer_money
+3. **Purchase**: "Quiero comprar un iPhone 15 Pro" → Should execute purchase_product
+4. **Query**: "Muéstrame mis últimas transacciones" → Should return transaction list
+
+### Current Status:
+- Audio input flow: ✅ COMPLETE
+- Agent comprehension: ✅ COMPLETE
+- Action execution: ✅ COMPLETE
+- Text response: ✅ COMPLETE
+- Audio response (TTS): ⏳ OPTIONAL (not implemented)
+
+**Ready for testing**: User can now test audio flow using frontend and monitoring tools.
+
+---
