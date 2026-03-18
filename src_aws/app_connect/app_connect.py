@@ -32,19 +32,20 @@ def lambda_handler(event, context):
     connection_id = event['requestContext']['connectionId']
     
     try:
-        # Extract auth token from query parameters
+        # Extract auth token from query parameters (optional for demo)
         query_params = event.get('queryStringParameters', {}) or {}
         token = query_params.get('token')
         
-        if not token:
-            print(f"ERROR: No auth token provided for connection {connection_id}")
-            return {'statusCode': 401, 'body': 'Unauthorized'}
-        
-        # Validate token and extract user_id (simplified for hackathon)
-        user_id = validate_token(token)
-        if not user_id:
-            print(f"ERROR: Invalid token for connection {connection_id}")
-            return {'statusCode': 403, 'body': 'Forbidden'}
+        # For demo: allow connections without token, use default user
+        if token:
+            user_id = validate_token(token)
+            if not user_id:
+                print(f"ERROR: Invalid token for connection {connection_id}")
+                return {'statusCode': 403, 'body': 'Forbidden'}
+        else:
+            # Demo mode: use default user
+            user_id = 'demo-user-comfi'
+            print(f"INFO: Demo mode - using default user_id: {user_id}")
         
         # Create session
         session_id = f"session_{int(time.time())}_{user_id}"

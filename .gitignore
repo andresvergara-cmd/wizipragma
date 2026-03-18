@@ -109,6 +109,15 @@ UX-UI-IMPROVEMENTS.md
 MULTIMODAL-STATUS.md
 AGREGAR-PERMISOS-MANUAL.md
 
+# Virtual environments
+.venv/
+
+# AgentCore test projects
+HelloAgent/
+
+# Lambda layer binaries (too large for git)
+lambda-layer/bin/
+
 # Mantener solo documentación final
 !docs/
 !demo/

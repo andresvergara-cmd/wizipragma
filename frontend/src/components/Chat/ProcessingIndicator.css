@@ -1,0 +1,156 @@
+/* ProcessingIndicator - Estilos para indicadores de procesamiento */
+
+/* Indicador inmediato de envío */
+.message-bubble.processing-immediate {
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: white;
+  border: 1px solid #e8e8e8;
+  animation: fadeInScale 0.3s ease-out;
+}
+
+.message-bubble.processing-immediate .processing-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Indicador de pensamiento */
+.message-bubble.processing-thinking {
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: linear-gradient(135deg, rgba(173, 55, 224, 0.08) 0%, rgba(173, 55, 224, 0.03) 100%);
+  border: 1px solid rgba(173, 55, 224, 0.2);
+  animation: fadeInScale 0.3s ease-out 0.2s backwards;
+}
+
+.message-bubble.processing-thinking .processing-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Indicador de escritura */
+.message-bubble.processing-typing {
+  padding: 0.875rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: white;
+  border: 1px solid #e8e8e8;
+  animation: fadeInScale 0.3s ease-out;
+}
+
+.message-bubble.processing-typing .processing-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Contenido del procesamiento */
+.processing-content {
+  display: flex;
+  align-items: center;
+}
+
+/* Icono de procesamiento (cerebro) */
+.processing-icon {
+  font-size: 1.5rem;
+  animation: thinkingPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes thinkingPulse {
+  0%, 100% { 
+    transform: scale(1); 
+    opacity: 0.8; 
+  }
+  50% { 
+    transform: scale(1.2); 
+    opacity: 1; 
+  }
+}
+
+/* Dots animados */
+.processing-dots {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.processing-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ad37e0;
+  display: inline-block;
+  animation: processingBounce 1.4s infinite;
+}
+
+.processing-dots span:nth-child(2) { 
+  animation-delay: 0.2s; 
+}
+
+.processing-dots span:nth-child(3) { 
+  animation-delay: 0.4s; 
+}
+
+@keyframes processingBounce {
+  0%, 60%, 100% { 
+    transform: translateY(0); 
+    opacity: 0.5; 
+  }
+  30% { 
+    transform: translateY(-8px); 
+    opacity: 1; 
+  }
+}
+
+/* Label de procesamiento */
+.processing-label {
+  font-size: 0.9rem;
+  color: #ad37e0;
+  font-weight: 500;
+  animation: processingPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes processingPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* Animación de entrada */
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .message-bubble.processing-thinking,
+  .message-bubble.processing-immediate,
+  .message-bubble.processing-typing {
+    padding: 0.75rem 1rem;
+  }
+  
+  .processing-icon {
+    font-size: 1.25rem;
+  }
+  
+  .processing-label {
+    font-size: 0.85rem;
+  }
+}

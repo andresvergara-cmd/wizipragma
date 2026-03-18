@@ -1,111 +1,110 @@
 #!/bin/bash
 
-# Deploy Audio Processing Fix
-# This script deploys the complete audio processing implementation
+# Deploy Audio Fix for Comfi
+# Includes polly_tts.py in Lambda and updates frontend
 
 set -e
 
-echo "🎤 =========================================="
-echo "🎤 CENTLI - Audio Processing Deployment"
-echo "🎤 =========================================="
+echo "🚀 Deploying Audio Fix for Comfi..."
 echo ""
 
+# Colors
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
 # Configuration
-AWS_PROFILE="pragma-power-user"
-LAMBDA_FUNCTION="poc-wizi-mex-lambda-inference-model-dev"
+LAMBDA_FUNCTION="centli-app-message"
 REGION="us-east-1"
-FRONTEND_BUCKET="poc-wizi-mex-front"
-CLOUDFRONT_ID="E29CTPS84NA5BZ"
+S3_BUCKET="comfi-frontend-pragma"
+CLOUDFRONT_ID="E2UWNXJTS2NM3V"
 
-echo "📦 Step 1: Package Lambda with audio_processor.py"
-cd src_aws/app_inference
+echo -e "${BLUE}📦 Step 1: Building Lambda package...${NC}"
+cd src_aws/app_message
 
-# Create deployment package
-echo "Creating deployment package..."
-zip -r ../../lambda-deployment.zip . -x "*.pyc" -x "__pycache__/*" -x "*.git*"
+# Clean previous builds
+rm -f function.zip
 
+# Create ZIP with all required files
+echo "  - Adding app_message.py"
+zip -q function.zip app_message.py
+
+echo "  - Adding polly_tts.py"
+zip -q function.zip polly_tts.py
+
+echo "  ✅ Lambda package created: function.zip"
+ls -lh function.zip
+
+echo ""
+echo -e "${BLUE}🚀 Step 2: Deploying Lambda function...${NC}"
+aws lambda update-function-code \
+  --function-name $LAMBDA_FUNCTION \
+  --zip-file fileb://function.zip \
+  --region $REGION
+
+echo "  ✅ Lambda function updated"
+
+echo ""
+echo -e "${BLUE}⏳ Step 3: Waiting for Lambda to be ready...${NC}"
+aws lambda wait function-updated \
+  --function-name $LAMBDA_FUNCTION \
+  --region $REGION
+
+echo "  ✅ Lambda is ready"
+
+# Go back to project root
 cd ../..
 
 echo ""
-echo "☁️  Step 2: Deploy Lambda Function"
-aws lambda update-function-code \
-    --function-name $LAMBDA_FUNCTION \
-    --zip-file fileb://lambda-deployment.zip \
-    --profile $AWS_PROFILE \
-    --region $REGION
-
-echo "Waiting for Lambda update to complete..."
-aws lambda wait function-updated \
-    --function-name $LAMBDA_FUNCTION \
-    --profile $AWS_PROFILE \
-    --region $REGION
-
-echo ""
-echo "🔧 Step 3: Verify Lambda has Bedrock permissions"
-echo "Checking Lambda execution role..."
-ROLE_NAME=$(aws lambda get-function \
-    --function-name $LAMBDA_FUNCTION \
-    --profile $AWS_PROFILE \
-    --region $REGION \
-    --query 'Configuration.Role' \
-    --output text | awk -F'/' '{print $NF}')
-
-echo "Lambda role: $ROLE_NAME"
-echo ""
-echo "⚠️  IMPORTANT: Verify this role has permission to invoke:"
-echo "   - bedrock:InvokeModel for amazon.nova-sonic-v1:0"
-echo "   - bedrock:InvokeModelWithResponseStream for amazon.nova-sonic-v1:0"
-echo ""
-
-echo "🌐 Step 4: Build and Deploy Frontend"
+echo -e "${BLUE}🎨 Step 4: Building frontend...${NC}"
 cd frontend
 
-echo "Installing dependencies..."
-npm install
+# Install dependencies if needed
+if [ ! -d "node_modules" ]; then
+  echo "  - Installing dependencies..."
+  npm install
+fi
 
-echo "Building production bundle..."
+# Build
+echo "  - Building React app..."
 npm run build
 
-echo "Deploying to S3..."
-aws s3 sync dist/ s3://$FRONTEND_BUCKET/ \
-    --profile $AWS_PROFILE \
-    --region $REGION \
-    --delete
+echo "  ✅ Frontend built"
 
 echo ""
-echo "🔄 Step 5: Invalidate CloudFront Cache"
-aws cloudfront create-invalidation \
-    --distribution-id $CLOUDFRONT_ID \
-    --paths "/*" \
-    --profile $AWS_PROFILE \
-    --region $REGION
+echo -e "${BLUE}☁️  Step 5: Deploying to S3...${NC}"
+aws s3 sync dist/ s3://$S3_BUCKET/ --delete --region $REGION
+
+echo "  ✅ Files uploaded to S3"
+
+echo ""
+echo -e "${BLUE}🔄 Step 6: Invalidating CloudFront cache...${NC}"
+INVALIDATION_ID=$(aws cloudfront create-invalidation \
+  --distribution-id $CLOUDFRONT_ID \
+  --paths "/*" \
+  --query 'Invalidation.Id' \
+  --output text)
+
+echo "  ✅ Invalidation created: $INVALIDATION_ID"
 
 cd ..
 
-# Cleanup
-rm -f lambda-deployment.zip
-
 echo ""
-echo "✅ =========================================="
-echo "✅ Deployment Complete!"
-echo "✅ =========================================="
+echo -e "${GREEN}✅ Deployment Complete!${NC}"
 echo ""
-echo "🎤 Audio Processing Status:"
-echo "   ✅ Backend: Lambda updated with audio_processor.py"
-echo "   ✅ Frontend: Updated to send audio via WebSocket"
-echo "   ✅ Model: Amazon Bedrock Nova Sonic (amazon.nova-sonic-v1:0)"
+echo "📋 Summary:"
+echo "  - Lambda: $LAMBDA_FUNCTION (with polly_tts.py)"
+echo "  - S3: s3://$S3_BUCKET/"
+echo "  - CloudFront: $CLOUDFRONT_ID"
+echo "  - URL: https://db4aulosarsdo.cloudfront.net"
 echo ""
-echo "🌐 Frontend URL: https://d210pgg1e91kn6.cloudfront.net"
-echo "🔌 WebSocket URL: wss://vp8zwzpjpj.execute-api.us-east-1.amazonaws.com/dev"
+echo -e "${YELLOW}⏳ CloudFront invalidation in progress...${NC}"
+echo "   It may take 2-5 minutes for changes to propagate."
 echo ""
-echo "📝 Next Steps:"
-echo "   1. Wait 2-3 minutes for CloudFront cache invalidation"
-echo "   2. Open frontend in browser (hard refresh: Cmd+Shift+R)"
-echo "   3. Test audio recording with microphone button"
-echo "   4. Check browser console for audio processing logs"
-echo ""
-echo "🔍 Troubleshooting:"
-echo "   - Check Lambda logs: aws logs tail /aws/lambda/$LAMBDA_FUNCTION --follow --profile $AWS_PROFILE"
-echo "   - Verify Bedrock permissions in IAM role: $ROLE_NAME"
-echo "   - Test in browser console: Check for '🎤 Audio' logs"
+echo "🧪 Testing:"
+echo "  1. Open https://db4aulosarsdo.cloudfront.net"
+echo "  2. Click the 🔇 button to activate voice"
+echo "  3. Send a message"
+echo "  4. Audio should play automatically"
 echo ""

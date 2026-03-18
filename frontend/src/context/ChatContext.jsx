@@ -12,15 +12,25 @@ export const useChat = () => {
 }
 
 export const ChatProvider = ({ children }) => {
-  const { messages: wsMessages, sendMessage: wsSendMessage, isConnected, isStreaming, currentStreamMessage } = useWebSocket()
+  const { 
+    messages: wsMessages, 
+    sendMessage: wsSendMessage, 
+    isConnected, 
+    isStreaming, 
+    currentStreamMessage,
+    isPlayingAudio,
+    playAudio,
+    stopAudio
+  } = useWebSocket()
   const [isChatOpen, setIsChatOpen] = useState(false)
   const [isTyping, setIsTyping] = useState(false)
   const [inputValue, setInputValue] = useState('')
+  const [voiceEnabled, setVoiceEnabled] = useState(false)  // Toggle for voice responses
 
-  const sendTextMessage = (text) => {
+  const sendTextMessage = (text, withVoice = false) => {
     if (!text.trim()) return false
 
-    const success = wsSendMessage(text, 'TEXT')
+    const success = wsSendMessage(text, 'TEXT', null, withVoice || voiceEnabled)
     
     if (success) {
       setInputValue('')
@@ -85,10 +95,15 @@ export const ChatProvider = ({ children }) => {
     isConnected,
     isStreaming,
     currentStreamMessage,
+    isPlayingAudio,
+    voiceEnabled,
     setInputValue,
+    setVoiceEnabled,
     sendTextMessage,
     sendVoiceMessage,
     sendImageMessage,
+    playAudio,
+    stopAudio,
     openChat,
     closeChat,
     toggleChat,

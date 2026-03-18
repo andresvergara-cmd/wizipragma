@@ -1,0 +1,684 @@
+# 🎨 Mockups Visuales - Comfi UX/UI
+
+## 📱 Vista General del Chat Widget
+
+### Antes vs Después
+
+#### ANTES (Avatar CinteotlLogo)
+```
+┌─────────────────────────────────────┐
+│  [👤]  Comfi          [En línea] [×]│ ← Header morado
+├─────────────────────────────────────┤
+│                                     │
+│     [Logo Azteca]                   │ ← Avatar geométrico
+│     ¡Hola! Soy Comfi                │   poco amigable
+│     Tu asistente...                 │
+│                                     │
+│  [💰] [💸] [🛒] [📊]                │
+│  Ver   Hacer  Ver   Mis             │
+│  saldo trans  prod  trans           │
+│                                     │
+├─────────────────────────────────────┤
+│ [📷] [🎤] [Escribe...      ] [➤]   │
+└─────────────────────────────────────┘
+```
+
+#### DESPUÉS (Avatar Comfi Superhéroe)
+```
+┌─────────────────────────────────────┐
+│  [🦸]  Comfi          [En línea] [×]│ ← Header morado
+├─────────────────────────────────────┤
+│                                     │
+│        [Comfi Avatar]               │ ← Superhéroe amigable
+│      ¡Hola! Soy Comfi 👋           │   con animación
+│   Tu asistente de Comfama           │
+│                                     │
+│  ┌─────────┐  ┌─────────┐          │
+│  │ 💰 Ver  │  │ 💸 Hacer│          │ ← Botones mejorados
+│  │  saldo  │  │  trans  │          │   con hover effect
+│  └─────────┘  └─────────┘          │
+│  ┌─────────┐  ┌─────────┐          │
+│  │ 🛒 Ver  │  │ 📊 Mis  │          │
+│  │  prod   │  │  trans  │          │
+│  └─────────┘  └─────────┘          │
+│                                     │
+├─────────────────────────────────────┤
+│ [📷] [🎤] [Escribe...      ] [➤]   │
+└─────────────────────────────────────┘
+```
+
+---
+
+## 🎬 Animación de Apertura del Chat
+
+### ANTES: Animación Simple (slideUp)
+```
+Frame 1 (0ms):          Frame 2 (200ms):        Frame 3 (400ms):
+                        
+                                                ┌─────────────┐
+                                                │   CHAT      │
+                                                │             │
+                        ┌─────────────┐         │             │
+                        │   CHAT      │         │             │
+                        │             │         │             │
+┌─────────────┐         │             │         │             │
+│   CHAT      │         │             │         │             │
+│             │         └─────────────┘         └─────────────┘
+│             │         ↑ Sube desde            ↑ Posición
+│             │         abajo (opaco)           final
+└─────────────┘
+↑ Invisible
+```
+
+### DESPUÉS: Animación WOW (desde botón flotante)
+```
+Frame 1 (0ms):          Frame 2 (250ms):        Frame 3 (500ms):
+
+                                                ┌─────────────┐
+                                                │   CHAT      │
+                                                │             │
+                                        ┌───┐   │             │
+                                        │ C │   │             │
+                                        └───┘   │             │
+                        [🦸]            ↗       │             │
+                        ↑               Scale   │             │
+                        Botón           0.7     └─────────────┘
+                        flotante                ↑ Posición
+                                                final (scale 1.0)
+
+Efecto: Círculo → Crece → Rectángulo redondeado
+        Esquina → Centro
+        Opacidad 0 → 1
+        Escala 0.3 → 1.0
+```
+
+---
+
+## 💬 Estados del Avatar Comfi
+
+### 1. Estado Normal (Conectado)
+```
+    ╭─────╮
+   ╱   C   ╲     ← Antena con luz verde parpadeante
+  │  ●   ●  │    ← Ojos grandes y amigables
+  │    ◡    │    ← Sonrisa
+  ╰─────────╯
+     │ C │        ← Logo "C" en el pecho
+    ╱│   │╲       ← Brazos
+   ╱ │   │ ╲
+  │  │   │  │     ← Piernas
+  └──┘   └──┘     ← Pies/botas
+
+Animación: Flotación suave (arriba/abajo)
+Colores: Rosa #e6007e, Morado #ad37e0, Verde #00a651
+```
+
+### 2. Estado Pensando (Processing)
+```
+    ╭─────╮
+   ╱   C   ╲     ← Antena parpadeando
+  │  ●   ●  │    ← Ojos mirando hacia arriba
+  │    ~    │    ← Boca pensativa
+  ╰─────────╯
+     │ C │        
+    ╱│   │╲       
+   ╱ │   │ ╲
+  │  │   │  │     
+  └──┘   └──┘     
+
+Animación: Rotación suave izquierda/derecha
+Efecto: Partículas flotando alrededor
+```
+
+### 3. Estado Hablando (Speaking)
+```
+    ╭─────╮
+   ╱   C   ╲     ← Antena brillando
+  │  ●   ●  │    ← Ojos abiertos
+  │    ○    │    ← Boca abierta (hablando)
+  ╰─────────╯
+     │ C │        
+    ╱│   │╲       ← Brazos en movimiento
+   ╱ │   │ ╲
+  │  │   │  │     
+  └──┘   └──┘     
+
+Animación: Escala vertical (simula hablar)
+Efecto: Ondas de sonido saliendo
+```
+
+### 4. Estado Escuchando (Listening)
+```
+    ╭─────╮
+   ╱   C   ╲     ← Antena con brillo morado intenso
+  │  ●   ●  │    ← Ojos atentos
+  │    ◡    │    ← Sonrisa atenta
+  ╰─────────╯
+     │ C │        
+    ╱│   │╲       ← Brazos hacia arriba
+   ╱ │   │ ╲      (postura de escucha)
+  │  │   │  │     
+  └──┘   └──┘     
+
+Animación: Pulsación con glow morado
+Efecto: Ondas de sonido entrando
+```
+
+### 5. Estado Celebrando (Success)
+```
+    ╭─────╮
+   ╱   C   ╲     ← Antena brillando intenso
+  │  ◠   ◠  │    ← Ojos felices (^_^)
+  │    ◡    │    ← Sonrisa grande
+  ╰─────────╯
+     │ C │        
+   ╱╲│   │╱╲      ← Brazos arriba (celebración)
+  │  │   │  │     
+  │  │   │  │     
+  └──┘   └──┘     
+
+Animación: Salto + rotación + escala
+Efecto: Confeti y estrellas alrededor
+```
+
+### 6. Estado Error (Error)
+```
+    ╭─────╮
+   ╱   C   ╲     ← Antena apagada
+  │  ×   ×  │    ← Ojos preocupados
+  │    ∩    │    ← Boca triste
+  ╰─────────╯
+     │ C │        
+    ╱│   │╲       ← Brazos caídos
+   ╱ │   │ ╲
+  │  │   │  │     
+  └──┘   └──┘     
+
+Animación: Sacudida horizontal
+Efecto: Fondo rojo suave
+```
+
+---
+
+## 💳 Componente: BalanceCard
+
+```
+┌─────────────────────────────────────────┐
+│  💰  Saldo disponible                   │
+│                                         │
+│         $15,234.50 MXN                  │ ← Número grande
+│                                         │
+│  ┌──────────────┐  ┌──────────────┐    │
+│  │  Transferir  │  │ Ver detalle  │    │ ← Botones de acción
+│  └──────────────┘  └──────────────┘    │
+│                                         │
+│  Última actualización: Hace 5 min       │ ← Timestamp
+└─────────────────────────────────────────┘
+
+Colores:
+- Fondo: Blanco con borde rosa suave
+- Número: Rosa #e6007e (grande y bold)
+- Botones: Rosa con hover effect
+```
+
+---
+
+## ✅ Componente: TransferConfirmation
+
+```
+┌─────────────────────────────────────────┐
+│         [🦸 Comfi Avatar]               │
+│                                         │
+│    ✓ Confirma tu transferencia          │ ← Título
+│                                         │
+│  ┌─────────────────────────────────┐   │
+│  │ Para:    Juan Pérez             │   │
+│  │ Cuenta:  **** 1234              │   │
+│  │ Monto:   $500.00 MXN            │   │ ← Detalles
+│  │ Concepto: Pago de comida        │   │
+│  └─────────────────────────────────┘   │
+│                                         │
+│  ┌──────────┐      ┌──────────────┐    │
+│  │ Cancelar │      │ ✓ Confirmar  │    │ ← Acciones
+│  └──────────┘      └──────────────┘    │
+│   (gris)            (rosa, destacado)   │
+└─────────────────────────────────────────┘
+
+Animación de entrada: Slide-up con bounce
+Hover en Confirmar: Escala + sombra
+```
+
+---
+
+## 🎁 Componente: ProductRecommendation
+
+```
+┌─────────────────────────────────────────┐
+│  🎯 Recomendado para ti                 │ ← Badge
+├─────────────────────────────────────────┤
+│                                         │
+│     [Imagen del producto]               │ ← Imagen 16:9
+│                                         │
+├─────────────────────────────────────────┤
+│  Crédito Personal Comfama               │ ← Título
+│  Hasta $50,000 MXN con tasa             │ ← Descripción
+│  preferencial                           │
+│                                         │
+│  ✓ Tasa desde 12% anual                 │
+│  ✓ Plazo hasta 36 meses                 │ ← Features
+│  ✓ Sin comisión por apertura            │
+│  ✓ Aprobación en 24 horas               │
+│                                         │
+│  ┌──────────┐      ┌──────────────┐    │
+│  │ Ver más  │      │  Solicitar   │    │ ← Acciones
+│  └──────────┘      └──────────────┘    │
+└─────────────────────────────────────────┘
+
+Colores:
+- Badge: Gradiente rosa-morado
+- Features: Checkmarks verdes
+- Botón Solicitar: Rosa destacado
+```
+
+---
+
+## 💬 Flujo de Conversación: Transferencia
+
+```
+┌─────────────────────────────────────────┐
+│  [🦸]  Comfi          [En línea] [×]   │
+├─────────────────────────────────────────┤
+│                                         │
+│  Usuario:                               │
+│  ┌─────────────────────────────────┐   │
+│  │ Quiero transferir dinero        │   │ ← Mensaje usuario
+│  └─────────────────────────────────┘ 👤│   (derecha, gris)
+│                                         │
+│  🦸 Comfi:                              │
+│  ┌─────────────────────────────────┐   │
+│  │ Perfecto, te ayudo con tu       │   │ ← Mensaje bot
+│  │ transferencia 💸                │   │   (izquierda, blanco)
+│  │                                 │   │
+│  │ ¿A quién quieres transferir?   │   │
+│  │ Puedes decirme el nombre o      │   │
+│  │ número de cuenta.               │   │
+│  └─────────────────────────────────┘   │
+│                                         │
+│  Usuario:                               │
+│  ┌─────────────────────────────────┐   │
+│  │ A Juan Pérez                    │   │
+│  └─────────────────────────────────┘ 👤│
+│                                         │
+│  🦸 Comfi: [Pensando...]                │
+│  ┌─────────────────────────────────┐   │
+│  │ [Avatar pensando]               │   │ ← Estado pensando
+│  │ Buscando a Juan Pérez... 🔍    │   │   con animación
+│  └─────────────────────────────────┘   │
+│                                         │
+│  🦸 Comfi:                              │
+│  ┌─────────────────────────────────┐   │
+│  │ Encontré a Juan Pérez           │   │
+│  │ Cuenta: **** 1234               │   │
+│  │                                 │   │
+│  │ ¿Cuánto quieres transferir?    │   │
+│  └─────────────────────────────────┘   │
+│                                         │
+│  [Sugerencias rápidas]                  │
+│  [$100] [$500] [$1,000] [Otro monto]   │ ← Quick replies
+│                                         │
+├─────────────────────────────────────────┤
+│ [📷] [🎤] [Escribe...      ] [➤]       │
+└─────────────────────────────────────────┘
+
+Animaciones:
+- Mensajes: Slide-in con bounce
+- Avatar: Cambia según estado
+- Quick replies: Fade-in después del mensaje
+```
+
+---
+
+## 🎤 Interfaz de Grabación de Voz
+
+### Estado Normal
+```
+┌─────────────────────────────────────────┐
+│ [📷] [🎤] [Escribe tu mensaje...] [➤]  │
+│        ↑                                │
+│        Click para grabar                │
+└─────────────────────────────────────────┘
+```
+
+### Estado Grabando
+```
+┌─────────────────────────────────────────┐
+│  ┌─────────────────────────────────┐   │
+│  │ 🔴 Grabando...          0:05    │   │ ← Indicador
+│  │                                 │   │
+│  │  ▂▄▆█▆▄▂  ▂▄▆█▆▄▂  ▂▄▆█▆▄▂    │   │ ← Ondas de sonido
+│  │                                 │   │   animadas
+│  └─────────────────────────────────┘   │
+│                                         │
+│ [📷] [⏹️] [                    ] [➤]   │
+│        ↑                                │
+│        Click para detener               │
+└─────────────────────────────────────────┘
+
+Colores:
+- Fondo: Gradiente rojo suave
+- Ondas: Rojo #f44336 animadas
+- Tiempo: Rojo bold
+```
+
+### Estado Procesando Audio
+```
+┌─────────────────────────────────────────┐
+│  ┌─────────────────────────────────┐   │
+│  │ [🦸 Avatar escuchando]          │   │
+│  │                                 │   │
+│  │ Procesando tu mensaje...        │   │ ← Loading
+│  │                                 │   │
+│  │ ●●●○○○                          │   │ ← Dots animados
+│  └─────────────────────────────────┘   │
+└─────────────────────────────────────────┘
+```
+
+---
+
+## 📱 Botón Flotante del Chat
+
+### Estado Cerrado
+```
+                                    ┌─────┐
+                                    │ 🦸  │ ← Avatar Comfi
+                                    │     │   animado
+                                    └─────┘
+                                       ↑
+                                    Flotando
+                                    con sombra
+                                    
+Posición: Esquina inferior derecha
+Tamaño: 70x70px
+Animación: Flotación suave + pulse
+Hover: Escala 1.1 + sombra aumentada
+```
+
+### Estado con Notificación
+```
+                                  [!]
+                                    ┌─────┐
+                                    │ 🦸  │ ← Avatar Comfi
+                                    │     │   + badge rojo
+                                    └─────┘
+                                       ↑
+                                    Badge
+                                    pulsante
+                                    
+Badge: Círculo rojo con "!"
+Animación: Pulse constante
+```
+
+### Estado Abierto (Chat visible)
+```
+┌─────────────────────────────────────┐
+│  [🦸]  Comfi      [En línea] [×]   │
+│                                     │
+│  [Conversación aquí]                │
+│                                     │
+│                                     │
+│                                     │
+│                                     │
+├─────────────────────────────────────┤
+│ [📷] [🎤] [Escribe...    ] [➤]     │
+└─────────────────────────────────────┘
+                                    [×] ← Botón cerrado
+                                        (no visible)
+```
+
+---
+
+## 🎨 Paleta de Colores Comfama
+
+```
+┌──────────────────────────────────────────┐
+│  COLORES PRINCIPALES                     │
+├──────────────────────────────────────────┤
+│                                          │
+│  █████  Rosa Principal                   │
+│  #e6007e  RGB(230, 0, 126)              │
+│  Uso: Botones primarios, headers        │
+│                                          │
+│  █████  Morado                           │
+│  #ad37e0  RGB(173, 55, 224)             │
+│  Uso: Acentos, gradientes               │
+│                                          │
+│  █████  Verde                            │
+│  #00a651  RGB(0, 166, 81)               │
+│  Uso: Success, confirmaciones            │
+│                                          │
+├──────────────────────────────────────────┤
+│  COLORES SECUNDARIOS                     │
+├──────────────────────────────────────────┤
+│                                          │
+│  █████  Gris Oscuro                      │
+│  #1a1a1a  RGB(26, 26, 26)               │
+│  Uso: Textos principales                 │
+│                                          │
+│  █████  Gris Medio                       │
+│  #6b7280  RGB(107, 114, 128)            │
+│  Uso: Textos secundarios                 │
+│                                          │
+│  █████  Gris Claro                       │
+│  #f5f5f7  RGB(245, 245, 247)            │
+│  Uso: Fondos, separadores                │
+│                                          │
+│  █████  Blanco                           │
+│  #ffffff  RGB(255, 255, 255)            │
+│  Uso: Fondos principales                 │
+│                                          │
+├──────────────────────────────────────────┤
+│  COLORES DE ESTADO                       │
+├──────────────────────────────────────────┤
+│                                          │
+│  █████  Error/Alerta                     │
+│  #f44336  RGB(244, 67, 54)              │
+│  Uso: Errores, alertas, grabación        │
+│                                          │
+│  █████  Warning                          │
+│  #ff9800  RGB(255, 152, 0)              │
+│  Uso: Advertencias, pendientes           │
+│                                          │
+│  █████  Info                             │
+│  #2196f3  RGB(33, 150, 243)             │
+│  Uso: Información, tips                  │
+│                                          │
+└──────────────────────────────────────────┘
+```
+
+---
+
+## 🎭 Gradientes Utilizados
+
+```
+1. Gradiente Principal (Rosa-Morado)
+   ┌────────────────────────────────┐
+   │ ████████████████████████████   │
+   │ #ff1a8c → #e6007e → #ad37e0   │
+   └────────────────────────────────┘
+   Uso: Headers, botones primarios
+
+2. Gradiente Suave (Rosa transparente)
+   ┌────────────────────────────────┐
+   │ ░░░░▒▒▒▒▓▓▓▓████▓▓▓▓▒▒▒▒░░░░   │
+   │ rgba(230,0,126,0.05) → 0.1     │
+   └────────────────────────────────┘
+   Uso: Fondos de cards, hover states
+
+3. Gradiente Verde (Success)
+   ┌────────────────────────────────┐
+   │ ████████████████████████████   │
+   │ #00d66a → #00a651              │
+   └────────────────────────────────┘
+   Uso: Confirmaciones, success messages
+```
+
+---
+
+## 📐 Espaciado y Tipografía
+
+```
+ESPACIADO (Sistema de 8px)
+├─ xs:  4px   (0.25rem)
+├─ sm:  8px   (0.5rem)
+├─ md:  16px  (1rem)
+├─ lg:  24px  (1.5rem)
+├─ xl:  32px  (2rem)
+└─ 2xl: 48px  (3rem)
+
+TIPOGRAFÍA
+├─ Font Family: 'Plus Jakarta Sans', sans-serif
+├─ Tamaños:
+│  ├─ xs:   0.75rem  (12px)
+│  ├─ sm:   0.875rem (14px)
+│  ├─ base: 0.95rem  (15px)
+│  ├─ lg:   1.125rem (18px)
+│  ├─ xl:   1.25rem  (20px)
+│  ├─ 2xl:  1.5rem   (24px)
+│  └─ 3xl:  2rem     (32px)
+└─ Pesos:
+   ├─ Regular: 400
+   ├─ Medium:  600
+   └─ Bold:    700
+
+BORDER RADIUS
+├─ sm:   8px
+├─ md:   12px
+├─ lg:   16px
+├─ xl:   20px
+└─ full: 9999px (círculos)
+
+SOMBRAS
+├─ sm:   0 2px 8px rgba(0,0,0,0.06)
+├─ md:   0 4px 16px rgba(0,0,0,0.1)
+├─ lg:   0 8px 24px rgba(0,0,0,0.15)
+└─ xl:   0 20px 60px rgba(0,0,0,0.3)
+```
+
+---
+
+## 🎬 Animaciones y Transiciones
+
+```
+DURACIONES
+├─ Fast:   0.2s  (hover, clicks)
+├─ Normal: 0.3s  (transiciones generales)
+├─ Slow:   0.5s  (animaciones complejas)
+└─ XSlow:  1s+   (animaciones de fondo)
+
+EASING FUNCTIONS
+├─ ease-in-out:  Transiciones suaves
+├─ cubic-bezier(0.34, 1.56, 0.64, 1):  Bounce
+├─ cubic-bezier(0.4, 0, 0.2, 1):  Material
+└─ linear:  Rotaciones, loops
+
+ANIMACIONES CLAVE
+├─ fadeIn:        Opacidad 0 → 1
+├─ slideUp:       TranslateY(20px) → 0
+├─ slideIn:       TranslateX(-20px) → 0
+├─ scale:         Scale(0.9) → 1
+├─ bounce:        Scale con overshoot
+├─ pulse:         Scale(1) → 1.1 → 1
+├─ float:         TranslateY loop
+└─ rotate:        Rotate(0) → 360deg
+```
+
+---
+
+## 📱 Responsive Breakpoints
+
+```
+MOBILE FIRST APPROACH
+
+┌─────────────────────────────────────┐
+│  Mobile (< 768px)                   │
+│  ┌─────────────────────────────┐   │
+│  │  Chat: 100% width           │   │
+│  │  Full screen                │   │
+│  │  No border radius           │   │
+│  └─────────────────────────────┘   │
+└─────────────────────────────────────┘
+
+┌─────────────────────────────────────┐
+│  Tablet (768px - 1024px)            │
+│  ┌─────────────────────────────┐   │
+│  │  Chat: 500px max-width      │   │
+│  │  Centered                   │   │
+│  │  Border radius 20px         │   │
+│  └─────────────────────────────┘   │
+└─────────────────────────────────────┘
+
+┌─────────────────────────────────────┐
+│  Desktop (> 1024px)                 │
+│  ┌─────────────────────────────┐   │
+│  │  Chat: 500px max-width      │   │
+│  │  Centered                   │   │
+│  │  Border radius 20px         │   │
+│  │  Animación desde botón      │   │
+│  └─────────────────────────────┘   │
+└─────────────────────────────────────┘
+```
+
+---
+
+## ✨ Microinteracciones
+
+### 1. Hover en Botones
+```
+Estado Normal:
+┌──────────────┐
+│  Transferir  │  ← Fondo rosa, texto blanco
+└──────────────┘
+
+Estado Hover:
+┌──────────────┐
+│  Transferir  │  ← Escala 1.05, sombra aumentada
+└──────────────┘    Efecto ripple desde centro
+    ↑ ↑ ↑
+   Sombra más
+   pronunciada
+```
+
+### 2. Click en Mensaje
+```
+Frame 1:              Frame 2:              Frame 3:
+┌─────────┐          ┌─────────┐          ┌─────────┐
+│ Mensaje │          │ Mensaje │          │ Mensaje │
+└─────────┘          └─────────┘          └─────────┘
+   ↓                    ↓ ↓                  ↓
+Scale 1.0            Scale 0.95           Scale 1.0
+                     (feedback)
+```
+
+### 3. Typing Indicator
+```
+Frame 1:    Frame 2:    Frame 3:    Frame 4:
+●○○         ○●○         ○○●         ●○○
+↑           ↑           ↑           ↑
+Dot 1       Dot 2       Dot 3       Loop
+animado     animado     animado     
+```
+
+### 4. Success Checkmark
+```
+Frame 1:    Frame 2:    Frame 3:    Frame 4:
+            ╱           ╱           ╱✓
+                       ╱           ╱  ╲
+                                      ╲
+
+Animación: Draw path (0.5s)
+Color: Verde #00a651
+```
+
+---
+
+**Diseñado con ❤️ para Comfama**

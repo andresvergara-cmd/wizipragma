@@ -1,0 +1,190 @@
+/* Comfi Avatar Animations */
+
+.comfi-avatar-container {
+  display: inline-block;
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.comfi-avatar-image {
+  display: block;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover effect */
+.comfi-avatar-container:hover {
+  transform: scale(1.05);
+}
+
+/* Animated state - floating effect */
+.comfi-avatar-container.comfi-animated {
+  animation: comfiFloat 3s ease-in-out infinite;
+}
+
+@keyframes comfiFloat {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-5px) rotate(2deg);
+  }
+  50% {
+    transform: translateY(0) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-3px) rotate(-2deg);
+  }
+}
+
+/* Pulse effect for active states */
+.comfi-avatar-container.comfi-pulse {
+  animation: comfiPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes comfiPulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 5px rgba(230, 0, 126, 0.3));
+  }
+  50% {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 15px rgba(230, 0, 126, 0.6));
+  }
+}
+
+/* Thinking/Processing animation */
+.comfi-avatar-container.comfi-thinking {
+  animation: comfiThinking 1s ease-in-out infinite;
+}
+
+@keyframes comfiThinking {
+  0%, 100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+/* Success celebration */
+.comfi-avatar-container.comfi-celebrate {
+  animation: comfiCelebrate 0.6s ease-in-out;
+}
+
+@keyframes comfiCelebrate {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.2) rotate(-10deg);
+  }
+  50% {
+    transform: scale(1.1) rotate(10deg);
+  }
+  75% {
+    transform: scale(1.15) rotate(-5deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Error shake */
+.comfi-avatar-container.comfi-error {
+  animation: comfiShake 0.5s ease-in-out;
+}
+
+@keyframes comfiShake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+/* Greeting wave */
+.comfi-avatar-container.comfi-wave {
+  animation: comfiWave 2s ease-in-out;
+}
+
+@keyframes comfiWave {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  10%, 30%, 50% {
+    transform: rotate(10deg);
+  }
+  20%, 40% {
+    transform: rotate(-10deg);
+  }
+  60% {
+    transform: rotate(0deg);
+  }
+}
+
+/* Listening state (for voice input) */
+.comfi-avatar-container.comfi-listening {
+  animation: comfiListen 1.2s ease-in-out infinite;
+}
+
+@keyframes comfiListen {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 8px rgba(173, 55, 224, 0.4));
+  }
+  50% {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 20px rgba(173, 55, 224, 0.8));
+  }
+}
+
+/* Speaking state (for voice output) */
+.comfi-avatar-container.comfi-speaking {
+  animation: comfiSpeak 0.8s ease-in-out infinite;
+}
+
+@keyframes comfiSpeak {
+  0%, 100% {
+    transform: scaleY(1);
+  }
+  25% {
+    transform: scaleY(1.05);
+  }
+  75% {
+    transform: scaleY(0.98);
+  }
+}
+
+/* Loading/Connecting state */
+.comfi-avatar-container.comfi-loading {
+  animation: comfiRotate 2s linear infinite;
+}
+
+@keyframes comfiRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Glow effect for important states */
+.comfi-avatar-container.comfi-glow {
+  filter: drop-shadow(0 0 20px rgba(230, 0, 126, 0.6));
+  animation: comfiGlow 2s ease-in-out infinite;
+}
+
+@keyframes comfiGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 10px rgba(230, 0, 126, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 25px rgba(230, 0, 126, 0.8));
+  }
+}

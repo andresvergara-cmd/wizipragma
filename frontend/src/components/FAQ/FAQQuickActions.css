@@ -1,0 +1,98 @@
+.faq-quick-actions {
+  background: linear-gradient(135deg, rgba(173, 55, 224, 0.03) 0%, rgba(173, 55, 224, 0.01) 100%);
+  border: 2px solid rgba(173, 55, 224, 0.15);
+  border-radius: 16px;
+  padding: 0.5rem; /* Reducido de 1rem */
+  margin: 0.5rem 0 0.5rem; /* Reducido márgenes */
+  width: 100%;
+  max-width: 400px;
+}
+
+.quick-actions-header {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem; /* Reducido */
+  margin-bottom: 0.5rem; /* Reducido de 0.875rem */
+}
+
+.quick-icon {
+  font-size: 1.1rem; /* Reducido */
+}
+
+.quick-title {
+  font-size: 0.85rem; /* Reducido */
+  font-weight: 700;
+  color: #ad37e0;
+}
+
+.faq-quick-actions .quick-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+  gap: 0.4rem;
+  margin-bottom: 0;
+}
+
+.quick-action-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 0.3rem; /* Padding horizontal reducido */
+  background: white;
+  border: 2px solid #e8e8e8;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
+  min-height: 60px;
+}
+
+.quick-action-item:hover {
+  background: linear-gradient(135deg, #ad37e0 0%, #8b2bb3 100%);
+  color: white;
+  border-color: #ad37e0;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(173, 55, 224, 0.3);
+}
+
+.quick-faq-icon {
+  font-size: 1.6rem; /* Aumentado de 1.3rem */
+  transition: transform 0.3s ease;
+}
+
+.quick-action-item:hover .quick-faq-icon {
+  transform: scale(1.15);
+}
+
+.quick-faq-text {
+  font-size: 0.65rem; /* Reducido más para compensar iconos grandes */
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.view-all-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background: transparent;
+  color: #ad37e0;
+  border: 2px solid #ad37e0;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.75rem;
+}
+
+.view-all-btn:hover {
+  background: #ad37e0;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(173, 55, 224, 0.3);
+}
+
+@media (max-width: 768px) {
+  .faq-quick-actions .quick-actions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

@@ -1,7 +1,10 @@
 import { useState, useRef, useEffect } from 'react'
 import { useChat } from '../../context/ChatContext'
-import CinteotlLogo from '../Logo/CinteotlLogo'
+import ComfiAvatar from '../Logo/ComfiAvatar'
+import { FAQCard, FAQQuickActions } from '../FAQ'
+import { getFAQById, quickFAQs } from '../../data/faqData'
 import './ChatWidget.css'
+import '../Logo/ComfiAvatar.css'
 
 const ChatWidget = ({ isOpen, onClose }) => {
   const { 
@@ -11,32 +14,32 @@ const ChatWidget = ({ isOpen, onClose }) => {
     isConnected,
     isStreaming,
     currentStreamMessage,
+    isPlayingAudio,
+    voiceEnabled,
     setInputValue, 
+    setVoiceEnabled,
     sendTextMessage,
-    sendVoiceMessage 
+    sendVoiceMessage,
+    playAudio,
+    stopAudio
   } = useChat()
 
   const [isRecording, setIsRecording] = useState(false)
   const [recordingTime, setRecordingTime] = useState(0)
   const [selectedImage, setSelectedImage] = useState(null)
   const [showQuickActions, setShowQuickActions] = useState(true)
+  const [showFAQQuickActions, setShowFAQQuickActions] = useState(true)
+  const [isProcessing, setIsProcessing] = useState(false) // Nuevo estado para indicador de procesamiento
   const messagesEndRef = useRef(null)
   const fileInputRef = useRef(null)
   const mediaRecorderRef = useRef(null)
   const recordingIntervalRef = useRef(null)
 
-  const quickActions = [
-    { icon: '💰', text: 'Ver mi saldo', action: '¿Cuál es mi saldo actual?' },
-    { icon: '💸', text: 'Hacer transferencia', action: 'Quiero hacer una transferencia' },
-    { icon: '🛒', text: 'Ver productos', action: 'Muéstrame productos disponibles' },
-    { icon: '📊', text: 'Mis transacciones', action: 'Muéstrame mis últimas transacciones' },
-    { icon: '🎁', text: 'Ofertas especiales', action: '¿Qué ofertas hay disponibles?' },
-    { icon: '❓', text: 'Ayuda', action: '¿Cómo puedo usar CENTLI?' }
-  ]
+  const quickActions = []
 
   useEffect(() => {
     scrollToBottom()
-  }, [messages])
+  }, [messages, currentStreamMessage, isStreaming])
 
   useEffect(() => {
     if (messages.length > 0) {
@@ -44,8 +47,31 @@ const ChatWidget = ({ isOpen, onClose }) => {
     }
   }, [messages])
 
+  // Control del indicador de procesamiento
+  useEffect(() => {
+    // Activar cuando se envía un mensaje del usuario y no hay streaming ni respuesta del bot
+    const lastMessage = messages[messages.length - 1]
+    const hasUserMessage = lastMessage && lastMessage.type === 'user'
+    const waitingForResponse = hasUserMessage && !isStreaming
+    
+    if (waitingForResponse) {
+      setIsProcessing(true)
+    }
+    
+    // Desactivar cuando comienza el streaming o llega respuesta del bot
+    if (isStreaming || (lastMessage && lastMessage.type === 'bot')) {
+      setIsProcessing(false)
+    }
+  }, [messages, isStreaming])
+
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'end',
+        inline: 'nearest'
+      })
+    }
   }
 
   const handleSendMessage = (e) => {
@@ -54,6 +80,8 @@ const ChatWidget = ({ isOpen, onClose }) => {
       sendTextMessage(inputValue)
       setInputValue('')
       setSelectedImage(null)
+      setShowFAQQuickActions(false) // Hide FAQ actions after first message
+      setIsProcessing(true) // Activar indicador de procesamiento
     }
   }
 
@@ -62,7 +90,84 @@ const ChatWidget = ({ isOpen, onClose }) => {
     setTimeout(() => {
       sendTextMessage(action)
       setInputValue('')
+      setIsProcessing(true) // Activar indicador de procesamiento
     }, 100)
+  }
+
+  const handleQuickFAQClick = (faqId) => {
+    if (faqId === 'help') {
+      // Si es el botón de ayuda, enviar mensaje de ayuda
+      sendTextMessage('¿Cómo puedo usar Comfi?')
+      setIsProcessing(true)
+    } else {
+      // Si es una FAQ normal, buscar y enviar la pregunta
+      const faq = getFAQById(faqId)
+      if (faq) {
+        sendTextMessage(faq.question)
+        setIsProcessing(true)
+      }
+    }
+  }
+
+  const handleFAQAction = (action) => {
+    console.log('FAQ Action:', action)
+    // Handle FAQ actions (activate_account, check_affiliation, etc.)
+  }
+
+  const handleFAQRelatedClick = (faqId) => {
+    const faq = getFAQById(faqId)
+    if (faq) {
+      sendTextMessage(faq.question)
+    }
+  }
+
+  const handleFAQFeedback = (faqId, isHelpful, comment) => {
+    console.log('FAQ Feedback:', { faqId, isHelpful, comment })
+    // Send feedback to backend
+  }
+
+  // Check if message is an FAQ response
+  const isFAQResponse = (message) => {
+    return message.content && typeof message.content === 'string' && 
+           message.content.includes('✅ Encontré información sobre:')
+  }
+
+  // Parse FAQ from message
+  const parseFAQFromMessage = (message) => {
+    // Try to extract FAQ ID from message
+    const content = message.content.toLowerCase()
+    
+    // Check if it's an FAQ response by looking for FAQ patterns
+    // IMPORTANT: Check more specific patterns first to avoid false matches
+    
+    // Tarifa (check first because it's more specific than afiliación)
+    if ((content.includes('tarifa') || content.includes('aporte') || 
+         content.includes('4%')) && !content.includes('tipos de crédito')) {
+      return getFAQById('faq-afiliacion-002')
+    }
+    // Afiliación (only if no tarifa keywords)
+    else if ((content.includes('afilia') || content.includes('empleador') || 
+              content.includes('registro') || content.includes('parafiscal')) &&
+             !content.includes('tarifa') && !content.includes('aporte')) {
+      return getFAQById('faq-afiliacion-001')
+    } 
+    // Requisitos crédito (check before tipos de crédito)
+    else if ((content.includes('requisitos') || content.includes('requisito')) && 
+             content.includes('crédito')) {
+      return getFAQById('faq-creditos-002')
+    }
+    // Tipos de crédito
+    else if (content.includes('tipos de crédito') || content.includes('líneas de crédito') ||
+             content.includes('crédito de vivienda') || content.includes('crédito de educación') ||
+             content.includes('libre inversión')) {
+      return getFAQById('faq-creditos-001')
+    } 
+    // Subsidios
+    else if (content.includes('subsidios') || content.includes('subsidio')) {
+      return getFAQById('faq-subsidios-001')
+    }
+    
+    return null
   }
 
   const handleVoiceRecord = async () => {
@@ -160,75 +265,160 @@ const ChatWidget = ({ isOpen, onClose }) => {
         {/* Header */}
         <div className="chat-widget-header">
           <div className="chat-header-left">
-            <CinteotlLogo size={32} className="cinteotl-logo pulse" />
+            <ComfiAvatar 
+              size={32} 
+              className={`comfi-avatar ${isStreaming ? 'comfi-speaking' : isTyping ? 'comfi-thinking' : ''}`}
+              animated={isConnected}
+            />
             <div className="chat-header-info">
-              <h3>CENTLI</h3>
+              <h3>Comfi</h3>
               <span className={`status-indicator ${isConnected ? 'online' : 'offline'}`}>
                 {isConnected ? 'En línea' : 'Desconectado'}
               </span>
             </div>
           </div>
-          <button className="close-button" onClick={onClose}>✕</button>
+          <div className="chat-header-right">
+            <button 
+              className={`voice-toggle-btn ${voiceEnabled ? 'active' : ''}`}
+              onClick={() => setVoiceEnabled(!voiceEnabled)}
+              title={voiceEnabled ? 'Desactivar respuestas de voz' : 'Activar respuestas de voz'}
+            >
+              {voiceEnabled ? '🔊' : '🔇'}
+            </button>
+            <button className="close-button" onClick={onClose}>✕</button>
+          </div>
         </div>
 
         {/* Messages */}
         <div className="chat-widget-body">
-          {messages.length === 0 && showQuickActions ? (
+          {console.log('🎨 RENDER: messages.length =', messages.length, 'messages =', messages)}
+          {messages.length === 0 ? (
             <div className="welcome-section">
+              {console.log('🎨 RENDER: Showing welcome section')}
               <div className="welcome-logo">
-                <CinteotlLogo size={80} className="cinteotl-logo" />
+                <ComfiAvatar size={50} className="comfi-avatar comfi-wave" animated={true} />
               </div>
-              <h2>¡Hola! Soy CENTLI</h2>
-              <p>Tu coach financiero inteligente. ¿En qué puedo ayudarte hoy?</p>
+              <h2>¡Hola! Soy Comfi</h2>
+              <p>Tu asistente de Comfama. ¿En qué puedo ayudarte hoy?</p>
               
-              <div className="quick-actions-grid">
-                {quickActions.map((action, index) => (
-                  <button
-                    key={index}
-                    className="quick-action-btn"
-                    onClick={() => handleQuickAction(action.action)}
-                  >
-                    <span className="quick-action-icon">{action.icon}</span>
-                    <span className="quick-action-text">{action.text}</span>
-                  </button>
-                ))}
-              </div>
+              {showFAQQuickActions && (
+                <FAQQuickActions
+                  quickFAQs={quickFAQs}
+                  onQuickFAQClick={handleQuickFAQClick}
+                />
+              )}
             </div>
           ) : (
             <>
-              {messages.map((msg) => (
-                <div key={msg.id} className={`message ${msg.type}`}>
-                  {msg.type === 'bot' && (
-                    <div className="message-avatar">
-                      <CinteotlLogo size={28} className="cinteotl-logo" />
+              {console.log('🎨 RENDER: Showing messages, count =', messages.length)}
+              {messages.map((msg) => {
+                console.log('🎨 RENDER: Rendering message', msg.id, msg.type, msg.content.substring(0, 50))
+                const faq = msg.type === 'bot' ? parseFAQFromMessage(msg) : null
+                
+                // Si es una FAQ, solo mostrar la tarjeta, NO el texto plano
+                if (faq) {
+                  return (
+                    <div key={msg.id} className={`message ${msg.type}`}>
+                      <div className="message-avatar">
+                        <ComfiAvatar size={28} className="comfi-avatar" />
+                      </div>
+                      <div className="message-faq-container">
+                        <FAQCard
+                          faq={faq}
+                          onActionClick={handleFAQAction}
+                          onRelatedClick={handleFAQRelatedClick}
+                          onFeedback={handleFAQFeedback}
+                        />
+                      </div>
                     </div>
-                  )}
-                  <div className={`message-bubble ${msg.isError ? 'error' : ''}`}>
-                    {msg.content}
+                  )
+                }
+                
+                // Si no es FAQ, mostrar mensaje normal
+                return (
+                  <div key={msg.id} className={`message ${msg.type}`}>
+                    {msg.type === 'bot' && (
+                      <div className="message-avatar">
+                        <ComfiAvatar size={28} className="comfi-avatar" />
+                      </div>
+                    )}
+                    
+                    <div className={`message-bubble ${msg.isError ? 'error' : ''}`}>
+                      {msg.content}
+                    </div>
+                    
+                    {msg.type === 'user' && (
+                      <div className="message-avatar user-avatar"></div>
+                    )}
                   </div>
-                  {msg.type === 'user' && (
-                    <div className="message-avatar user-avatar">👤</div>
-                  )}
-                </div>
-              ))}
+                )
+              })}
               
               {/* Streaming message */}
               {isStreaming && currentStreamMessage && (
-                <div className="message bot">
+                (() => {
+                  // Check if streaming message is a FAQ
+                  const tempMsg = { content: currentStreamMessage.toLowerCase() }
+                  const isFAQ = tempMsg.content.includes('afilia') || 
+                                tempMsg.content.includes('empleador') ||
+                                tempMsg.content.includes('tarifa') || 
+                                tempMsg.content.includes('aporte') ||
+                                tempMsg.content.includes('crédito') ||
+                                tempMsg.content.includes('subsidio')
+                  
+                  // If it's a FAQ, show "Procesando..." instead of streaming text
+                  if (isFAQ) {
+                    return (
+                      <div className="message bot processing-message">
+                        <div className="message-avatar">
+                          <ComfiAvatar size={28} className="comfi-avatar comfi-thinking" animated={true} />
+                        </div>
+                        <div className="message-bubble processing">
+                          <div className="processing-indicator">
+                            <div className="processing-spinner"></div>
+                            <span className="processing-text">Procesando...</span>
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  }
+                  
+                  // Otherwise show streaming text normally
+                  return (
+                    <div className="message bot">
+                      <div className="message-avatar">
+                        <ComfiAvatar size={28} className="comfi-avatar comfi-speaking" animated={true} />
+                      </div>
+                      <div className="message-bubble streaming">
+                        {currentStreamMessage}
+                        <span className="cursor-blink">|</span>
+                      </div>
+                    </div>
+                  )
+                })()
+              )}
+              
+              {/* Indicador de procesamiento - Comfi está escribiendo */}
+              {isProcessing && !isStreaming && (
+                <div className="message bot processing-message">
                   <div className="message-avatar">
-                    <CinteotlLogo size={28} className="cinteotl-logo pulse" />
+                    <ComfiAvatar size={28} className="comfi-avatar comfi-thinking" animated={true} />
                   </div>
-                  <div className="message-bubble streaming">
-                    {currentStreamMessage}
-                    <span className="cursor-blink">|</span>
+                  <div className="message-bubble processing">
+                    <div className="typing-indicator">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </div>
+                    <span className="typing-text">Comfi está escribiendo...</span>
                   </div>
                 </div>
               )}
               
-              {isTyping && !isStreaming && (
+              {isTyping && !isStreaming && !isProcessing && (
                 <div className="message bot">
                   <div className="message-avatar">
-                    <CinteotlLogo size={28} className="cinteotl-logo" />
+                    <ComfiAvatar size={28} className="comfi-avatar comfi-thinking" />
                   </div>
                   <div className="message-bubble typing">
                     <div className="typing-indicator">

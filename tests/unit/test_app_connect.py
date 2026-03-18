@@ -19,7 +19,6 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../../src_aws/app_co
 
 from app_connect import lambda_handler, validate_token
 
-
 @pytest.fixture
 def mock_env(monkeypatch):
     """Set up environment variables for tests."""

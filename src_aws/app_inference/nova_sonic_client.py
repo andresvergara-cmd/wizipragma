@@ -200,3 +200,92 @@ def transcribe_audio_with_nova_sonic(audio_base64: str) -> str:
     """
     client = NovaSonicClient()
     return client.transcribe_audio(audio_base64)
+
+
+def synthesize_speech_with_nova_sonic(text: str, voice_id: str = "es-MX-Camila") -> str:
+    """
+    Synthesize text to speech using Nova Sonic
+    
+    Args:
+        text: Text to synthesize in Spanish
+        voice_id: Voice ID for synthesis (default: es-MX-Camila for Colombian Spanish)
+        
+    Returns:
+        str: Base64 encoded audio (PCM format)
+    """
+    try:
+        logger.info(f"Starting Nova Sonic speech synthesis (text length: {len(text)} chars)")
+        
+        bedrock_runtime = boto3.client('bedrock-runtime', region_name=REGION_NAME)
+        
+        # Invoke Nova Sonic for TTS
+        response = bedrock_runtime.invoke_model_with_response_stream(
+            modelId=MODEL_ID,
+            contentType='application/json',
+            accept='application/json',
+            body=json.dumps({
+                "schemaVersion": "messages-v1",
+                "messages": [
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "text": f"Convierte este texto a audio en español colombiano con voz femenina amigable: {text}"
+                            }
+                        ]
+                    }
+                ],
+                "inferenceConfig": {
+                    "maxTokens": 4096,
+                    "temperature": 0.5
+                },
+                "audioConfig": {
+                    "format": "pcm",
+                    "sampleRate": OUTPUT_SAMPLE_RATE
+                }
+            })
+        )
+        
+        # Collect audio chunks
+        audio_chunks = []
+        stream = response.get('body')
+        
+        if stream:
+            for event in stream:
+                chunk = event.get('chunk')
+                if chunk:
+                    chunk_data = json.loads(chunk.get('bytes').decode())
+                    
+                    # Extract audio from chunk
+                    if 'audio' in chunk_data:
+                        audio_data = chunk_data['audio']
+                        if 'bytes' in audio_data:
+                            audio_chunks.append(base64.b64decode(audio_data['bytes']))
+        
+        # Combine all audio chunks
+        if audio_chunks:
+            combined_audio = b''.join(audio_chunks)
+            audio_base64 = base64.b64encode(combined_audio).decode('utf-8')
+            logger.info(f"Speech synthesis completed: {len(combined_audio)} bytes")
+            return audio_base64
+        else:
+            logger.warning("No audio chunks received from Nova Sonic")
+            return ""
+            
+    except Exception as e:
+        logger.error(f"Error in Nova Sonic speech synthesis: {str(e)}")
+        return ""
+
+
+def transcribe_audio_with_nova_sonic(audio_base64: str) -> str:
+    """
+    Main function to transcribe audio using Nova Sonic
+    
+    Args:
+        audio_base64: Base64 encoded audio from frontend
+        
+    Returns:
+        str: Transcribed text in Spanish
+    """
+    client = NovaSonicClient()
+    return client.transcribe_audio(audio_base64)
