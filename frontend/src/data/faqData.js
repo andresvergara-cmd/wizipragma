@@ -149,27 +149,27 @@ export const quickFAQs = [
   {
     id: 'faq-afiliacion-001',
     icon: '👥',
-    shortQuestion: '¿Cómo me afilio?'
-  },
-  {
-    id: 'faq-afiliacion-002',
-    icon: '💰',
-    shortQuestion: '¿Cuál es mi tarifa?'
-  },
-  {
-    id: 'faq-creditos-001',
-    icon: '🏠',
-    shortQuestion: 'Tipos de créditos'
-  },
-  {
-    id: 'faq-creditos-002',
-    icon: '📋',
-    shortQuestion: 'Requisitos crédito'
+    shortQuestion: '¿Cómo me afilio a Comfama?'
   },
   {
     id: 'faq-subsidios-001',
     icon: '🎁',
-    shortQuestion: 'Subsidios disponibles'
+    shortQuestion: '¿Qué subsidios ofrece Comfama?'
+  },
+  {
+    id: 'faq-creditos-001',
+    icon: '💰',
+    shortQuestion: '¿Qué tipos de créditos ofrece Comfama?'
+  },
+  {
+    id: 'faq-educacion-001',
+    icon: '📚',
+    shortQuestion: '¿Cómo me inscribo a cursos?'
+  },
+  {
+    id: 'faq-atencion-001',
+    icon: '📞',
+    shortQuestion: '¿Cuáles son los canales de atención?'
   },
   {
     id: 'help',

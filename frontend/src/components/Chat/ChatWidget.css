@@ -318,9 +318,8 @@
 .message {
   display: flex;
   gap: 0.75rem;
-  align-items: flex-end;
+  align-items: flex-start;
   animation: messageSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  /* Removed opacity: 0 - messages should be visible by default */
   animation-fill-mode: forwards;
 }
 
@@ -405,7 +404,6 @@
 }
 
 .message-bubble {
-  max-width: 75%;
   padding: 0.875rem 1.125rem;
   border-radius: 18px;
   font-size: 0.95rem;
@@ -953,6 +951,15 @@
   .message-bubble {
     max-width: 85%;
   }
+
+  .suggestions-container {
+    padding-left: 0.5rem;
+  }
+
+  .suggestion-chip {
+    font-size: 0.72rem;
+    white-space: normal;
+  }
 }
 
 /* Streaming Message - Mejorado */
@@ -1043,4 +1050,108 @@
 /* FAQ Quick Actions in Welcome Screen */
 .welcome-section .faq-quick-actions {
   margin-top: 24px;
+}
+
+/* Message Content Wrapper */
+.message-content-wrapper {
+  max-width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+
+.message.user .message-content-wrapper {
+  align-items: flex-end;
+}
+
+/* Message Meta (timestamp + copy) */
+.message-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.2rem;
+  padding: 0 0.25rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.message:hover .message-meta {
+  opacity: 1;
+}
+
+.message-meta.user {
+  justify-content: flex-end;
+}
+
+.message-time {
+  font-size: 0.7rem;
+  color: #999;
+}
+
+.copy-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 0.1rem 0.25rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  opacity: 0.6;
+}
+
+.copy-btn:hover {
+  opacity: 1;
+  background: rgba(173, 55, 224, 0.08);
+}
+
+.copy-btn.copied {
+  color: #4caf50;
+  opacity: 1;
+}
+
+/* Follow-up Suggestions */
+.suggestions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.25rem 0 0.25rem 3rem;
+  animation: fadeInUp 0.4s ease;
+}
+
+.suggestions-label {
+  font-size: 0.75rem;
+  color: #999;
+  font-weight: 500;
+}
+
+.suggestions-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.suggestion-chip {
+  background: white;
+  border: 1.5px solid rgba(173, 55, 224, 0.25);
+  border-radius: 16px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.78rem;
+  color: #ad37e0;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.suggestion-chip:hover {
+  background: linear-gradient(135deg, #ad37e0 0%, #8b2bb3 100%);
+  color: white;
+  border-color: #ad37e0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(173, 55, 224, 0.25);
+}
+
+.suggestion-chip:active {
+  transform: translateY(0);
 }

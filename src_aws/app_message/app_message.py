@@ -104,29 +104,38 @@ def lambda_handler(event, context):
         if message_type == 'TEXT':
             print(f"📝 Calling process_text_message...")
             response = process_text_message(content, session_id, user_id, connection_id, include_audio)
+            print("=" * 80)
+            print("✅ LAMBDA HANDLER COMPLETED SUCCESSFULLY")
+            print("=" * 80)
+            return {'statusCode': 200}
         elif message_type == 'VOICE' or message_type == 'AUDIO':
-            print(f"🎤 Calling process_voice_message...")
+            # Voice processing takes 20-60s (Transcribe + Agent + Polly)
+            # Lambda timeout is 90s. API GW WebSocket integration timeout is 29s.
+            # API GW may send "Internal server error" to client if Lambda takes >29s,
+            # but Lambda continues running and sends results via post_to_connection.
+            # Frontend handles this by ignoring "Internal server error" during voice.
+            print(f"🎤 Processing voice message synchronously...")
             response = process_voice_message(content, session_id, user_id, connection_id)
+            # process_voice_message sends responses directly via post_to_connection
+            # Only send if there's an error to report
+            if response and response.get('error'):
+                send_error(connection_id, response['error'])
+            print("=" * 80)
+            print("✅ LAMBDA HANDLER COMPLETED")
+            print("=" * 80)
+            return {'statusCode': 200}
         elif message_type == 'IMAGE':
             print(f"🖼️ Calling process_image_message...")
             response = process_image_message(content, session_id, user_id, connection_id)
+            send_message(connection_id, response)
+            print("=" * 80)
+            print("✅ LAMBDA HANDLER COMPLETED SUCCESSFULLY")
+            print("=" * 80)
+            return {'statusCode': 200}
         else:
             print(f"❌ Unknown message type: {message_type}")
-            response = {"error": "Unknown message type"}
-        
-        print(f"✅ Message processed successfully")
-        print(f"📤 Response: {json.dumps(response, indent=2)[:500]}")
-        
-        # Send response only if not already streamed (TEXT messages are streamed)
-        if message_type != 'TEXT':
-            print(f"📨 Sending response to client...")
-            send_message(connection_id, response)
-            print(f"✅ Response sent")
-        
-        print("=" * 80)
-        print("✅ LAMBDA HANDLER COMPLETED SUCCESSFULLY")
-        print("=" * 80)
-        return {'statusCode': 200}
+            send_error(connection_id, "Unknown message type")
+            return {'statusCode': 200}
         
     except Exception as e:
         print("=" * 80)
@@ -262,6 +271,26 @@ def process_voice_message(audio_data: str, session_id: str, user_id: str, connec
             print(f"✅ Transcription completed")
             print(f"📝 Transcribed text: '{transcribed_text}'")
             
+            # Check if transcription is empty or too short (garbage)
+            if not transcribed_text or not transcribed_text.strip() or len(transcribed_text.strip()) < 3:
+                print(f"⚠️ Empty or too short transcription: '{transcribed_text}' (len={len(transcribed_text.strip()) if transcribed_text else 0})")
+                apigateway.post_to_connection(
+                    ConnectionId=connection_id,
+                    Data=json.dumps({
+                        "msg_type": "transcription",
+                        "text": "(No se detectó voz)"
+                    }).encode('utf-8')
+                )
+                # Send error message to client
+                apigateway.post_to_connection(
+                    ConnectionId=connection_id,
+                    Data=json.dumps({
+                        "msg_type": "agent_response",
+                        "message": "No pude entender el audio. Asegúrate de hablar claramente y cerca del micrófono, e intenta de nuevo."
+                    }).encode('utf-8')
+                )
+                return None
+            
             # Send transcription to client
             print("📤 Sending transcription to client...")
             transcription_message = {
@@ -283,11 +312,15 @@ def process_voice_message(audio_data: str, session_id: str, user_id: str, connec
             print(f"TRACEBACK:\n{traceback.format_exc()}")
             print("!" * 80)
             
-            return {
-                "type": "TEXT",
-                "content": "Lo siento, no pude entender el audio. Por favor intenta de nuevo.",
-                "metadata": {"timestamp": datetime.utcnow().isoformat()}
-            }
+            # Send error message to client
+            apigateway.post_to_connection(
+                ConnectionId=connection_id,
+                Data=json.dumps({
+                    "msg_type": "agent_response",
+                    "message": "Lo siento, no pude entender el audio. Por favor intenta de nuevo."
+                }).encode('utf-8')
+            )
+            return None
         
         # Step 2: Process transcribed text through Bedrock Agent
         print("\n" + "-" * 80)
@@ -320,6 +353,19 @@ def process_voice_message(audio_data: str, session_id: str, user_id: str, connec
         response_text = extract_agent_response(response)
         print(f"✅ Response extracted")
         print(f"📝 Response text (first 200 chars): '{response_text[:200]}...'")
+        
+        # Send text response to client
+        print("📤 Sending text response to client...")
+        text_response = {
+            "msg_type": "agent_response",
+            "message": response_text,
+            "data": {"timestamp": datetime.utcnow().isoformat()}
+        }
+        apigateway.post_to_connection(
+            ConnectionId=connection_id,
+            Data=json.dumps(text_response).encode('utf-8')
+        )
+        print("✅ Text response sent to client")
         
         # Step 3: Synthesize response to audio using Amazon Polly
         print("\n" + "-" * 80)
@@ -399,11 +445,9 @@ def process_voice_message(audio_data: str, session_id: str, user_id: str, connec
         print("✅ PROCESS_VOICE_MESSAGE COMPLETED")
         print("=" * 80 + "\n")
         
-        return {
-            "type": "TEXT",
-            "content": response_text,
-            "metadata": {"timestamp": datetime.utcnow().isoformat()}
-        }
+        # Return None to prevent duplicate send in main handler
+        # (text and audio already sent via post_to_connection above)
+        return None
         
     except Exception as e:
         print("\n" + "!" * 80)

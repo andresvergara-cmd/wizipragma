@@ -1,77 +1,84 @@
 import { useState, useRef, useEffect } from 'react'
 import { useChat } from '../../context/ChatContext'
 import ComfiAvatar from '../Logo/ComfiAvatar'
-import { FAQCard, FAQQuickActions } from '../FAQ'
-import { getFAQById, quickFAQs } from '../../data/faqData'
+import { FAQQuickActions } from '../FAQ'
+import { quickFAQs } from '../../data/faqData'
+import MarkdownMessage from './MarkdownMessage'
 import './ChatWidget.css'
 import '../Logo/ComfiAvatar.css'
 
+// Follow-up suggestions based on last bot response keywords
+const getSuggestions = (botMessage) => {
+  if (!botMessage) return []
+  const text = botMessage.toLowerCase()
+  
+  if (text.includes('afilia') || text.includes('empleador') || text.includes('parafiscal')) {
+    return ['¿Cuál es la tarifa de afiliación?', '¿Qué beneficios tengo como afiliado?', '¿Quiénes pueden ser mis beneficiarios?']
+  }
+  if (text.includes('tarifa') || text.includes('4%') || text.includes('aporte')) {
+    return ['¿Cómo me afilio a Comfama?', '¿Qué beneficios tengo como afiliado?']
+  }
+  if (text.includes('crédito') || text.includes('financier') || text.includes('préstamo')) {
+    return ['¿Cuáles son los requisitos para un crédito?', '¿Qué es la cuota monetaria?']
+  }
+  if (text.includes('subsidio') && text.includes('desempleo')) {
+    return ['¿Cuáles son los requisitos para el subsidio al desempleo?', '¿Qué documentos necesito?']
+  }
+  if (text.includes('subsidio') || text.includes('vivienda')) {
+    return ['¿Cómo me postulo al subsidio de vivienda?', '¿Qué es el subsidio familiar?']
+  }
+  if (text.includes('curso') || text.includes('educa') || text.includes('formación')) {
+    return ['¿Los cursos tienen costo?', '¿Qué programas educativos ofrece Comfama?']
+  }
+  if (text.includes('certificado') || text.includes('carné')) {
+    return ['¿Cómo obtengo mi certificado de afiliación?', '¿Cómo obtengo mi carné?']
+  }
+  if (text.includes('teléfono') || text.includes('contacto') || text.includes('atención')) {
+    return ['¿Cuáles son los horarios de atención?', '¿Cómo presento una PQR?']
+  }
+  // Default suggestions
+  return ['¿Cómo me afilio a Comfama?', '¿Qué servicios financieros ofrece?', '¿Cuáles son los canales de atención?']
+}
+
+const formatTimestamp = (ts) => {
+  if (!ts) return ''
+  const d = new Date(ts)
+  return d.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' })
+}
+
 const ChatWidget = ({ isOpen, onClose }) => {
   const { 
-    messages, 
-    isTyping, 
-    inputValue, 
-    isConnected,
-    isStreaming,
-    currentStreamMessage,
-    isPlayingAudio,
-    voiceEnabled,
-    setInputValue, 
-    setVoiceEnabled,
-    sendTextMessage,
-    sendVoiceMessage,
-    playAudio,
-    stopAudio
+    messages, isTyping, inputValue, isConnected, isStreaming,
+    currentStreamMessage, voiceEnabled,
+    setInputValue, setVoiceEnabled, sendTextMessage, sendVoiceMessage
   } = useChat()
 
   const [isRecording, setIsRecording] = useState(false)
   const [recordingTime, setRecordingTime] = useState(0)
   const [selectedImage, setSelectedImage] = useState(null)
-  const [showQuickActions, setShowQuickActions] = useState(true)
   const [showFAQQuickActions, setShowFAQQuickActions] = useState(true)
-  const [isProcessing, setIsProcessing] = useState(false) // Nuevo estado para indicador de procesamiento
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [copiedId, setCopiedId] = useState(null)
   const messagesEndRef = useRef(null)
   const fileInputRef = useRef(null)
-  const mediaRecorderRef = useRef(null)
   const recordingIntervalRef = useRef(null)
+  const inputRef = useRef(null)
 
-  const quickActions = []
+  useEffect(() => { scrollToBottom() }, [messages, currentStreamMessage, isStreaming])
+
+  // Auto-focus input when chat opens
+  useEffect(() => {
+    if (isOpen) setTimeout(() => inputRef.current?.focus(), 300)
+  }, [isOpen])
 
   useEffect(() => {
-    scrollToBottom()
-  }, [messages, currentStreamMessage, isStreaming])
-
-  useEffect(() => {
-    if (messages.length > 0) {
-      setShowQuickActions(false)
-    }
-  }, [messages])
-
-  // Control del indicador de procesamiento
-  useEffect(() => {
-    // Activar cuando se envía un mensaje del usuario y no hay streaming ni respuesta del bot
     const lastMessage = messages[messages.length - 1]
-    const hasUserMessage = lastMessage && lastMessage.type === 'user'
-    const waitingForResponse = hasUserMessage && !isStreaming
-    
-    if (waitingForResponse) {
-      setIsProcessing(true)
-    }
-    
-    // Desactivar cuando comienza el streaming o llega respuesta del bot
-    if (isStreaming || (lastMessage && lastMessage.type === 'bot')) {
-      setIsProcessing(false)
-    }
+    if (lastMessage?.type === 'user' && !isStreaming) setIsProcessing(true)
+    if (isStreaming || lastMessage?.type === 'bot') setIsProcessing(false)
   }, [messages, isStreaming])
 
   const scrollToBottom = () => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'end',
-        inline: 'nearest'
-      })
-    }
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
   }
 
   const handleSendMessage = (e) => {
@@ -80,174 +87,154 @@ const ChatWidget = ({ isOpen, onClose }) => {
       sendTextMessage(inputValue)
       setInputValue('')
       setSelectedImage(null)
-      setShowFAQQuickActions(false) // Hide FAQ actions after first message
-      setIsProcessing(true) // Activar indicador de procesamiento
+      setShowFAQQuickActions(false)
+      setIsProcessing(true)
     }
   }
 
-  const handleQuickAction = (action) => {
-    setInputValue(action)
-    setTimeout(() => {
-      sendTextMessage(action)
-      setInputValue('')
-      setIsProcessing(true) // Activar indicador de procesamiento
-    }, 100)
+  const handleSuggestionClick = (question) => {
+    sendTextMessage(question)
+    setIsProcessing(true)
   }
 
   const handleQuickFAQClick = (faqId) => {
     if (faqId === 'help') {
-      // Si es el botón de ayuda, enviar mensaje de ayuda
       sendTextMessage('¿Cómo puedo usar Comfi?')
-      setIsProcessing(true)
     } else {
-      // Si es una FAQ normal, buscar y enviar la pregunta
-      const faq = getFAQById(faqId)
-      if (faq) {
-        sendTextMessage(faq.question)
-        setIsProcessing(true)
-      }
+      // Send the shortQuestion text directly
+      const faq = quickFAQs.find(f => f.id === faqId)
+      if (faq) sendTextMessage(faq.shortQuestion)
     }
+    setIsProcessing(true)
   }
 
-  const handleFAQAction = (action) => {
-    console.log('FAQ Action:', action)
-    // Handle FAQ actions (activate_account, check_affiliation, etc.)
+  const handleCopy = async (content, msgId) => {
+    try {
+      await navigator.clipboard.writeText(content)
+      setCopiedId(msgId)
+      setTimeout(() => setCopiedId(null), 2000)
+    } catch { /* clipboard not available */ }
   }
 
-  const handleFAQRelatedClick = (faqId) => {
-    const faq = getFAQById(faqId)
-    if (faq) {
-      sendTextMessage(faq.question)
-    }
+  const handleShowFAQs = () => {
+    setShowFAQQuickActions(true)
+    // Scroll to show FAQs would need welcome section, so just send a help message
+    sendTextMessage('¿Cuáles son las preguntas frecuentes?')
+    setIsProcessing(true)
   }
 
-  const handleFAQFeedback = (faqId, isHelpful, comment) => {
-    console.log('FAQ Feedback:', { faqId, isHelpful, comment })
-    // Send feedback to backend
-  }
+  const MAX_RECORDING_SECONDS = 15 // API Gateway WebSocket limit ~128KB
+  const audioContextRef = useRef(null)
+  const audioStreamRef = useRef(null)
+  const mediaRecorderRef = useRef(null)
 
-  // Check if message is an FAQ response
-  const isFAQResponse = (message) => {
-    return message.content && typeof message.content === 'string' && 
-           message.content.includes('✅ Encontré información sobre:')
-  }
+  // Auto-stop recording at max duration
+  useEffect(() => {
+    if (isRecording && recordingTime >= MAX_RECORDING_SECONDS) {
+      stopRecordingAndSend()
+    }
+  }, [isRecording, recordingTime])
 
-  // Parse FAQ from message
-  const parseFAQFromMessage = (message) => {
-    // Try to extract FAQ ID from message
-    const content = message.content.toLowerCase()
-    
-    // Check if it's an FAQ response by looking for FAQ patterns
-    // IMPORTANT: Check more specific patterns first to avoid false matches
-    
-    // Tarifa (check first because it's more specific than afiliación)
-    if ((content.includes('tarifa') || content.includes('aporte') || 
-         content.includes('4%')) && !content.includes('tipos de crédito')) {
-      return getFAQById('faq-afiliacion-002')
+  const stopRecordingAndSend = () => {
+    setIsRecording(false)
+    clearInterval(recordingIntervalRef.current)
+
+    // Stop MediaRecorder — onstop handler will process and send
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
+      mediaRecorderRef.current.stop()
     }
-    // Afiliación (only if no tarifa keywords)
-    else if ((content.includes('afilia') || content.includes('empleador') || 
-              content.includes('registro') || content.includes('parafiscal')) &&
-             !content.includes('tarifa') && !content.includes('aporte')) {
-      return getFAQById('faq-afiliacion-001')
-    } 
-    // Requisitos crédito (check before tipos de crédito)
-    else if ((content.includes('requisitos') || content.includes('requisito')) && 
-             content.includes('crédito')) {
-      return getFAQById('faq-creditos-002')
-    }
-    // Tipos de crédito
-    else if (content.includes('tipos de crédito') || content.includes('líneas de crédito') ||
-             content.includes('crédito de vivienda') || content.includes('crédito de educación') ||
-             content.includes('libre inversión')) {
-      return getFAQById('faq-creditos-001')
-    } 
-    // Subsidios
-    else if (content.includes('subsidios') || content.includes('subsidio')) {
-      return getFAQById('faq-subsidios-001')
-    }
-    
-    return null
   }
 
   const handleVoiceRecord = async () => {
-    // Check if we're on HTTPS or localhost
     const isSecureContext = window.isSecureContext || window.location.protocol === 'https:' || window.location.hostname === 'localhost'
-    
     if (!isSecureContext) {
-      alert('🎤 La grabación de voz requiere una conexión segura (HTTPS).\n\nPor ahora, puedes usar el chat de texto. Estamos trabajando en habilitar HTTPS para esta función.')
+      alert('🎤 La grabación de voz requiere HTTPS.\nPor ahora, usa el chat de texto.')
       return
     }
-    
     if (!isRecording) {
       try {
-        // Check if getUserMedia is available
-        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-          alert('Tu navegador no soporta grabación de audio. Por favor, usa un navegador moderno como Chrome, Firefox o Safari.')
+        if (!navigator.mediaDevices?.getUserMedia) {
+          alert('Tu navegador no soporta grabación de audio.')
           return
         }
-        
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
-        const mediaRecorder = new MediaRecorder(stream)
+        const stream = await navigator.mediaDevices.getUserMedia({
+          audio: {
+            channelCount: 1,
+            echoCancellation: true,
+            noiseSuppression: true,
+            autoGainControl: true
+          }
+        })
+        audioStreamRef.current = stream
+
+        // Strategy: Use AudioContext to route audio through a destination node,
+        // then use MediaRecorder on that destination. This ensures we always
+        // get audio data (AudioContext capture is 100% reliable) while still
+        // getting Opus compression (small file size for WebSocket).
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)()
+        audioContextRef.current = audioContext
+        const source = audioContext.createMediaStreamSource(stream)
+        const destination = audioContext.createMediaStreamDestination()
+        source.connect(destination)
+
+        const mimeType = MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
+          ? 'audio/webm;codecs=opus'
+          : 'audio/webm'
+
+        const mediaRecorder = new MediaRecorder(destination.stream, {
+          mimeType,
+          audioBitsPerSecond: 32000 // Low bitrate to keep file small
+        })
         mediaRecorderRef.current = mediaRecorder
-        
         const audioChunks = []
+
         mediaRecorder.ondataavailable = (event) => {
-          audioChunks.push(event.data)
+          console.log('🎤 ondataavailable:', event.data.size, 'bytes')
+          if (event.data.size > 0) audioChunks.push(event.data)
         }
-        
-        mediaRecorder.onstop = async () => {
-          const audioBlob = new Blob(audioChunks, { type: 'audio/webm' })
-          console.log('🎤 Audio recorded:', audioBlob.size, 'bytes')
-          
-          // Send audio to backend via sendVoiceMessage
+
+        mediaRecorder.onstop = () => {
+          console.log('🎤 MediaRecorder stopped, chunks:', audioChunks.length, 'sizes:', audioChunks.map(c => c.size))
+          const audioBlob = new Blob(audioChunks, { type: mimeType })
+          console.log('🎤 Final blob:', audioBlob.size, 'bytes')
+
+          // Cleanup
+          if (audioStreamRef.current) {
+            audioStreamRef.current.getTracks().forEach(t => t.stop())
+            audioStreamRef.current = null
+          }
+          if (audioContextRef.current) {
+            audioContextRef.current.close().catch(() => {})
+            audioContextRef.current = null
+          }
+
+          if (audioBlob.size < 500) {
+            console.error('❌ Audio blob too small:', audioBlob.size, 'bytes')
+            alert('La grabación fue muy corta o no se capturó audio. Intenta de nuevo.')
+            return
+          }
+          if (audioBlob.size > 90000) {
+            console.warn('⚠️ Audio large:', audioBlob.size, 'bytes. May exceed WebSocket limit.')
+          }
           sendVoiceMessage(audioBlob)
-          
-          // Stop all tracks
-          stream.getTracks().forEach(track => track.stop())
         }
-        
-        mediaRecorder.start()
+
+        // Use timeslice of 500ms to ensure data is captured incrementally.
+        // With AudioContext destination, the WebM headers are handled properly.
+        mediaRecorder.start(500)
+        console.log('🎤 Recording started (AudioContext → MediaRecorder, rate:', audioContext.sampleRate, 'Hz, mime:', mimeType, ')')
+
         setIsRecording(true)
         setRecordingTime(0)
-        
-        recordingIntervalRef.current = setInterval(() => {
-          setRecordingTime(prev => prev + 1)
-        }, 1000)
+        recordingIntervalRef.current = setInterval(() => setRecordingTime(prev => prev + 1), 1000)
       } catch (error) {
-        console.error('Error accessing microphone:', error)
-        
-        let errorMessage = 'No se pudo acceder al micrófono.'
-        
-        if (error.name === 'NotAllowedError' || error.name === 'PermissionDeniedError') {
-          errorMessage = '🎤 Permiso denegado.\n\nPor favor, permite el acceso al micrófono en la configuración de tu navegador.'
-        } else if (error.name === 'NotFoundError' || error.name === 'DevicesNotFoundError') {
-          errorMessage = '🎤 No se encontró ningún micrófono.\n\nPor favor, conecta un micrófono y recarga la página.'
-        } else if (error.name === 'NotReadableError' || error.name === 'TrackStartError') {
-          errorMessage = '🎤 El micrófono está siendo usado por otra aplicación.\n\nPor favor, cierra otras aplicaciones que puedan estar usando el micrófono.'
-        } else if (error.name === 'NotSupportedError') {
-          errorMessage = '🎤 La grabación de voz requiere HTTPS.\n\nPor ahora, usa el chat de texto.'
-        }
-        
-        alert(errorMessage)
+        let msg = 'No se pudo acceder al micrófono.'
+        if (error.name === 'NotAllowedError') msg = '🎤 Permiso denegado. Permite el acceso al micrófono.'
+        else if (error.name === 'NotFoundError') msg = '🎤 No se encontró micrófono.'
+        alert(msg)
       }
     } else {
-      if (mediaRecorderRef.current) {
-        mediaRecorderRef.current.stop()
-        setIsRecording(false)
-        clearInterval(recordingIntervalRef.current)
-      }
-    }
-  }
-
-  const handleImageSelect = (e) => {
-    const file = e.target.files[0]
-    if (file) {
-      const reader = new FileReader()
-      reader.onloadend = () => {
-        setSelectedImage(reader.result)
-      }
-      reader.readAsDataURL(file)
+      stopRecordingAndSend()
     }
   }
 
@@ -256,6 +243,11 @@ const ChatWidget = ({ isOpen, onClose }) => {
     const secs = seconds % 60
     return `${mins}:${secs.toString().padStart(2, '0')}`
   }
+
+  // Get last bot message for suggestions
+  const lastBotMessage = [...messages].reverse().find(m => m.type === 'bot')
+  const showSuggestions = lastBotMessage && !isStreaming && !isProcessing && messages[messages.length - 1]?.type === 'bot'
+  const suggestions = showSuggestions ? getSuggestions(lastBotMessage.content) : []
 
   if (!isOpen) return null
 
@@ -282,6 +274,7 @@ const ChatWidget = ({ isOpen, onClose }) => {
               className={`voice-toggle-btn ${voiceEnabled ? 'active' : ''}`}
               onClick={() => setVoiceEnabled(!voiceEnabled)}
               title={voiceEnabled ? 'Desactivar respuestas de voz' : 'Activar respuestas de voz'}
+              aria-label={voiceEnabled ? 'Desactivar respuestas de voz' : 'Activar respuestas de voz'}
             >
               {voiceEnabled ? '🔊' : '🔇'}
             </button>
@@ -291,114 +284,73 @@ const ChatWidget = ({ isOpen, onClose }) => {
 
         {/* Messages */}
         <div className="chat-widget-body">
-          {console.log('🎨 RENDER: messages.length =', messages.length, 'messages =', messages)}
           {messages.length === 0 ? (
             <div className="welcome-section">
-              {console.log('🎨 RENDER: Showing welcome section')}
               <div className="welcome-logo">
                 <ComfiAvatar size={50} className="comfi-avatar comfi-wave" animated={true} />
               </div>
               <h2>¡Hola! Soy Comfi</h2>
               <p>Tu asistente de Comfama. ¿En qué puedo ayudarte hoy?</p>
-              
               {showFAQQuickActions && (
-                <FAQQuickActions
-                  quickFAQs={quickFAQs}
-                  onQuickFAQClick={handleQuickFAQClick}
-                />
+                <FAQQuickActions quickFAQs={quickFAQs} onQuickFAQClick={handleQuickFAQClick} />
               )}
             </div>
           ) : (
             <>
-              {console.log('🎨 RENDER: Showing messages, count =', messages.length)}
-              {messages.map((msg) => {
-                console.log('🎨 RENDER: Rendering message', msg.id, msg.type, msg.content.substring(0, 50))
-                const faq = msg.type === 'bot' ? parseFAQFromMessage(msg) : null
-                
-                // Si es una FAQ, solo mostrar la tarjeta, NO el texto plano
-                if (faq) {
-                  return (
-                    <div key={msg.id} className={`message ${msg.type}`}>
-                      <div className="message-avatar">
-                        <ComfiAvatar size={28} className="comfi-avatar" />
-                      </div>
-                      <div className="message-faq-container">
-                        <FAQCard
-                          faq={faq}
-                          onActionClick={handleFAQAction}
-                          onRelatedClick={handleFAQRelatedClick}
-                          onFeedback={handleFAQFeedback}
-                        />
-                      </div>
+              {messages.map((msg) => (
+                <div key={msg.id} className={`message ${msg.type}`}>
+                  {msg.type === 'bot' && (
+                    <div className="message-avatar">
+                      <ComfiAvatar size={28} className="comfi-avatar" />
                     </div>
-                  )
-                }
-                
-                // Si no es FAQ, mostrar mensaje normal
-                return (
-                  <div key={msg.id} className={`message ${msg.type}`}>
-                    {msg.type === 'bot' && (
-                      <div className="message-avatar">
-                        <ComfiAvatar size={28} className="comfi-avatar" />
-                      </div>
-                    )}
-                    
+                  )}
+                  
+                  <div className="message-content-wrapper">
                     <div className={`message-bubble ${msg.isError ? 'error' : ''}`}>
-                      {msg.content}
+                      {msg.type === 'bot' && !msg.isError ? (
+                        <MarkdownMessage content={msg.content} />
+                      ) : (
+                        msg.content
+                      )}
                     </div>
                     
-                    {msg.type === 'user' && (
-                      <div className="message-avatar user-avatar"></div>
-                    )}
+                    {/* Timestamp + Copy button for bot messages */}
+                    <div className={`message-meta ${msg.type}`}>
+                      <span className="message-time">{formatTimestamp(msg.timestamp)}</span>
+                      {msg.type === 'bot' && !msg.isError && (
+                        <button 
+                          className={`copy-btn ${copiedId === msg.id ? 'copied' : ''}`}
+                          onClick={() => handleCopy(msg.content, msg.id)}
+                          title="Copiar respuesta"
+                        >
+                          {copiedId === msg.id ? '✓' : '📋'}
+                        </button>
+                      )}
+                    </div>
                   </div>
-                )
-              })}
+                  
+                  {msg.type === 'user' && (
+                    <div className="message-avatar user-avatar"></div>
+                  )}
+                </div>
+              ))}
               
               {/* Streaming message */}
               {isStreaming && currentStreamMessage && (
-                (() => {
-                  // Check if streaming message is a FAQ
-                  const tempMsg = { content: currentStreamMessage.toLowerCase() }
-                  const isFAQ = tempMsg.content.includes('afilia') || 
-                                tempMsg.content.includes('empleador') ||
-                                tempMsg.content.includes('tarifa') || 
-                                tempMsg.content.includes('aporte') ||
-                                tempMsg.content.includes('crédito') ||
-                                tempMsg.content.includes('subsidio')
-                  
-                  // If it's a FAQ, show "Procesando..." instead of streaming text
-                  if (isFAQ) {
-                    return (
-                      <div className="message bot processing-message">
-                        <div className="message-avatar">
-                          <ComfiAvatar size={28} className="comfi-avatar comfi-thinking" animated={true} />
-                        </div>
-                        <div className="message-bubble processing">
-                          <div className="processing-indicator">
-                            <div className="processing-spinner"></div>
-                            <span className="processing-text">Procesando...</span>
-                          </div>
-                        </div>
-                      </div>
-                    )
-                  }
-                  
-                  // Otherwise show streaming text normally
-                  return (
-                    <div className="message bot">
-                      <div className="message-avatar">
-                        <ComfiAvatar size={28} className="comfi-avatar comfi-speaking" animated={true} />
-                      </div>
-                      <div className="message-bubble streaming">
-                        {currentStreamMessage}
-                        <span className="cursor-blink">|</span>
-                      </div>
+                <div className="message bot">
+                  <div className="message-avatar">
+                    <ComfiAvatar size={28} className="comfi-avatar comfi-speaking" animated={true} />
+                  </div>
+                  <div className="message-content-wrapper">
+                    <div className="message-bubble streaming">
+                      <MarkdownMessage content={currentStreamMessage} />
+                      <span className="cursor-blink">|</span>
                     </div>
-                  )
-                })()
+                  </div>
+                </div>
               )}
               
-              {/* Indicador de procesamiento - Comfi está escribiendo */}
+              {/* Processing indicator */}
               {isProcessing && !isStreaming && (
                 <div className="message bot processing-message">
                   <div className="message-avatar">
@@ -406,11 +358,13 @@ const ChatWidget = ({ isOpen, onClose }) => {
                   </div>
                   <div className="message-bubble processing">
                     <div className="typing-indicator">
-                      <span></span>
-                      <span></span>
-                      <span></span>
+                      <span></span><span></span><span></span>
                     </div>
-                    <span className="typing-text">Comfi está escribiendo...</span>
+                    <span className="typing-text">
+                      {messages[messages.length - 1]?.content?.includes('🎤') 
+                        ? 'Procesando audio...' 
+                        : 'Comfi está escribiendo...'}
+                    </span>
                   </div>
                 </div>
               )}
@@ -422,13 +376,26 @@ const ChatWidget = ({ isOpen, onClose }) => {
                   </div>
                   <div className="message-bubble typing">
                     <div className="typing-indicator">
-                      <span></span>
-                      <span></span>
-                      <span></span>
+                      <span></span><span></span><span></span>
                     </div>
                   </div>
                 </div>
               )}
+
+              {/* Follow-up suggestions */}
+              {suggestions.length > 0 && (
+                <div className="suggestions-container">
+                  <span className="suggestions-label">Preguntas relacionadas:</span>
+                  <div className="suggestions-chips">
+                    {suggestions.map((s, i) => (
+                      <button key={i} className="suggestion-chip" onClick={() => handleSuggestionClick(s)}>
+                        {s}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               <div ref={messagesEndRef} />
             </>
           )}
@@ -439,69 +406,54 @@ const ChatWidget = ({ isOpen, onClose }) => {
           {selectedImage && (
             <div className="image-preview">
               <img src={selectedImage} alt="Preview" />
-              <button 
-                className="remove-image"
-                onClick={() => setSelectedImage(null)}
-              >
-                ✕
-              </button>
+              <button className="remove-image" onClick={() => setSelectedImage(null)}>✕</button>
             </div>
           )}
 
           {isRecording && (
             <div className="recording-indicator">
               <div className="recording-animation">
-                <div className="wave"></div>
-                <div className="wave"></div>
-                <div className="wave"></div>
+                <div className="wave"></div><div className="wave"></div><div className="wave"></div>
               </div>
               <span className="recording-time">{formatTime(recordingTime)}</span>
-              <span className="recording-text">Grabando...</span>
+              <span className="recording-text">
+                {recordingTime >= MAX_RECORDING_SECONDS - 3 
+                  ? `Deteniendo en ${MAX_RECORDING_SECONDS - recordingTime}s...` 
+                  : `Grabando... (máx ${MAX_RECORDING_SECONDS}s)`}
+              </span>
             </div>
           )}
 
           <form className="chat-input-form" onSubmit={handleSendMessage}>
             <div className="input-actions">
-              <button
-                type="button"
-                className="action-btn"
-                onClick={() => fileInputRef.current?.click()}
-                title="Adjuntar imagen"
-              >
+              <button type="button" className="action-btn" onClick={() => fileInputRef.current?.click()} title="Adjuntar imagen" aria-label="Adjuntar imagen">
                 📷
               </button>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleImageSelect}
-                style={{ display: 'none' }}
-              />
-              
-              <button
-                type="button"
-                className={`action-btn voice-btn ${isRecording ? 'recording' : ''}`}
-                onClick={handleVoiceRecord}
-                title={isRecording ? 'Detener grabación' : 'Grabar voz'}
-              >
+              <input ref={fileInputRef} type="file" accept="image/*" onChange={(e) => {
+                const file = e.target.files[0]
+                if (file) {
+                  const reader = new FileReader()
+                  reader.onloadend = () => setSelectedImage(reader.result)
+                  reader.readAsDataURL(file)
+                }
+              }} style={{ display: 'none' }} />
+              <button type="button" className={`action-btn voice-btn ${isRecording ? 'recording' : ''}`} onClick={handleVoiceRecord} title={isRecording ? 'Detener' : 'Grabar voz'} aria-label={isRecording ? 'Detener grabación' : 'Grabar mensaje de voz'}>
                 {isRecording ? '⏹️' : '🎤'}
               </button>
             </div>
 
             <input
+              ref={inputRef}
               type="text"
               className="chat-input"
               placeholder="Escribe tu mensaje..."
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               disabled={!isConnected || isRecording}
+              aria-label="Escribe tu mensaje"
             />
 
-            <button
-              type="submit"
-              className="send-btn"
-              disabled={!isConnected || (!inputValue.trim() && !selectedImage) || isRecording}
-            >
+            <button type="submit" className="send-btn" disabled={!isConnected || (!inputValue.trim() && !selectedImage) || isRecording}>
               ➤
             </button>
           </form>

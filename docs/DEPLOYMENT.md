@@ -1,344 +1,165 @@
-# 🚀 Guía de Deployment - CENTLI
+# Guía de Deployment - Comfi
 
-Esta guía detalla cómo desplegar CENTLI en AWS.
+## Prerrequisitos
 
----
-
-## 📋 Prerrequisitos
-
-- AWS CLI configurado con perfil `pragma-power-user`
+- AWS CLI configurado con credenciales válidas
 - Python 3.10+
 - Node.js 18+
-- Acceso a AWS Bedrock (Claude 3.7 Sonnet)
-- Permisos IAM necesarios
+- Región: us-east-1
 
 ---
 
-## 🏗️ Arquitectura Desplegada
+## Arquitectura Desplegada
 
 ```
-CloudFront (Frontend)
-    ↓
-API Gateway (WebSocket)
-    ↓
-Lambda (Inference)
-    ↓
-├── AWS Bedrock (Claude 3.7)
-├── Amazon Transcribe (Audio)
-├── DynamoDB (User Data)
-└── S3 (Audio Temp)
+CloudFront (E2UWNXJTS2NM3V) → S3 (comfi-frontend-pragma)
+API Gateway WebSocket (vvg621xawg) → Lambda centli-app-message (512MB, 45s)
+                                   → Bedrock Agent (Z6PCEKYNPS)
+                                   → Transcribe Streaming + Polly Neural
+                                   → DynamoDB (centli-sessions)
 ```
 
 ---
 
-## 1️⃣ Backend (Lambda)
-
-### Desplegar Lambda con Tool Use
-
-```bash
-cd src_aws/app_inference
-./scripts/deploy-tool-use-fix.sh
-```
-
-Este script:
-- Empaqueta el código Lambda
-- Incluye `action_tools.py` y `audio_processor.py`
-- Actualiza la función `poc-wizi-mex-lambda-inference-model-dev`
-- Configura variables de entorno
-
-### Verificar Deployment
-
-```bash
-aws lambda get-function \
-  --function-name poc-wizi-mex-lambda-inference-model-dev \
-  --profile pragma-power-user \
-  --query 'Configuration.LastModified'
-```
-
----
-
-## 2️⃣ Audio (Amazon Transcribe)
-
-### Desplegar Audio Processor
-
-```bash
-./scripts/deploy-audio-transcribe.sh
-```
-
-Este script:
-- Crea bucket S3 `poc-wizi-mex-audio-temp`
-- Configura lifecycle policy (1 día)
-- Actualiza Lambda con `audio_processor.py`
-
-### Agregar Permisos IAM
-
-**IMPORTANTE**: Debes agregar permisos manualmente en la consola AWS.
-
-1. Ve a IAM Console
-2. Busca el rol: `poc-wizi-mex-stack-InferenceAPIFnRole-gNaIeNvDMIxD`
-3. Agrega inline policy con este JSON:
-
-```json
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "transcribe:StartTranscriptionJob",
-        "transcribe:GetTranscriptionJob"
-      ],
-      "Resource": "*"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "s3:PutObject",
-        "s3:GetObject",
-        "s3:DeleteObject"
-      ],
-      "Resource": "arn:aws:s3:::poc-wizi-mex-audio-temp/*"
-    }
-  ]
-}
-```
-
-### Verificar Audio
-
-```bash
-python scripts/test-audio-complete.py
-```
-
----
-
-## 3️⃣ Frontend (CloudFront)
+## 1. Frontend
 
 ### Build y Deploy
 
 ```bash
 cd frontend
-
-# Build
 npm run build
-
-# Deploy a S3
-aws s3 sync dist/ s3://poc-wizi-mex-frontend \
-  --profile pragma-power-user \
-  --delete
-
-# Invalidar cache de CloudFront
-aws cloudfront create-invalidation \
-  --distribution-id E3XXXXXXXXXX \
-  --paths "/*" \
-  --profile pragma-power-user
+aws s3 sync dist/ s3://comfi-frontend-pragma/ --delete
+aws cloudfront create-invalidation --distribution-id E2UWNXJTS2NM3V --paths "/*"
 ```
 
-### Verificar Frontend
-
-Abre: https://d210pgg1e91kn6.cloudfront.net
-
----
-
-## 4️⃣ Configuración de Variables
-
-### Backend (.env)
-
-```bash
-# src_aws/app_inference/.env
-AWS_PROFILE=pragma-power-user
-REGION_NAME=us-east-1
-DYNAMODB_TABLE_USERS=poc-wizi-mex-users
-DYNAMODB_TABLE_ACCOUNTS=poc-wizi-mex-accounts
-DYNAMODB_TABLE_BENEFICIARIES=poc-wizi-mex-beneficiaries
-DYNAMODB_TABLE_PRODUCTS=poc-wizi-mex-products
-S3_AUDIO_BUCKET=poc-wizi-mex-audio-temp
-```
-
-### Frontend (.env.production)
+### Variables de entorno
 
 ```bash
 # frontend/.env.production
-VITE_WEBSOCKET_URL=wss://vp8zwzpjpj.execute-api.us-east-1.amazonaws.com/dev
-VITE_API_URL=https://vp8zwzpjpj.execute-api.us-east-1.amazonaws.com/dev
+VITE_WEBSOCKET_URL=wss://vvg621xawg.execute-api.us-east-1.amazonaws.com/prod
 ```
 
 ---
 
-## 5️⃣ Testing Post-Deployment
+## 2. Lambda app_message
 
-### Test Completo
+### Empaquetar y desplegar
 
 ```bash
-python scripts/test-tool-use-complete.py
+cd src_aws/app_message
+zip -r function.zip app_message.py transcribe_stt.py polly_tts.py amazon_transcribe/
+aws lambda update-function-code \
+  --function-name centli-app-message \
+  --zip-file fileb://function.zip \
+  --region us-east-1
 ```
 
-Debe mostrar:
-```
-✅ Test 1: Transfer - PASSED (TRF-XXXXXXXX)
-✅ Test 2: Purchase - PASSED (ORD-XXXXXXXX)
-✅ Test 3: Balance Query - PASSED
+### Configuración de la Lambda
 
-Total: 3 passed, 0 failed
-```
+| Parámetro | Valor |
+|-----------|-------|
+| Runtime | Python 3.11 |
+| Memoria | 512 MB |
+| Timeout | 45 segundos |
+| Layer | nova-sonic-dependencies:1 (ffmpeg + pydub) |
 
-### Test Manual
+### Variables de entorno de la Lambda
 
-1. Abre: https://d210pgg1e91kn6.cloudfront.net
-2. Prueba texto: "Envía $500 a mi mamá"
-3. Prueba voz: Click en micrófono → "Compra un iPhone"
-4. Verifica IDs de transacción
+| Variable | Valor |
+|----------|-------|
+| SESSIONS_TABLE | centli-sessions |
+| EVENT_BUS_NAME | centli-event-bus |
+| AGENTCORE_ID | Z6PCEKYNPS |
+| AGENTCORE_ALIAS_ID | TSTALIASID |
+| ASSETS_BUCKET | centli-assets-777937796305 |
+
+> **IMPORTANTE**: Nunca desplegar `src_aws/app_inference/` a `centli-app-message`. Es código legacy que romperá la Lambda.
 
 ---
 
-## 6️⃣ Monitoreo
-
-### CloudWatch Logs
+## 3. Lambdas Connect/Disconnect
 
 ```bash
-# Ver logs de Lambda
-aws logs tail /aws/lambda/poc-wizi-mex-lambda-inference-model-dev \
-  --follow \
-  --profile pragma-power-user
+# app_connect
+cd src_aws/app_connect
+zip app_connect.zip app_connect.py
+aws lambda update-function-code --function-name centli-app-connect --zip-file fileb://app_connect.zip
+
+# app_disconnect
+cd src_aws/app_disconnect
+zip app_disconnect.zip app_disconnect.py
+aws lambda update-function-code --function-name centli-app-disconnect --zip-file fileb://app_disconnect.zip
 ```
-
-### Métricas
-
-- **Invocations**: Número de requests
-- **Duration**: Tiempo de ejecución
-- **Errors**: Errores de Lambda
-- **Throttles**: Requests limitados
 
 ---
 
-## 7️⃣ Rollback
+## 4. Knowledge Base
 
-### Revertir Lambda
+### Actualizar FAQ
 
+1. Editar/regenerar el documento FAQ:
+   ```bash
+   /Library/Frameworks/Python.framework/Versions/3.13/bin/python3 scripts/generate_faq_docx.py
+   ```
+
+2. Subir a S3:
+   ```bash
+   aws s3 cp knowledge-base-docs/FAQ_Comfama_Centro_Conocimiento_v2.docx \
+     s3://comfi-knowledge-base-pragma/
+   ```
+
+3. Sincronizar Knowledge Base:
+   ```bash
+   aws bedrock-agent start-ingestion-job \
+     --knowledge-base-id PDNW6DDDGZ \
+     --data-source-id ELUSMDMG9H
+   ```
+
+---
+
+## 5. Verificación Post-Deploy
+
+### Frontend
+- Abrir https://db4aulosarsdo.cloudfront.net (hard refresh: Cmd+Shift+R)
+- Verificar indicador "En línea"
+- Enviar mensaje de texto
+- Probar grabación de voz
+
+### Lambda
 ```bash
-# Listar versiones
-aws lambda list-versions-by-function \
-  --function-name poc-wizi-mex-lambda-inference-model-dev \
-  --profile pragma-power-user
-
-# Revertir a versión anterior
-aws lambda update-alias \
-  --function-name poc-wizi-mex-lambda-inference-model-dev \
-  --name PROD \
-  --function-version <VERSION> \
-  --profile pragma-power-user
+aws logs tail /aws/lambda/centli-app-message --follow --region us-east-1
 ```
 
-### Revertir Frontend
-
+### Tests E2E
 ```bash
-# Desplegar versión anterior desde Git
-git checkout <COMMIT_ANTERIOR>
-cd frontend
-npm run build
-./scripts/deploy-frontend.sh
+python scripts/test_voice_complete.py
 ```
 
 ---
 
-## 8️⃣ Troubleshooting
+## 6. Permisos IAM
 
-### Lambda no responde
+### CentliLambdaExecutionRole
+- DynamoDB: CRUD en centli-sessions
+- Bedrock: InvokeAgent
+- Transcribe: StartStreamTranscription, StartTranscriptionJob, GetTranscriptionJob
+- Polly: SynthesizeSpeech
+- S3: PutObject, GetObject, DeleteObject en centli-assets-*
+- API Gateway: ManageConnections (post_to_connection)
 
-```bash
-# Verificar configuración
-aws lambda get-function-configuration \
-  --function-name poc-wizi-mex-lambda-inference-model-dev \
-  --profile pragma-power-user
-
-# Verificar logs
-aws logs tail /aws/lambda/poc-wizi-mex-lambda-inference-model-dev \
-  --profile pragma-power-user
-```
-
-### Audio no funciona
-
-1. Verificar permisos IAM (Transcribe + S3)
-2. Verificar bucket S3 existe
-3. Verificar HTTPS (audio requiere HTTPS)
-4. Ver logs de Lambda
-
-### Tool Use no ejecuta
-
-1. Verificar `action_tools.py` está en Lambda
-2. Verificar logs de Bedrock
-3. Verificar formato de tool definitions
-4. Probar con test: `python scripts/test-tool-use-complete.py`
+### CentliBedrockAgentRole
+- Bedrock: InvokeModel
+- Bedrock: Retrieve, RetrieveAndGenerate
+- OpenSearch Serverless: APIAccessAll
 
 ---
 
-## 9️⃣ Costos Estimados
+## 7. Troubleshooting
 
-### Por Request
-
-- **Lambda**: $0.0000002 por invocación
-- **Bedrock**: ~$0.003 por request (Claude 3.7)
-- **Transcribe**: $0.024 por minuto de audio
-- **API Gateway**: $0.001 por millón de mensajes
-
-### Por Usuario/Mes (estimado)
-
-- 100 requests/mes: ~$0.30
-- 10 minutos audio/mes: ~$0.24
-- **Total**: ~$0.54/usuario/mes
-
-### Optimizaciones
-
-- Usar Lambda Provisioned Concurrency para latencia
-- Cachear respuestas comunes
-- Comprimir audio antes de transcribir
-- Usar Bedrock batch para múltiples requests
-
----
-
-## 🔟 Checklist de Deployment
-
-### Pre-Deployment
-
-- [ ] Tests pasan localmente
-- [ ] Variables de entorno configuradas
-- [ ] Permisos IAM verificados
-- [ ] Backup de versión actual
-
-### Deployment
-
-- [ ] Backend desplegado
-- [ ] Audio configurado
-- [ ] Frontend desplegado
-- [ ] Cache invalidado
-
-### Post-Deployment
-
-- [ ] Tests de integración pasan
-- [ ] Frontend carga correctamente
-- [ ] Audio funciona
-- [ ] Tool Use ejecuta acciones
-- [ ] Logs sin errores
-
-### Validación
-
-- [ ] Demo completo funciona
-- [ ] Transferencias generan IDs
-- [ ] Compras generan IDs
-- [ ] Consultas responden correctamente
-
----
-
-## 📞 Soporte
-
-Si encuentras problemas:
-
-1. Revisa logs de CloudWatch
-2. Ejecuta tests de diagnóstico
-3. Verifica configuración de IAM
-4. Contacta al equipo de desarrollo
-
----
-
-**✅ Sistema listo para producción**
-
-**🚀 URL Demo**: https://d210pgg1e91kn6.cloudfront.net
+| Problema | Solución |
+|----------|----------|
+| "No pude entender el audio" | Verificar que el blob > 500 bytes en consola del navegador |
+| Lambda timeout | Verificar timeout es 45s, no 30s |
+| Knowledge Base no responde | Verificar permisos bedrock:Retrieve en el rol del agente |
+| Frontend no carga | Verificar invalidación de CloudFront completada |
+| WebSocket desconectado | Verificar que la Lambda $connect funciona y DynamoDB accesible |

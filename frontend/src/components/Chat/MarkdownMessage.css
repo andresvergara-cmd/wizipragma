@@ -1,0 +1,75 @@
+.markdown-message {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: inherit;
+}
+
+.markdown-message .md-paragraph {
+  margin: 0 0 0.5rem 0;
+}
+
+.markdown-message .md-paragraph:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-message .md-bold {
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.markdown-message .md-italic {
+  font-style: italic;
+}
+
+.markdown-message .md-list {
+  margin: 0.4rem 0;
+  padding-left: 1.25rem;
+}
+
+.markdown-message .md-list-ordered {
+  list-style-type: decimal;
+}
+
+.markdown-message .md-list-item {
+  margin-bottom: 0.25rem;
+  line-height: 1.5;
+}
+
+.markdown-message .md-list-item::marker {
+  color: #ad37e0;
+}
+
+.markdown-message .md-heading {
+  font-weight: 700;
+  color: #ad37e0;
+  margin: 0.5rem 0 0.25rem 0;
+  font-size: 0.95rem;
+}
+
+.markdown-message .md-link {
+  color: #ad37e0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.markdown-message .md-link:hover {
+  color: #8b2bb3;
+}
+
+.markdown-message .md-code-inline {
+  background: rgba(173, 55, 224, 0.08);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+}
+
+.markdown-message .md-code-block {
+  background: #f5f5f7;
+  padding: 0.75rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.85rem;
+  margin: 0.5rem 0;
+  border: 1px solid #e8e8e8;
+}

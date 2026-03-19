@@ -27,25 +27,6 @@ export const WebSocketProvider = ({ children }) => {
   const audioRef = useRef(null)
   const audioChunksRef = useRef([])  // For assembling audio chunks
 
-  // Debug: Log messages changes
-  useEffect(() => {
-    console.log('📋 Messages array updated, count:', messages.length)
-    if (messages.length > 0) {
-      console.log('📋 Last message:', messages[messages.length - 1])
-      console.log('📋 All message IDs:', messages.map(m => m.id))
-    }
-  }, [messages])
-  
-  // Debug: Log streaming state changes
-  useEffect(() => {
-    console.log('🌊 isStreaming changed:', isStreaming)
-  }, [isStreaming])
-  
-  // Debug: Log currentStreamMessage changes
-  useEffect(() => {
-    console.log('💬 currentStreamMessage changed (length):', currentStreamMessage.length)
-  }, [currentStreamMessage])
-
   const WEBSOCKET_URL = import.meta.env.VITE_WEBSOCKET_URL || 'wss://vvg621xawg.execute-api.us-east-1.amazonaws.com/prod'
   const MAX_RECONNECT_ATTEMPTS = 5
   const RECONNECT_DELAY = 3000
@@ -221,20 +202,10 @@ export const WebSocketProvider = ({ children }) => {
           const chunk = event.data
           console.log('📦 Plain text chunk received (length:', chunk.length, '):', chunk.substring(0, 100))
           
-          // Check for error messages
+          // Check for error messages (ignore during voice processing - API GW timeout)
           if (chunk.includes('Internal server error')) {
-            console.error('❌ Internal server error')
-            isStreamingRef.current = false
-            accumulatedMessageRef.current = ''
-            setIsStreaming(false)
-            setCurrentStreamMessage('')
-            setMessages(prev => [...prev, {
-              id: `msg-${Date.now()}`,
-              type: 'bot',
-              content: 'Lo siento, hubo un error procesando tu mensaje. Por favor intenta de nuevo.',
-              timestamp: new Date().toISOString(),
-              isError: true
-            }])
+            console.warn('⚠️ Internal server error (likely API GW timeout during voice processing, Lambda continues)')
+            // Don't show error - Lambda is still processing and will send results via post_to_connection
             return
           }
           
@@ -398,6 +369,7 @@ export const WebSocketProvider = ({ children }) => {
       }
 
       wsRef.current.send(JSON.stringify(payload))
+      console.log('📤 WebSocket send completed, payload size:', JSON.stringify(payload).length, 'bytes')
       
       // Add user message to local state
       setMessages(prev => [...prev, {

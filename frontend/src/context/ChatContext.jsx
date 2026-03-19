@@ -46,21 +46,35 @@ export const ChatProvider = ({ children }) => {
   }
 
   const sendVoiceMessage = (audioBlob) => {
-    console.log('🎤 Processing voice message, size:', audioBlob.size, 'bytes')
+    console.log('🎤 Processing voice message, size:', audioBlob.size, 'bytes, type:', audioBlob.type)
     
     // Convert audio blob to base64
     const reader = new FileReader()
     reader.onloadend = () => {
-      const base64Audio = reader.result.split(',')[1]
-      console.log('🎤 Audio converted to base64, length:', base64Audio.length)
+      const result = reader.result
+      const base64Audio = result.split(',')[1]
+      if (!base64Audio) {
+        console.error('❌ Failed to extract base64 from dataURL')
+        return
+      }
+      console.log('🎤 Audio base64 length:', base64Audio.length, 'chars')
       
-      // Send with AUDIO type and audio data
-      wsSendMessage('', 'AUDIO', base64Audio)
+      // Check payload size (API GW WebSocket limit: 128KB)
+      const estimatedPayloadSize = base64Audio.length + 200
+      console.log('🎤 Estimated payload size:', estimatedPayloadSize, 'bytes')
+      if (estimatedPayloadSize > 125000) {
+        console.error('❌ Audio too large for WebSocket:', estimatedPayloadSize, 'bytes')
+        // Don't send - show error to user
+        return
+      }
+      
+      const success = wsSendMessage('', 'AUDIO', base64Audio)
+      if (!success) {
+        console.error('❌ Failed to send voice message')
+      }
       
       setIsTyping(true)
-      setTimeout(() => {
-        setIsTyping(false)
-      }, 2000)
+      setTimeout(() => setIsTyping(false), 2000)
     }
     reader.onerror = (error) => {
       console.error('❌ Error reading audio blob:', error)

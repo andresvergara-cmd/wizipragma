@@ -1,10 +1,10 @@
-# Arquitectura de la Demo Comfi - Comfama
+# Arquitectura de Comfi - Asistente Virtual de Comfama
 
 ## 1. Visión General
 
-Comfi es un asistente virtual inteligente desarrollado para Comfama (Caja de Compensación Familiar de Antioquia, Colombia). Permite a los usuarios interactuar mediante texto y voz para consultar información sobre servicios de Comfama: afiliación, créditos, subsidios, educación, recreación y atención al cliente.
+Comfi es un asistente virtual inteligente para Comfama (Caja de Compensación Familiar de Antioquia, Colombia). Permite interactuar mediante texto y voz para consultar información sobre servicios: afiliación, créditos, subsidios, educación, recreación y atención al cliente.
 
-La solución implementa una arquitectura serverless en AWS con comunicación bidireccional en tiempo real vía WebSocket, procesamiento de lenguaje natural con Amazon Bedrock, y capacidades de voz bidireccional con Amazon Transcribe (STT) y Amazon Polly (TTS).
+Arquitectura serverless en AWS con WebSocket bidireccional, Amazon Bedrock (Claude 3.5 Sonnet v2), Transcribe Streaming para STT y Polly Neural para TTS.
 
 ## 2. Diagrama de Arquitectura
 
@@ -17,7 +17,7 @@ La solución implementa una arquitectura serverless en AWS con comunicación bid
                            ▼
 ┌─────────────────────────────────────────────────────────────────────────┐
 │                     Amazon CloudFront                                   │
-│              CDN - Distribución Frontend                                │
+│              CDN - Distribución E2UWNXJTS2NM3V                         │
 │           db4aulosarsdo.cloudfront.net                                  │
 └──────────────────────────┬──────────────────────────────────────────────┘
                            │
@@ -25,70 +25,56 @@ La solución implementa una arquitectura serverless en AWS con comunicación bid
               ▼                         ▼
 ┌──────────────────────┐   ┌──────────────────────────────────────────────┐
 │    Amazon S3         │   │        API Gateway WebSocket                 │
-│  Frontend Assets     │   │  wss://vvg621xawg.execute-api.              │
-│  (React Build)       │   │  us-east-1.amazonaws.com/prod               │
-│                      │   │                                              │
-│  comfi-frontend-     │   │  Rutas:                                      │
-│  pragma              │   │  ├── $connect    → Lambda app_connect        │
-└──────────────────────┘   │  ├── $disconnect → Lambda app_disconnect     │
-                           │  └── $default    → Lambda app_message        │
+│  comfi-frontend-     │   │  wss://vvg621xawg.execute-api.              │
+│  pragma              │   │  us-east-1.amazonaws.com/prod               │
+│  (React Build)       │   │                                              │
+└──────────────────────┘   │  Rutas:                                      │
+                           │  ├── $connect    → centli-app-connect        │
+                           │  ├── $disconnect → centli-app-disconnect     │
+                           │  └── $default    → centli-app-message        │
                            └──────────┬───────────────────────────────────┘
                                       │
                     ┌─────────────────┼─────────────────┐
                     ▼                 ▼                  ▼
           ┌──────────────┐  ┌──────────────┐  ┌──────────────────┐
           │ Lambda       │  │ Lambda       │  │ Lambda           │
-          │ app_connect  │  │ app_disconnect│  │ app_message     │
-          │              │  │              │  │ (Orquestador)    │
+          │ app_connect  │  │ app_disconnect│ │ app_message     │
+          │              │  │              │  │ (512MB, 45s)     │
           │ Crea sesión  │  │ Limpia       │  │                  │
           │ en DynamoDB  │  │ sesión       │  │ Enruta mensajes: │
-          └──────┬───────┘  └──────┬───────┘  │ TEXT / VOICE /   │
-                 │                 │          │ IMAGE            │
-                 ▼                 ▼          └────────┬─────────┘
+          └──────┬───────┘  └──────┬───────┘  │ TEXT / AUDIO     │
+                 │                 │          └────────┬─────────┘
+                 ▼                 ▼                   │
           ┌──────────────────────────────┐             │
-          │       Amazon DynamoDB        │             │
-          │    centli-sessions           │    ┌────────┴─────────┐
-          │                              │    │                  │
-          │  Campos:                     │    ▼                  ▼
-          │  - session_id                │  [TEXT]            [VOICE]
-          │  - connection_id             │    │                  │
-          │  - user_id                   │    │         ┌────────┴────────┐
-          │  - state (ACTIVE/DISCONNECTED)│   │         ▼                ▼
-          │  - message_count             │    │  ┌─────────────┐  ┌───────────┐
-          │  - expires_at (4h TTL)       │    │  │  Amazon     │  │  Amazon   │
-          └──────────────────────────────┘    │  │  Transcribe │  │  Polly    │
-                                              │  │  (STT)      │  │  (TTS)    │
-                                              │  │             │  │           │
-                                              │  │ Audio→Texto │  │ Texto→Voz │
-                                              │  │ es-ES       │  │ Voz: Mia  │
-                                              │  │ WebM input  │  │ es-MX     │
-                                              │  └──────┬──────┘  │ Neural    │
-                                              │         │         │ MP3 24kHz │
-                                              │         ▼         └─────┬─────┘
-                                              │    Texto extraído       │
-                                              │         │               │
-                                              ▼         ▼               │
+          │       Amazon DynamoDB        │    ┌────────┴─────────┐
+          │    centli-sessions           │    │                  │
+          │  - session_id (PK)           │    ▼                  ▼
+          │  - connection_id             │  [TEXT]            [AUDIO]
+          │  - user_id                   │    │                  │
+          │  - state                     │    │         ┌────────┴────────┐
+          │  - expires_at (4h TTL)       │    │         ▼                ▼
+          └──────────────────────────────┘    │  ┌─────────────┐  ┌───────────┐
+                                              │  │ Transcribe  │  │  Polly    │
+                                              │  │ Streaming   │  │  Neural   │
+                                              │  │ (~2-4s)     │  │  (Mia)    │
+                                              │  │ es-US       │  │  es-MX    │
+                                              │  │ 16kHz PCM   │  │  MP3 24kHz│
+                                              │  └──────┬──────┘  └─────┬─────┘
+                                              │         ▼               │
+                                              ▼    Texto extraído       │
                                     ┌─────────────────────────┐         │
                                     │   Amazon Bedrock Agent  │         │
-                                    │   ID: Z6PCEKYNPS        │         │
-                                    │                         │         │
-                                    │   Modelo: Claude 3.5    │         │
-                                    │   Sonnet v2             │         │
-                                    │                         │         │
-                                    │   System Prompt:        │         │
-                                    │   Identidad Comfi       │         │
-                                    │   (Comfama, Colombia)   │         │
-                                    └────────┬────────────────┘         │
-                                             │                          │
-                                    ┌────────┴────────┐                 │
-                                    ▼                 ▼                 │
-                          ┌──────────────┐  ┌──────────────────┐        │
-                          │  Knowledge   │  │  Respuesta       │        │
-                          │  Base        │  │  Texto           │────────┘
-                          │  PDNW6DDDGZ  │  │  (Streaming)    │
-                          │              │  └──────────────────┘
-                          │  FAQ Comfama │
-                          │  (35 preguntas)│
+                                    │   Z6PCEKYNPS            │         │
+                                    │   Claude 3.5 Sonnet v2  │◄────────┘
+                                    └────────┬────────────────┘
+                                             │
+                                    ┌────────┴────────┐
+                                    ▼                 ▼
+                          ┌──────────────┐  ┌──────────────────┐
+                          │  Knowledge   │  │  Respuesta       │
+                          │  Base        │  │  (Streaming o    │
+                          │  PDNW6DDDGZ  │  │   directa)      │
+                          │  43 FAQs     │  └──────────────────┘
                           └──────┬───────┘
                                  │
                     ┌────────────┴────────────┐
@@ -96,14 +82,8 @@ La solución implementa una arquitectura serverless en AWS con comunicación bid
           ┌──────────────────┐    ┌──────────────────────┐
           │   Amazon S3      │    │  Amazon OpenSearch    │
           │   comfi-         │    │  Serverless           │
-          │   knowledge-     │    │                       │
-          │   base-pragma    │    │  Índice vectorial     │
-          │                  │    │  Embeddings:          │
-          │   Documento:     │    │  Titan Embed Text v2  │
-          │   FAQ_Comfama_   │    │                       │
-          │   Centro_        │    └──────────────────────┘
-          │   Conocimiento   │
-          │   .docx          │
+          │   knowledge-     │    │  Titan Embed Text v2  │
+          │   base-pragma    │    └──────────────────────┘
           └──────────────────┘
 ```
 
@@ -117,139 +97,95 @@ La solución implementa una arquitectura serverless en AWS con comunicación bid
 | Hosting | Amazon S3 + CloudFront |
 | URL | https://db4aulosarsdo.cloudfront.net |
 | Comunicación | WebSocket bidireccional |
-| Modalidades | Texto, Voz (MediaRecorder API), Imágenes |
+| Modalidades | Texto y Voz |
 
 Componentes principales:
-- `WebSocketContext.jsx`: Gestión de conexión WebSocket, streaming de mensajes, ensamblaje de audio chunks
-- `ChatWidget.jsx`: Interfaz de chat con soporte multimodal
-- `CinteotlLogo.jsx`: Avatar animado de Comfi (estados: hablando, pensando, saludando)
+- `WebSocketContext.jsx`: Conexión WebSocket, streaming, ensamblaje de audio chunks, auto-reconexión
+- `ChatContext.jsx`: Estado del chat, envío de mensajes texto/voz, conversión blob→base64
+- `ChatWidget.jsx`: Interfaz de chat con grabación de voz (AudioContext + MediaRecorder), markdown, sugerencias
+- `MarkdownMessage.jsx`: Renderizado de respuestas con formato markdown
+- `FAQQuickActions`: Accesos rápidos a preguntas frecuentes
+- `ComfiAvatar`: Avatar animado (estados: hablando, pensando, saludando)
 
-Funcionalidades del frontend:
-- Streaming de respuestas en tiempo real
-- Grabación de audio con MediaRecorder API (formato WebM)
-- Reproducción de audio TTS (MP3) con soporte de chunks
-- Auto-reconexión WebSocket (máximo 5 intentos, 3s entre intentos)
-- Indicadores de "escribiendo" y procesamiento
+Captura de audio:
+- `AudioContext.createMediaStreamSource()` captura el micrófono (100% confiable)
+- Rutea a `MediaStreamDestination` → `MediaRecorder` (compresión Opus/WebM)
+- `timeslice: 500ms`, `audioBitsPerSecond: 32000` para archivos pequeños
+- Máximo 15 segundos de grabación (límite 128KB WebSocket)
 
 ### 3.2 API Gateway WebSocket
 
 | Aspecto | Detalle |
 |---------|---------|
-| Tipo | WebSocket API |
 | Endpoint | wss://vvg621xawg.execute-api.us-east-1.amazonaws.com/prod |
-| Stage | prod |
+| Route Selection | `$request.body.action` |
 | Región | us-east-1 |
 
-Rutas configuradas:
 | Ruta | Lambda | Función |
 |------|--------|---------|
 | `$connect` | `centli-app-connect` | Crear sesión en DynamoDB |
-| `$disconnect` | `centli-app-disconnect` | Marcar sesión como DISCONNECTED |
-| `$default` | `centli-app-message` | Procesar mensajes (texto/voz/imagen) |
+| `$disconnect` | `centli-app-disconnect` | Marcar sesión DISCONNECTED |
+| `$default` | `centli-app-message` | Procesar mensajes TEXT/AUDIO |
 
-### 3.3 Lambda Functions
+### 3.3 Lambda centli-app-message (Orquestador)
 
-#### centli-app-connect
-- Handler: `app_connect.lambda_handler`
-- Función: Crea sesión en DynamoDB al conectarse un usuario
-- Modo demo: Asigna `user_id: demo-user-comfi` sin autenticación
-- TTL de sesión: 4 horas
+| Aspecto | Detalle |
+|---------|---------|
+| Runtime | Python 3.11 |
+| Memoria | 512 MB |
+| Timeout | 45 segundos |
+| Layer | nova-sonic-dependencies:1 (ffmpeg + pydub) |
+| Código fuente | `src_aws/app_message/` |
 
-#### centli-app-disconnect
-- Handler: `app_disconnect.lambda_handler`
-- Función: Marca la sesión como `DISCONNECTED` en DynamoDB
+Flujo TEXT:
+1. Recibe mensaje → Busca sesión en DynamoDB
+2. Invoca Bedrock Agent con streaming
+3. Envía chunks de texto al frontend vía `post_to_connection`
 
-#### centli-app-message (Orquestador Principal)
-- Handler: `app_message.lambda_handler`
-- Runtime: Python 3.11
-- Memoria: 512 MB
-- Timeout: 30 segundos
-- Función: Enruta mensajes según tipo:
-  - `TEXT` → Bedrock Agent con streaming
-  - `VOICE/AUDIO` → Transcribe STT → Bedrock Agent → Polly TTS
-  - `IMAGE` → Placeholder (no implementado)
+Flujo AUDIO:
+1. Recibe base64 audio → Decodifica
+2. ffmpeg convierte WebM→WAV (16kHz, mono)
+3. Transcribe Streaming API (~2-4s) → texto
+4. Envía transcripción al frontend
+5. Invoca Bedrock Agent → respuesta texto
+6. Envía respuesta texto al frontend
+7. Polly Neural sintetiza MP3 → envía audio chunks
 
-### 3.4 Amazon Bedrock Agent
+### 3.4 Amazon Transcribe Streaming (STT)
+
+| Aspecto | Detalle |
+|---------|---------|
+| API | Transcribe Streaming (tiempo real) |
+| Idioma | es-US |
+| Formato entrada | PCM 16kHz mono 16-bit |
+| SDK | amazon-transcribe (incluido en Lambda) |
+| Latencia | ~2-4 segundos |
+| Fallback | Batch Transcribe (si streaming falla) |
+
+### 3.5 Amazon Polly (TTS)
+
+| Aspecto | Detalle |
+|---------|---------|
+| Voz | Mia (Neural) |
+| Idioma | es-MX |
+| Formato | MP3, 24 kHz |
+| Límite | 3000 caracteres |
+| Chunking | Si > 100KB, divide en chunks para WebSocket |
+
+### 3.6 Amazon Bedrock Agent
 
 | Aspecto | Detalle |
 |---------|---------|
 | Agent ID | Z6PCEKYNPS |
 | Alias | TSTALIASID |
 | Modelo | us.anthropic.claude-3-5-sonnet-20241022-v2:0 |
-| Rol IAM | CentliBedrockAgentRole |
-| Idle TTL | 600 segundos |
-| Orquestación | DEFAULT |
-
-El agente tiene configurado un system prompt extenso que define:
-- Identidad: Comfi, asistente de Comfama
-- Ubicación: Antioquia, Colombia
-- Moneda: Pesos Colombianos (COP)
-- Servicios: Afiliación, créditos, subsidios, educación, recreación, salud, cultura
-- Información de contacto: (604) 360 70 80 / 018000 415 455 / www.comfama.com
-
-### 3.5 Knowledge Base (RAG)
-
-| Aspecto | Detalle |
-|---------|---------|
-| KB ID | PDNW6DDDGZ |
-| Nombre | comfi-knowledge-base |
-| Tipo | VECTOR |
+| Knowledge Base | PDNW6DDDGZ (43 FAQs de Comfama) |
 | Embedding | Amazon Titan Embed Text v2 |
-| Storage | OpenSearch Serverless |
-| Fuente | S3: comfi-knowledge-base-pragma |
-| Rol IAM | ComfiKnowledgeBaseRole |
+| Vector Store | OpenSearch Serverless |
 
-Documento fuente: `FAQ_Comfama_Centro_Conocimiento.docx` (38 KB)
+### 3.7 Amazon DynamoDB
 
-Categorías del FAQ (35 preguntas):
-| Categoría | Preguntas | Temas |
-|-----------|-----------|-------|
-| Afiliación | 8 | Cómo afiliarse, beneficiarios, pensionados, beneficios |
-| Certificados | 3 | Certificado de afiliación, carné, certificados financieros |
-| Cuenta digital | 4 | Crear cuenta, actualizar datos, problemas de sesión |
-| Subsidios | 9 | Subsidio al desempleo, requisitos, documentos, postulación |
-| Créditos | 3 | Cuota monetaria, requisitos, servicios financieros |
-| Educación | 3 | Inscripción a cursos, programas educativos |
-| Atención | 5 | Canales de contacto, teléfono, PQR, correo |
-
-### 3.6 Amazon Transcribe (STT)
-
-| Aspecto | Detalle |
-|---------|---------|
-| Idioma | es-ES (Español) |
-| Formato entrada | WebM (desde navegador) |
-| Almacenamiento temporal | S3: centli-assets-777937796305 |
-| Polling | Backoff exponencial (0.3s → 1.5s, máx 40 intentos) |
-
-Flujo STT:
-1. Audio base64 del frontend → Decodificar a bytes
-2. Subir WebM a S3 (temporal)
-3. Iniciar TranscriptionJob
-4. Polling hasta completar
-5. Extraer texto transcrito
-6. Limpiar archivos temporales
-
-### 3.7 Amazon Polly (TTS)
-
-| Aspecto | Detalle |
-|---------|---------|
-| Voz | Mia (Neural) |
-| Idioma | es-MX (Español México) |
-| Engine | Neural |
-| Formato salida | MP3 |
-| Sample Rate | 24 kHz |
-| Límite texto | 3000 caracteres |
-
-Flujo TTS:
-1. Texto de respuesta del agente
-2. Polly sintetiza a MP3
-3. Codificar a base64
-4. Si > 100KB: dividir en chunks
-5. Enviar por WebSocket al frontend
-
-### 3.8 Amazon DynamoDB
-
-Tabla principal: `centli-sessions`
+Tabla: `centli-sessions`
 
 | Campo | Tipo | Descripción |
 |-------|------|-------------|
@@ -258,105 +194,66 @@ Tabla principal: `centli-sessions`
 | user_id | String | ID del usuario |
 | state | String | ACTIVE / DISCONNECTED |
 | created_at | Number | Timestamp de creación |
-| expires_at | Number | Timestamp de expiración (4h) |
+| expires_at | Number | TTL (4 horas) |
 | last_activity | Number | Última actividad |
 | message_count | Number | Contador de mensajes |
 
-### 3.9 Amazon S3
+### 3.8 Buckets S3
 
 | Bucket | Uso |
 |--------|-----|
-| comfi-knowledge-base-pragma | Documentos FAQ para Knowledge Base |
-| centli-assets-777937796305 | Audio temporal para Transcribe |
-| Frontend bucket | Build de React para CloudFront |
+| comfi-frontend-pragma | Build de React para CloudFront |
+| comfi-knowledge-base-pragma | Documento FAQ para Knowledge Base |
+| centli-assets-777937796305 | Audio temporal (fallback batch Transcribe) |
 
 ## 4. Flujos de Datos
 
 ### 4.1 Flujo de Texto
 
 ```
-Usuario escribe mensaje
-    │
-    ▼
-Frontend (WebSocket) ──────► API Gateway ──────► Lambda app_message
-                                                      │
-                                                      ▼
-                                                Bedrock Agent
-                                                (Claude 3.5 Sonnet)
-                                                      │
-                                              ┌───────┴───────┐
-                                              ▼               ▼
-                                        Knowledge Base    Respuesta
-                                        (si es FAQ)       directa
-                                              │               │
-                                              └───────┬───────┘
-                                                      ▼
-                                              Streaming chunks
-                                                      │
-                                                      ▼
-Usuario ve respuesta ◄──── Frontend ◄──── WebSocket ◄─┘
+Usuario escribe → WebSocket → Lambda app_message
+                                    │
+                                    ▼
+                              Bedrock Agent (streaming)
+                              ├── Knowledge Base (si es FAQ)
+                              └── Respuesta directa
+                                    │
+                                    ▼ chunks de texto
+Usuario ve respuesta ◄── WebSocket ◄─┘
 (en tiempo real)
 ```
 
-### 4.2 Flujo de Voz (Bidireccional)
+### 4.2 Flujo de Voz
 
 ```
-Usuario graba audio (WebM)
+Usuario graba (AudioContext → MediaRecorder → WebM/Opus)
     │
-    ▼
-Frontend codifica base64 ──► API Gateway ──► Lambda app_message
-                                                   │
-                                                   ▼
-                                            Amazon Transcribe
-                                            (Audio → Texto)
-                                                   │
-                                                   ▼
-                                            Bedrock Agent
-                                            (Texto → Respuesta)
-                                                   │
-                                                   ▼
-                                            Amazon Polly
-                                            (Respuesta → Audio MP3)
-                                                   │
-                                                   ▼
-                                            Base64 chunks
-                                                   │
-                                                   ▼
-Usuario escucha respuesta ◄── Frontend ◄── WebSocket
-(audio MP3)
+    ▼ base64
+Lambda app_message
+    │
+    ├── ffmpeg: WebM → WAV 16kHz mono
+    ├── Transcribe Streaming: WAV → texto (~2-4s)
+    ├── Envía transcripción al frontend
+    ├── Bedrock Agent: texto → respuesta
+    ├── Envía respuesta texto al frontend
+    └── Polly Neural: respuesta → MP3 → chunks base64
+                                          │
+Usuario escucha ◄── WebSocket ◄───────────┘
 ```
 
-## 5. Servicios AWS Utilizados
+## 5. Seguridad
 
-| Servicio | Uso en Comfi |
-|----------|-------------|
-| Amazon CloudFront | CDN para frontend React |
-| Amazon S3 | Hosting frontend, documentos KB, audio temporal |
-| API Gateway (WebSocket) | Comunicación bidireccional en tiempo real |
-| AWS Lambda (3 funciones) | Lógica serverless (connect, disconnect, message) |
-| Amazon Bedrock Agent | Agente conversacional con Claude 3.5 Sonnet v2 |
-| Bedrock Knowledge Base | RAG con FAQ de Comfama |
-| Amazon OpenSearch Serverless | Almacenamiento vectorial para embeddings |
-| Amazon Titan Embed Text v2 | Modelo de embeddings para Knowledge Base |
-| Amazon DynamoDB | Gestión de sesiones |
-| Amazon Transcribe | Speech-to-Text (voz del usuario → texto) |
-| Amazon Polly | Text-to-Speech (respuesta → voz neural) |
-| AWS IAM | Roles y permisos de seguridad |
-
-## 6. Seguridad
-
-- Comunicación HTTPS/WSS en todos los canales
+- HTTPS/WSS en todos los canales
 - Sesiones con TTL de 4 horas
-- Roles IAM con permisos mínimos necesarios:
-  - `CentliBedrockAgentRole`: InvokeModel, Retrieve KB, acceso OpenSearch
-  - `ComfiKnowledgeBaseRole`: S3 GetObject, InvokeModel, acceso OpenSearch
+- Roles IAM con permisos mínimos:
+  - `CentliBedrockAgentRole`: InvokeModel, Retrieve KB, OpenSearch
+  - `ComfiKnowledgeBaseRole`: S3 GetObject, InvokeModel, OpenSearch
   - `CentliLambdaExecutionRole`: DynamoDB, Bedrock, Transcribe, Polly, S3
-- Validación de identidad del agente (identity_validator.py)
-- Audio temporal en S3 con limpieza automática post-transcripción
+- Audio temporal en S3 con limpieza post-transcripción
 
-## 7. Región y Cuenta AWS
+## 6. Región y Cuenta
 
 | Aspecto | Valor |
 |---------|-------|
-| Región | us-east-1 (N. Virginia) |
-| Cuenta AWS | 777937796305 |
+| Región | us-east-1 |
+| Cuenta | 777937796305 |

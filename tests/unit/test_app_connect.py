@@ -107,14 +107,22 @@ class TestLambdaHandler:
         assert 'expires_at' in session_item
     
     def test_connect_no_token(self, mock_env, mock_dynamodb_table, connect_event_no_token):
-        """Test connection without auth token."""
+        """Test connection without auth token uses demo mode."""
+        # Arrange
+        mock_dynamodb_table.put_item = Mock()
+        
         # Act
         response = lambda_handler(connect_event_no_token, None)
         
-        # Assert
-        assert response['statusCode'] == 401
-        assert response['body'] == 'Unauthorized'
-        mock_dynamodb_table.put_item.assert_not_called()
+        # Assert - demo mode allows connection without token
+        assert response['statusCode'] == 200
+        assert response['body'] == 'Connected'
+        mock_dynamodb_table.put_item.assert_called_once()
+        
+        # Verify demo user_id is used
+        call_args = mock_dynamodb_table.put_item.call_args
+        session_item = call_args[1]['Item']
+        assert session_item['user_id'] == 'demo-user-comfi'
     
     def test_connect_invalid_token(self, mock_env, mock_dynamodb_table):
         """Test connection with invalid token."""

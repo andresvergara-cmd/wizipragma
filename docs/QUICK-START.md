@@ -1,333 +1,141 @@
-# ⚡ Quick Start - CENTLI
+# Quick Start - Comfi
 
 Guía rápida para desarrolladores que se unen al proyecto.
 
 ---
 
-## 🎯 Lo Esencial
+## Lo Esencial
 
-**Demo**: https://d210pgg1e91kn6.cloudfront.net
-
-**WebSocket**: wss://vp8zwzpjpj.execute-api.us-east-1.amazonaws.com/dev
-
-**Lambda**: `poc-wizi-mex-lambda-inference-model-dev`
-
-**AWS Profile**: `pragma-power-user`
+- **Demo**: https://db4aulosarsdo.cloudfront.net
+- **WebSocket**: wss://vvg621xawg.execute-api.us-east-1.amazonaws.com/prod
+- **Lambda principal**: `centli-app-message`
+- **Región**: us-east-1
 
 ---
 
-## 🚀 Setup en 5 Minutos
+## Setup en 5 Minutos
 
-### 1. Clonar y Configurar
-
-```bash
-git clone https://github.com/andresvergara-cmd/wizipragma.git
-cd wizipragma
-git checkout feature/hackaton
-```
-
-### 2. Backend
+### 1. Clonar
 
 ```bash
-cd src_aws/app_inference
-pip install -r requirements.txt
-export AWS_PROFILE=pragma-power-user
+git clone <repo-url>
+cd comfi
 ```
 
-### 3. Frontend
+### 2. Frontend
 
 ```bash
 cd frontend
 npm install
 npm run dev
+# Abre http://localhost:5173
 ```
 
-### 4. Probar
+### 3. Probar
+
+Abre la demo en https://db4aulosarsdo.cloudfront.net y prueba:
+- Texto: "¿Cómo me afilio a Comfama?"
+- Voz: Click en 🎤, habla, click para detener
+
+---
+
+## Estructura Clave
+
+```
+src_aws/app_message/        # Lambda de producción (orquestador)
+├── app_message.py          # Handler: TEXT, AUDIO
+├── transcribe_stt.py       # Transcribe Streaming STT
+├── polly_tts.py            # Polly Neural TTS
+└── amazon_transcribe/      # SDK Transcribe Streaming
+
+src_aws/app_connect/        # Lambda $connect
+src_aws/app_disconnect/     # Lambda $disconnect
+
+frontend/src/
+├── components/Chat/        # ChatWidget, MarkdownMessage
+├── context/                # WebSocketContext, ChatContext
+├── pages/                  # Home, Marketplace
+└── data/                   # faqData, mockProducts
+```
+
+> `src_aws/app_inference/` es código legacy. NO usar en producción.
+
+---
+
+## Comandos de Deploy
+
+### Frontend
 
 ```bash
-# Test completo
-python scripts/test-tool-use-complete.py
+cd frontend
+npm run build
+aws s3 sync dist/ s3://comfi-frontend-pragma/ --delete
+aws cloudfront create-invalidation --distribution-id E2UWNXJTS2NM3V --paths "/*"
+```
 
-# Debe mostrar:
-# ✅ Test 1: Transfer - PASSED
-# ✅ Test 2: Purchase - PASSED
-# ✅ Test 3: Balance Query - PASSED
+### Lambda app_message
+
+```bash
+cd src_aws/app_message
+zip -r function.zip app_message.py transcribe_stt.py polly_tts.py amazon_transcribe/
+aws lambda update-function-code --function-name centli-app-message --zip-file fileb://function.zip
 ```
 
 ---
 
-## 📁 Estructura Clave
+## Tests
 
-```
-wizipragma/
-├── src_aws/app_inference/
-│   ├── app.py                  # Handler WebSocket
-│   ├── bedrock_config.py       # Tool Use + Streaming
-│   ├── action_tools.py         # transfer_money(), purchase_product()
-│   └── audio_processor.py      # Amazon Transcribe
-│
-├── frontend/src/
-│   ├── components/Chat/        # ChatWidget con voz
-│   └── context/                # WebSocket + Chat context
-│
-├── scripts/
-│   ├── deploy-tool-use-fix.sh  # Deploy Lambda
-│   ├── deploy-frontend.sh      # Deploy Frontend
-│   └── test-tool-use-complete.py  # Tests E2E
-│
-└── docs/
-    ├── DEPLOYMENT.md           # Guía completa
-    ├── TOOL-USE-WORKING.md     # Documentación técnica
-    └── AUDIO-SETUP-COMPLETO.md # Setup de audio
+```bash
+# Unitarios
+python -m pytest tests/unit/ -v
+
+# E2E voz (requiere credenciales AWS)
+python scripts/test_voice_complete.py
 ```
 
 ---
 
-## 🔧 Comandos Útiles
+## Flujos Principales
 
-### Deploy
-
-```bash
-# Backend
-./scripts/deploy-tool-use-fix.sh
-
-# Frontend
-cd frontend && npm run build && ./scripts/deploy-frontend.sh
+### Texto
+```
+Usuario escribe → WebSocket → Lambda → Bedrock Agent (streaming) → chunks → Frontend
 ```
 
-### Testing
-
-```bash
-# Test completo
-python scripts/test-tool-use-complete.py
-
-# Test solo transferencias
-python scripts/test-simple-transfer.py
-
-# Test audio
-python scripts/test-audio-complete.py
+### Voz
 ```
-
-### Logs
-
-```bash
-# Ver logs en tiempo real
-aws logs tail /aws/lambda/poc-wizi-mex-lambda-inference-model-dev \
-  --follow --profile pragma-power-user
+Usuario graba → WebM base64 → Lambda → ffmpeg → Transcribe Streaming (~2-4s)
+→ Bedrock Agent → Polly TTS → MP3 chunks → Frontend reproduce
 ```
 
 ---
 
-## 💡 Conceptos Clave
+## Debugging
 
-### Tool Use
-
-El agente puede ejecutar acciones automáticamente:
-
-```python
-# action_tools.py
-def transfer_money(amount: float, recipient_name: str) -> dict:
-    """Ejecuta transferencia y retorna TRF-XXXXXXXX"""
-    return {
-        "success": True,
-        "transaction_id": f"TRF-{uuid.uuid4().hex[:8].upper()}"
-    }
-```
-
-### Streaming
-
-Respuestas en tiempo real via WebSocket:
-
-```python
-# bedrock_config.py
-for event in response['stream']:
-    if 'contentBlockDelta' in event:
-        chunk = event['contentBlockDelta']['delta']['text']
-        yield chunk  # Stream al frontend
-```
-
-### Audio
-
-Transcripción con Amazon Transcribe:
-
-```python
-# audio_processor.py
-def transcribe_audio(audio_base64: str) -> str:
-    """Convierte audio a texto"""
-    # 1. Decode base64
-    # 2. Upload a S3
-    # 3. Start Transcribe job
-    # 4. Poll hasta completar
-    # 5. Return texto
-```
-
----
-
-## 🎯 Flujos Principales
-
-### 1. Transferencia
-
-```
-Usuario: "Envía $500 a mi mamá"
-    ↓
-Lambda recibe via WebSocket
-    ↓
-Bedrock analiza → Tool Use
-    ↓
-Lambda ejecuta transfer_money(500, "mamá")
-    ↓
-Genera TRF-XXXXXXXX
-    ↓
-Bedrock formatea respuesta
-    ↓
-Stream al usuario
-```
-
-### 2. Compra
-
-```
-Usuario: "Compra un iPhone 15 Pro"
-    ↓
-Lambda recibe via WebSocket
-    ↓
-Bedrock analiza → Tool Use
-    ↓
-Lambda ejecuta purchase_product("iPhone 15 Pro")
-    ↓
-Genera ORD-XXXXXXXX
-    ↓
-Bedrock formatea respuesta
-    ↓
-Stream al usuario
-```
-
-### 3. Audio
-
-```
-Usuario: Click micrófono → Habla
-    ↓
-Frontend graba con MediaRecorder
-    ↓
-Envía audio base64 via WebSocket
-    ↓
-Lambda transcribe con Transcribe
-    ↓
-Procesa como mensaje de texto
-    ↓
-Stream respuesta
-```
-
----
-
-## 🐛 Debugging
-
-### Lambda no responde
+### Ver logs de Lambda
 
 ```bash
-# Ver última actualización
-aws lambda get-function \
-  --function-name poc-wizi-mex-lambda-inference-model-dev \
-  --profile pragma-power-user \
-  --query 'Configuration.LastModified'
-
-# Ver logs
-aws logs tail /aws/lambda/poc-wizi-mex-lambda-inference-model-dev \
-  --profile pragma-power-user
-```
-
-### Tool Use no ejecuta
-
-```bash
-# Verificar action_tools.py está en Lambda
-aws lambda get-function \
-  --function-name poc-wizi-mex-lambda-inference-model-dev \
-  --profile pragma-power-user \
-  --query 'Code.Location' \
-  | xargs curl -o lambda.zip
-
-unzip -l lambda.zip | grep action_tools
+aws logs tail /aws/lambda/centli-app-message --follow --region us-east-1
 ```
 
 ### Audio no funciona
 
-1. Verificar HTTPS (audio requiere HTTPS)
-2. Verificar permisos IAM (Transcribe + S3)
-3. Verificar bucket S3: `poc-wizi-mex-audio-temp`
+1. Verificar HTTPS (audio requiere contexto seguro)
+2. Verificar permisos del micrófono en el navegador
+3. Revisar consola del navegador: debe mostrar `🎤 Recording started (AudioContext → MediaRecorder...)`
+4. El blob final debe ser > 500 bytes
+
+### Respuestas vacías
+
+1. Verificar que el WebSocket está conectado (indicador "En línea")
+2. Revisar logs de Lambda en CloudWatch
+3. Verificar que el Bedrock Agent está activo
 
 ---
 
-## 📚 Documentación
+## Documentación
 
 - [README.md](../README.md) - Overview del proyecto
-- [DEPLOYMENT.md](DEPLOYMENT.md) - Guía de deployment
-- [TOOL-USE-WORKING.md](TOOL-USE-WORKING.md) - Documentación técnica Tool Use
-- [AUDIO-SETUP-COMPLETO.md](AUDIO-SETUP-COMPLETO.md) - Setup de audio
-- [CONTRIBUTING.md](../CONTRIBUTING.md) - Guía de contribución
-
----
-
-## 🎯 Próximos Pasos
-
-1. **Familiarízate con el código**
-   - Lee `bedrock_config.py` (lógica principal)
-   - Lee `action_tools.py` (herramientas)
-   - Lee `ChatWidget.jsx` (frontend)
-
-2. **Ejecuta tests**
-   - `python scripts/test-tool-use-complete.py`
-   - Prueba el demo en vivo
-
-3. **Haz un cambio pequeño**
-   - Agrega un nuevo tool
-   - Mejora el frontend
-   - Agrega tests
-
-4. **Lee CONTRIBUTING.md**
-   - Workflow de desarrollo
-   - Estándares de código
-   - Proceso de PR
-
----
-
-## 💬 Preguntas Frecuentes
-
-**¿Cómo agrego un nuevo tool?**
-
-1. Define función en `action_tools.py`
-2. Agrega tool definition en `bedrock_config.py`
-3. Actualiza `execute_tool()` en `bedrock_config.py`
-4. Deploy: `./scripts/deploy-tool-use-fix.sh`
-
-**¿Cómo pruebo localmente?**
-
-Usa los scripts de test:
-```bash
-python scripts/test-tool-use-complete.py
-```
-
-**¿Cómo veo logs?**
-
-```bash
-aws logs tail /aws/lambda/poc-wizi-mex-lambda-inference-model-dev \
-  --follow --profile pragma-power-user
-```
-
-**¿Cómo despliego cambios?**
-
-```bash
-# Backend
-./scripts/deploy-tool-use-fix.sh
-
-# Frontend
-cd frontend && npm run build && ./scripts/deploy-frontend.sh
-```
-
----
-
-## 🚀 ¡Listo!
-
-Ya puedes empezar a contribuir. Si tienes dudas, revisa la documentación o pregunta al equipo.
-
-**Demo**: https://d210pgg1e91kn6.cloudfront.net
-
-**¡Bienvenido al equipo!** 🎉
+- [Arquitectura](ARQUITECTURA-COMFI.md) - Diagrama y componentes
+- [Deployment](DEPLOYMENT.md) - Guía de despliegue
+- [Contributing](../CONTRIBUTING.md) - Guía de contribución
